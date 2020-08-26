@@ -1,49 +1,87 @@
 import React from "react";
-import Styled from "styled-components";
+import Styled, { keyframes } from "styled-components";
+import Plus from "../Assets/pictures/plus.png";
+
+
+const bounce = keyframes`
+ 0% {
+  transform: translateY(-500px);
+  animation-timing-function: ease-in;
+  opacity: 0;
+}
+38% {
+  transform: translateY(0);
+  animation-timing-function: ease-out;
+  opacity: 1;
+}
+55% {
+  transform: translateY(-65px);
+  animation-timing-function: ease-in;
+}
+72% {
+  transform: translateY(0);
+  animation-timing-function: ease-out;
+}
+81% {
+  transform: translateY(-28px);
+  animation-timing-function: ease-in;
+}
+90% {
+  transform: translateY(0);
+  animation-timing-function: ease-out;
+}
+95% {
+  transform: translateY(-8px);
+  animation-timing-function: ease-in;
+}
+100% {
+  transform: translateY(0);
+  animation-timing-function: ease-out;
+}
+`
+const boxShdow = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.35);
+}
+`
 
 const ButtonWrapper = Styled.div`
-position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  height: 100px;
+  width: 100px;
+  margin: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  
 `;
-const AddButtonMain = Styled.button`
-width: 180px;
-  height: 60px;
-  cursor: pointer;
+const AddButtonMain = Styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
   background: transparent;
-  border: 1px solid #91C9FF;
-  outline: none;
-  transition: 1s ease-in-out;
+  box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.25);
+  
   &:hover { 
-    transition: 1s ease-in-out;
-  background: #4F95DA;
+    animation: ${boxShdow} cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   }
 `;
-const AnimationBorder = Styled.svg`
-  position: absolute;
-  left: 0;
-  top: 0;
-  fill: none;
-  stroke: #fff;
-  stroke-dasharray: 150 480;
-  stroke-dashoffset: 150;
-  transition: 1s ease-in-out;
-  &:hover { 
-    stroke-dashoffset: -480;
-  }
-`;
+
+const PlusSign = Styled.img`
+ height: 50px;
+  width: 50px;
+  `;
 
 const AddButton = () => {
   return (
     <ButtonWrapper>
       <AddButtonMain>
-        <AnimationBorder width="180px" height="60px" viewBox="0 0 180 60">
-          <polyline points="179,1 179,59 1,59 1,1 179,1" />
-        </AnimationBorder>
+        <PlusSign src={Plus}></PlusSign>
       </AddButtonMain>
     </ButtonWrapper>
   );
