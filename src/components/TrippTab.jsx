@@ -38,7 +38,7 @@ background: linear-gradient(
                                 );
 box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 margin: 20px;
-border-radius: 5%;
+border-radius: 3%;
 width: 150px;
 height: 190px;
 &:hover { 
@@ -46,9 +46,10 @@ height: 190px;
 }
 
 `;
-const TitleText = Styled.h1`
- font: 1.5em 'Quicksand', sans-serif;
-
+const TitleText = Styled.p`
+font-family: "Yeseva One";
+font-size: 1.3em;
+letter-spacing: 1px;
  color: #041e29;
  margin: 0px;
 `;
@@ -56,12 +57,14 @@ const TabImg = Styled.img`
 border: 1px solid black;
 margin: 10px;
 width: 130px;
-height: 90px
+height: 90px;
 `;
 const MainText = Styled.p`
-font: 1.2em 'Nunito', sans-serif;
 color: #041e29;
 margin: 0px;
+font-family: "Roboto";
+font-size: 1.2em;
+letter-spacing: 1px;
 `;
 
 export default TrippTab;
