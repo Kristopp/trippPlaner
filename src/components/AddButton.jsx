@@ -48,19 +48,11 @@ const boxShdow = keyframes`
 }
 `
 
-const ButtonWrapper = Styled.div`
-  height: 100px;
-  width: 100px;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-`;
 const AddButtonMain = Styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  posistion: fixed;
   height: 100px;
   width: 100px;
   border-radius: 50%;
@@ -79,11 +71,9 @@ const PlusSign = Styled.img`
 
 const AddButton = () => {
   return (
-    <ButtonWrapper>
       <AddButtonMain>
         <PlusSign src={Plus}></PlusSign>
       </AddButtonMain>
-    </ButtonWrapper>
   );
 };
 

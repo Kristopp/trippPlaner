@@ -1,19 +1,19 @@
-import React from 'react'
-import Styled from 'styled-components'
+import React from "react";
+import Styled from "styled-components";
 
 const HeaderWraper = Styled.div`
-witdh: 100vh;
+
 height: 65px;
 background-color: #041e29;
-`
+z-index: 100;
+`;
 
-const Header = () => { 
-    return ( 
-<HeaderWraper>
+const Header = () => {
+  return (
+    <React.Fragment>
+      <HeaderWraper></HeaderWraper>
+    </React.Fragment>
+  );
+};
 
-</HeaderWraper>
-
-    )
-}
-
-export default Header
+export default Header;

@@ -4,7 +4,7 @@ import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 const TrippTab = (props) => {
   return (
-    <CardWrapper>
+    <CardWrapper onClick={props.onClick}>
       <TitleText>Bulgaria</TitleText>
       <TabImg src={demoPic}></TabImg>
       <MainText>dd/mm/yyyy</MainText>
