@@ -5,7 +5,6 @@ const HeaderWraper = Styled.div`
 
 height: 65px;
 background-color: #041e29;
-z-index: 100;
 `;
 
 const Header = () => {

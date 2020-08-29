@@ -4,11 +4,13 @@ import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 const AddFormCont = Styled.div`
 display: flex;
+justify-content: center;
 align-items: center;
-flex-direction: column;
+position: absolute;
+margin: 50px;
+z-index: 10;
 `;
 const FormWrapper = Styled.div`
-margin: 10px;
 `;
 const TabTop = Styled.div`
 width: 205px;
