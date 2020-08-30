@@ -41,10 +41,11 @@ const bounce = keyframes`
 `
 const boxShdow = keyframes`
   0% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0);
   }
   100% {
     box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.35);
+    
 }
 `
 
@@ -57,8 +58,7 @@ const AddButtonMain = Styled.div`
   width: 100px;
   border-radius: 50%;
   background: transparent;
-  box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.25);
-  
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.15);
   &:hover { 
     animation: ${boxShdow} cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   }

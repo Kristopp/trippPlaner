@@ -8,20 +8,24 @@ import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 
 const App = () => {
+
+ 
   const [addButtonShow, setaddButtonShow] = useState(true);
   const [trippTabState, setTripTabState] = useState(true);
   const [trippFormState, setFormState] = useState(true);
 
+  const [tabArray, setTabArray] = useState([])
+
   //Kui Form on open siis hide add ja hide
+
+  const createNewTab = () => { 
+    const newTabArray = [...tabArray, ]
+
+  }
 
   let trippTabs;
   if (trippTabState) {
     trippTabs = <TrippTab onClick={() => setTripTabState(true)}></TrippTab>;
-  }
-
-  let addButton;
-  if (addButtonShow) {
-    addButton = <AddButton></AddButton>;
   }
 
   let trppForm;
@@ -43,7 +47,9 @@ const App = () => {
           {trippTabs}
           {trippTabs}
         </TabWrapper>
-        <ButtonContainer>{addButton}</ButtonContainer>
+        <ButtonContainer>
+        <AddButton onClick={() => createNewTab}></AddButton>
+        </ButtonContainer>
       </MainContainer>
     </React.Fragment>
   );
@@ -57,20 +63,21 @@ margin: 0;
 padding: 0;
 background: linear-gradient(45deg,#00cdac,#02aab0) no-repeat, repeat center center / cover;
 `;
+
 const FormWrapper = Styled.div`
 display: flex;
 justify-content: center;
 `;
+
 const TabWrapper = Styled.div`
 display: flex;
 flex-direction: row;
 `;
 
 const ButtonContainer = Styled.div`
-display: flex;
-justify-content: flex-end;
-align-items: flex-end;
-margin: 50px;
+bottom: 60px; 
+right: 60px;
+position: absolute; 
 `;
 
 export default App;
