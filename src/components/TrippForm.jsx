@@ -6,33 +6,46 @@ const TrippForm = () => {
   const [rowArray, setRowArray] = useState([]);
 
   const handleNewRow = () => {
-    console.log(rowArray)
+    console.log(rowArray);
   };
+  
   return (
-    <AddForm>
-          <BudgetContainer>
-            <BudgetText>Budget</BudgetText>
-            <BudgetNumber>0</BudgetNumber>
-          </BudgetContainer>
-          <MainText>
-            <TitleText>
-              category
-            </TitleText>
-            <TitleText>
-              details
-            </TitleText>
-            <TitleText>
-              who pays
-            </TitleText>
-            <TitleText>
-              picture
-            </TitleText>
-            <TitleText>
-              expense
-            </TitleText>
-          </MainText>
-          <AddNewRow onClick={handleNewRow}>add new row</AddNewRow>
-        </AddForm>
+    <AddFormCont>
+      <AddForm>
+        <BudgetContainer>
+          <BudgetText>Budget</BudgetText>
+          <BudgetNumber>0</BudgetNumber>
+        </BudgetContainer>
+        <MainText>
+          <TitleText>category</TitleText>
+          <TitleText>details</TitleText>
+          <TitleText>who pays</TitleText>
+          <TitleText>picture</TitleText>
+          <TitleText>expense</TitleText>
+        </MainText>
+        <ListWrapper>
+          <ChildText>
+            <FormInput />
+          </ChildText>
+          <ChildText>
+            <FormInput />
+          </ChildText>
+          <ChildText>
+            <FormInput />
+          </ChildText>
+          <ChildText>
+            <FormInput />
+          </ChildText>
+          <Image>
+            
+          </Image>
+          <ChildText>
+            <FormInput />
+          </ChildText>
+        </ListWrapper>
+        <AddNewRow onClick={handleNewRow}>add new row</AddNewRow>
+      </AddForm>
+    </AddFormCont>
   );
 };
 
@@ -66,7 +79,13 @@ position: absolute;
 margin: 50px;
 z-index: 10;
 `;
-const FormWrapper = Styled.div`
+const ListWrapper = Styled.div`
+display: flex;
+flex-direction: row;
+border: 1px black solid;
+width: 100%;
+height: 70px;
+margin-bottom: 10px;
 `;
 /*  */
 const AddForm = Styled.div`
@@ -109,7 +128,7 @@ font: 2em 'Yeseva One', sans-serif;
 letter-spacing: 1px;
 `;
 const ChildText = Styled.p`
-font: 0.7em 'Roboto', sans-serif;
+font: 1.5em 'Roboto', sans-serif;
 letter-spacing: 1px;
 width: 200px;
 height: 100px;
