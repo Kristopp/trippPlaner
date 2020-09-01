@@ -2,13 +2,42 @@ import React, { useState } from "react";
 import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
+//unquie key gen
+
+
 const TrippForm = () => {
-  const [rowArray, setRowArray] = useState([]);
+  const [formRowArrays, setRowArrays] = useState([
+    {
+      id: 0,
+      category: "",
+      details: "",
+      whoPays: "",
+      pictures: "",
+      expense: 0,
+    },
+    {
+      id: 0,
+      category: "",
+      details: "",
+      whoPays: "",
+      pictures: "",
+      expense: 0,
+    },
+  ]);
+  const createKey = formRowArrays.map((e, index) => { 
+    return e.name + index
+  })
+
+  const handleFormInput = (index, event) => {
+    //use spread so i wont mutate
+    const values = [...formRowArrays];
+    values[index][event.target.name] = event.target.value;
+    setRowArrays(values);
+  };
 
   const handleNewRow = () => {
-    console.log(rowArray);
+    console.log(formRowArrays);
   };
-  
   return (
     <AddFormCont>
       <AddForm>
@@ -23,26 +52,47 @@ const TrippForm = () => {
           <TitleText>picture</TitleText>
           <TitleText>expense</TitleText>
         </MainText>
-        <ListWrapper>
-          <ChildText>
-            <FormInput />
-          </ChildText>
-          <ChildText>
-            <FormInput />
-          </ChildText>
-          <ChildText>
-            <FormInput />
-          </ChildText>
-          <ChildText>
-            <FormInput />
-          </ChildText>
-          <Image>
-            
-          </Image>
-          <ChildText>
-            <FormInput />
-          </ChildText>
-        </ListWrapper>
+        {formRowArrays.map((formRowArray, index) => (
+          <ListWrapper key={formRowArray.id + index}>
+            <ChildText>
+              <FormInput
+                name="category"
+                label="category"
+                type="text"
+                value={formRowArray.category}
+                onChange={(event) => handleFormInput(index, event)}
+              />
+            </ChildText>
+            <ChildText>
+              <FormInput
+                name="details"
+                label="details"
+                type="text"
+                value={formRowArray.details}
+                onChange={(event) => handleFormInput(index, event)}
+              />
+            </ChildText>
+            <ChildText>
+              <FormInput
+                name="whoPays"
+                label="whoPays"
+                type="text"
+                value={formRowArray.whoPays}
+                onChange={(event) => handleFormInput(index, event)}
+              />
+            </ChildText>
+            <Image></Image>
+            <ChildText>
+              <FormInput
+                name="expense"
+                label="expense"
+                type="number"
+                value={formRowArray.expense}
+                onChange={(event) => handleFormInput(index, event)}
+              />
+            </ChildText>
+          </ListWrapper>
+        ))}
         <AddNewRow onClick={handleNewRow}>add new row</AddNewRow>
       </AddForm>
     </AddFormCont>
@@ -132,6 +182,7 @@ font: 1.5em 'Roboto', sans-serif;
 letter-spacing: 1px;
 width: 200px;
 height: 100px;
+appearance: none;
 `;
 const FormInput = Styled.input`
 background-color: transparent;
