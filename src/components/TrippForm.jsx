@@ -24,9 +24,7 @@ const TrippForm = () => {
       expense: 0,
     },
   ]);
-  const createKey = formRowArrays.map((e, index) => { 
-    return e.name + index
-  })
+
 
   const handleFormInput = (index, event) => {
     //use spread so i wont mutate
@@ -35,8 +33,20 @@ const TrippForm = () => {
     setRowArrays(values);
   };
 
+  const deleteRow = () => { 
+    
+  }
+
   const handleNewRow = () => {
-    console.log(formRowArrays);
+    const newRow = Object.create({
+      id: 0,
+      category: "",
+      details: "",
+      whoPays: "",
+      pictures: "",
+      expense: 0,
+    })
+    
   };
   return (
     <AddFormCont>
