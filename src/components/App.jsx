@@ -8,47 +8,71 @@ import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 
 const App = () => {
-
- 
   const [addButtonShow, setaddButtonShow] = useState(true);
   const [trippTabState, setTripTabState] = useState(true);
   const [trippFormState, setFormState] = useState(true);
 
-  const [tabArray, setTabArray] = useState([])
+  const [tabsArray, setTabArray] = useState([]);
+  const [id, setId] = useState(0)
+  const [tapForm, setTabForm] = useState({
+    id: id,
+    title: "",
+    picture: "",
+    date: "",
+  });
 
   //Kui Form on open siis hide add ja hide
+  const createNewTab = () => {
+    let newObject = new Object({ 
+      tapForm
+    })
+    setId(id + 1)
+    newObject.id = id;
+    tabsArray.push(newObject);
+    console.log('hello')
+  };
 
-  const createNewTab = () => { 
-    const newTabArray = [...tabArray, ]
-
+  const handleTrippInput = (index, event) => { 
+    const values = [...tabsArray];
+    values[index][event.target.name] = event.target.value;
+    console.log(values)
   }
 
-  let trippTabs;
-  if (trippTabState) {
-    trippTabs = <TrippTab onClick={() => setTripTabState(true)}></TrippTab>;
-  }
+/* let trippTabs;
+  if (!trippTabState) {
+    setTripTabState(true)
+    trippTabs = <TrippTab onClick={() => setTripTabState(true)}></TrippTab>; 
+  }  */
 
-  let trppForm;
-  if (trippFormState) {
-    trppForm = <TrippForm></TrippForm>;
-  }
+  let form;
+  const closeForm = () => {
+    if (!trippFormState) {
+      setFormState(true);
+      form = <FormWrapper onClick={() => closeForm}></FormWrapper>;
+      console.log(form);
+    } else {
+      form = undefined;
+      setFormState(false);
+      console.log("false");
+    }
+  };
 
   return (
     <React.Fragment>
       <MainContainer>
         <Header />
-        <FormWrapper>
-       {trppForm}
-        </FormWrapper>
+        {form}
         <TabWrapper>
-          {trippTabs}
-          {trippTabs}
-          {trippTabs}
-          {trippTabs}
-          {trippTabs}
+          {tabsArray.map((tabArray, index) => {
+            return <TrippTab 
+            key={id + index} 
+            onChange={(event) => handleTrippInput(index, event)}
+            tabArray={tabArray}
+            ></TrippTab>;
+          })}
         </TabWrapper>
         <ButtonContainer>
-        <AddButton onClick={() => createNewTab}></AddButton>
+          <AddButton onClick={() => createNewTab()}></AddButton>
         </ButtonContainer>
       </MainContainer>
     </React.Fragment>

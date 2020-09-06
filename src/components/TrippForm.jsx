@@ -4,27 +4,24 @@ import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 //unquie key gen
 
+const TrippForm = (props) => {
 
-const TrippForm = () => {
-  const [formRowArrays, setRowArrays] = useState([
-    {
-      id: 0,
-      category: "",
-      details: "",
-      whoPays: "",
-      pictures: "",
-      expense: 0,
-    },
-    {
-      id: 0,
-      category: "",
-      details: "",
-      whoPays: "",
-      pictures: "",
-      expense: 0,
-    },
-  ]);
+  const [trippFormState, setFormState] = useState(true);
+  const [id, setId] = useState(0);
+  const [forObject, setFormObject] = useState({
+    id: id,
+    category: "",
+    details: "",
+    whoPays: "",
+    pictures: "",
+    expense: 0,
+  });
 
+  const [expenseCount, setExpenseCount] = useState({
+    expenseCount: 0,
+  });
+
+  const [formRowArrays, setRowArrays] = useState([]);
 
   const handleFormInput = (index, event) => {
     //use spread so i wont mutate
@@ -32,25 +29,44 @@ const TrippForm = () => {
     values[index][event.target.name] = event.target.value;
     setRowArrays(values);
   };
-
-  const deleteRow = () => { 
-    
-  }
+  const deleteRow = (id) => {
+    const values = [...formRowArrays];
+    const newList = values.filter((item) => item.id !== id);
+    setRowArrays(newList);
+  };
 
   const handleNewRow = () => {
-    const newRow = Object.create({
-      id: 0,
+
+    let newObject = new Object({
+      id: id,
       category: "",
       details: "",
       whoPays: "",
       pictures: "",
-      expense: 0,
-    })
-    
+    });
+
+    setId(id + 1);
+    newObject.id = id;
+    formRowArrays.push(newObject);
   };
+  /* const closeForm = () => { 
+    if(!trippFormState){
+      setFormState(true)
+      console.log(trippFormState)
+    } else { 
+      setFormState(false) 
+      console.log("false")
+    }
+  } */
+  
   return (
     <AddFormCont>
       <AddForm>
+        <CloseButtonWrapper>
+          <CloseTab  onClick={props.onClick}>
+            x
+          </CloseTab>
+        </CloseButtonWrapper>
         <BudgetContainer>
           <BudgetText>Budget</BudgetText>
           <BudgetNumber>0</BudgetNumber>
@@ -63,7 +79,7 @@ const TrippForm = () => {
           <TitleText>expense</TitleText>
         </MainText>
         {formRowArrays.map((formRowArray, index) => (
-          <ListWrapper key={formRowArray.id + index}>
+          <ListWrapper key={index + id}>
             <ChildText>
               <FormInput
                 name="category"
@@ -92,15 +108,17 @@ const TrippForm = () => {
               />
             </ChildText>
             <Image></Image>
-            <ChildText>
+            <ChildText style={{ width: "100px", "margin-left": "100px" }}>
               <FormInput
                 name="expense"
                 label="expense"
                 type="number"
                 value={formRowArray.expense}
                 onChange={(event) => handleFormInput(index, event)}
+                style={{ width: "100px", "margin-left": "100px"}}
               />
             </ChildText>
+            <DeleteRow onClick={() => deleteRow(formRowArray.id)}></DeleteRow>
           </ListWrapper>
         ))}
         <AddNewRow onClick={handleNewRow}>add new row</AddNewRow>
@@ -108,6 +126,8 @@ const TrippForm = () => {
     </AddFormCont>
   );
 };
+
+
 
 const boxShdow = keyframes`
   0% {
@@ -117,10 +137,33 @@ const boxShdow = keyframes`
     box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.35);
 }
 `;
+const CloseButtonWrapper = Styled.div`
+display: flex;
+justify-content: flex-end;
+align-items: flex-end;
+width: 50px;
+`;
 
+const CloseTab = Styled.button`
+margin-right: 20px;
+border-radius: 50%;
+background-color: transparent;
+`;
+
+const DeleteRow = Styled.button`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 20px;
+height: 20px;
+margin: 5px;
+border-radius: 50%;
+background-color: transparent;
+`;
 const AddNewRow = Styled.button`
 display: flex;
 justify-content: center;
+align-items: center;
 width: 100%;
 background-color: transparent;
 color: #041e29;
@@ -138,9 +181,12 @@ align-items: center;
 position: absolute;
 margin: 50px;
 z-index: 10;
+height: fit-content;
 `;
 const ListWrapper = Styled.div`
 display: flex;
+justify-content: space-between;
+align-items: center;
 flex-direction: row;
 border: 1px black solid;
 width: 100%;
@@ -188,8 +234,12 @@ font: 2em 'Yeseva One', sans-serif;
 letter-spacing: 1px;
 `;
 const ChildText = Styled.p`
+display: flex;
+justify-content: space-between;
+align-items: center;
 font: 1.5em 'Roboto', sans-serif;
 letter-spacing: 1px;
+margin: 14px;
 width: 200px;
 height: 100px;
 appearance: none;
@@ -208,12 +258,17 @@ color: black;
   :-ms-input-placeholder {
      color: black;
   }
+  ::-webkit-inner-spin-button{
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
 `;
 const Image = Styled.img`
 display: flex;
 flex-direction: column;
-width: 120px;
-height: 90px;
+width: 80px;
+height: 65px;
+margin: 14px;
 `;
 
 export default TrippForm;

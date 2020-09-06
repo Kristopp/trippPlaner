@@ -1,7 +1,10 @@
 [x] form window 
-[] add inputs for form
-[] addable list for form
-[] header style
+[x] add inputs for form
+[x] addable list for form
 [x] posistion add button
-[] add create card
-[] add button for creating row
+[x] add button for creating row
+[x] add create card function
+[] header style
+[] tap close function
+[] budget calc
+[] create new tab form 

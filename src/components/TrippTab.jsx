@@ -3,11 +3,23 @@ import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 const TrippTab = (props) => {
+
+ 
   return (
     <CardWrapper onClick={props.onClick}>
-      <TitleText>Bulgaria</TitleText>
+      <TitleText 
+       name="title"
+       label="title"
+       type="text"
+       value={props.title}
+       />
       <TabImg src={demoPic}></TabImg>
-      <MainText>dd/mm/yyyy</MainText>
+      <MainText
+      name="date"
+      label="date"
+      type="text"
+      value={props.date}
+      />
     </CardWrapper>
   );
 };
@@ -46,7 +58,7 @@ height: 190px;
 }
 
 `;
-const TitleText = Styled.p`
+const TitleText = Styled.input`
 font-family: "Yeseva One";
 font-size: 1.3em;
 letter-spacing: 1px;
@@ -59,7 +71,7 @@ margin: 10px;
 width: 130px;
 height: 90px;
 `;
-const MainText = Styled.p`
+const MainText = Styled.input`
 color: #041e29;
 margin: 0px;
 font-family: "Roboto";
