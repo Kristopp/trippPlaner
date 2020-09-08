@@ -5,6 +5,6 @@
 [x] add button for creating row
 [x] add create card function
 [] header style
-[] tap close function
+[] tap open/close function
 [] budget calc
-[] create new tab form 
+[] show right form data onCLick

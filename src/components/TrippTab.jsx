@@ -3,11 +3,12 @@ import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 const TrippTab = (props) => {
+  console.log(props)
   return (
     <CardWrapper onClick={props.onClick}>
-      <TitleText name="title" label="title" type="text" onChange={props.onChange}/>
+      <TitleText name="title" label="title" type="text" onChange={props.onChange} value={props.data.title}/>
       <TabImg src={demoPic}></TabImg>
-      <MainText name="date" label="date" type="text" onChange={props.onChange}/>
+      <MainText name="date" label="date" type="text" onChange={props.onChange} value={props.data.date}/>
     </CardWrapper>
   );
 };

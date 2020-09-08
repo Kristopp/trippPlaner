@@ -14,29 +14,41 @@ const App = () => {
 
   const [tabsArray, setTabsArray] = useState([]);
   const [id, setId] = useState(0)
-  const [tapForm, setTabForm] = useState({
+  //Holds input values until pushed
+  const [tabForm, setTabForm] = useState({
     id: 0,
     title: "",
     picture: "",
     date: "",
   });
 
+  const createNewTab = () => {
+    //Create new object and push into array
+    let newObject = new Object({
+      id: 0,
+      title: "name",
+      picture: "",
+      date: "dd/mm/yyyy",
+    })
+    setId(id + 1)
+    newObject.id = id;
+    tabsArray.push(newObject);
+    console.log(tabForm)
+  };
   
     const handleTrippInput = (index, event) => { 
+      //Get object and add input values
       const values = [...tabsArray];
+      //we change values of array copy
       values[index][event.target.name] = event.target.value;
       setTabForm(values)
     }
   //Kui Form on open siis hide add ja hide
-  const createNewTab = () => {
-    let newObject = new Object(tapForm)
-    setId(id + 1)
-    newObject.id = id;
-    setTabsArray(tabsArray.concat([newObject]));
-    console.log(tapForm)
-  };
 
   let form;
+  const toggleForm = () => { 
+
+  }
   const closeForm = () => {
     if (!trippFormState) {
       setFormState(true);
@@ -53,14 +65,13 @@ const App = () => {
     <React.Fragment>
       <MainContainer>
         <Header />
-        {TrippForm}
         <TabWrapper>
           {tabsArray.map((tabArray, index) => {
             return <TrippTab 
-            name="trippTab"
             key={id + index} 
+            data={tabArray}
+            onClick={toggleForm}
             onChange={(event) => handleTrippInput(index, event)}
-            dataArray={tabArray}
             ></TrippTab>;
           })}
         </TabWrapper>
