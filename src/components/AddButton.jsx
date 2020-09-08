@@ -54,6 +54,8 @@ const AddButtonMain = Styled.button`
   justify-content: center;
   align-items: center;
   posistion: fixed;
+  border: none;
+  outline:none;
   height: 100px;
   width: 100px;
   border-radius: 50%;

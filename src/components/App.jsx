@@ -10,10 +10,10 @@ import TrippForm from "./TrippForm";
 const App = () => {
   const [addButtonShow, setaddButtonShow] = useState(true);
   const [trippTabState, setTripTabState] = useState(true);
-  const [trippFormState, setFormState] = useState(true);
+  const [trippFormState, setFormState] = useState(false);
 
   const [tabsArray, setTabsArray] = useState([]);
-  const [id, setId] = useState(0)
+  const [id, setId] = useState(0);
   //Holds input values until pushed
   const [tabForm, setTabForm] = useState({
     id: 0,
@@ -29,50 +29,43 @@ const App = () => {
       title: "name",
       picture: "",
       date: "dd/mm/yyyy",
-    })
-    setId(id + 1)
+    });
+    setId(id + 1);
     newObject.id = id;
     tabsArray.push(newObject);
-    console.log(tabForm)
   };
-  
-    const handleTrippInput = (index, event) => { 
-      //Get object and add input values
-      const values = [...tabsArray];
-      //we change values of array copy
-      values[index][event.target.name] = event.target.value;
-      setTabForm(values)
-    }
+
+  const handleTrippInput = (index, event) => {
+    //Get object and add input values
+    const values = [...tabsArray];
+    //we change values of array copy
+    values[index][event.target.name] = event.target.value;
+    setTabForm(values);
+  };
   //Kui Form on open siis hide add ja hide
 
-  let form;
-  const toggleForm = () => { 
-
-  }
-  const closeForm = () => {
-    if (!trippFormState) {
-      setFormState(true);
-      form = <FormWrapper onClick={() => closeForm}></FormWrapper>;
-      console.log(form);
-    } else {
-      form = undefined;
+  const toggleForm = () => {
+    if (trippFormState) {
       setFormState(false);
-      console.log("false");
+    } else {
+      setFormState(true)
     }
   };
-
   return (
     <React.Fragment>
       <MainContainer>
         <Header />
+        {trippFormState ? <TrippForm></TrippForm> : undefined}
         <TabWrapper>
           {tabsArray.map((tabArray, index) => {
-            return <TrippTab 
-            key={id + index} 
-            data={tabArray}
-            onClick={toggleForm}
-            onChange={(event) => handleTrippInput(index, event)}
-            ></TrippTab>;
+            return (
+              <TrippTab
+                key={id + index}
+                data={tabArray}
+                onClick={toggleForm}
+                onChange={(event) => handleTrippInput(index, event)}
+              ></TrippTab>
+            );
           })}
         </TabWrapper>
         <ButtonContainer>
