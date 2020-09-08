@@ -27,7 +27,7 @@ const TrippForm = (props) => {
     //use spread so i wont mutate
     const values = [...formRowArrays];
     values[index][event.target.name] = event.target.value;
-    setRowArrays(values);
+    setFormObject(values);
   };
   const deleteRow = (id) => {
     const values = [...formRowArrays];
@@ -36,18 +36,10 @@ const TrippForm = (props) => {
   };
 
   const handleNewRow = () => {
-
-    let newObject = new Object({
-      id: id,
-      category: "",
-      details: "",
-      whoPays: "",
-      pictures: "",
-    });
-
+    let newObject = new Object(forObject);
     setId(id + 1);
-    newObject.id = id;
     formRowArrays.push(newObject);
+    console.log(newObject)
   };
   /* const closeForm = () => { 
     if(!trippFormState){

@@ -70,7 +70,6 @@ const PlusSign = Styled.img`
   `;
 
 const AddButton = (props) => {
-  console.log(props)
   return (
       <AddButtonMain onClick={props.onClick}>
         <PlusSign src={Plus}></PlusSign>

@@ -3,23 +3,11 @@ import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 const TrippTab = (props) => {
-
- 
   return (
     <CardWrapper onClick={props.onClick}>
-      <TitleText 
-       name="title"
-       label="title"
-       type="text"
-       value={props.title}
-       />
+      <TitleText name="title" label="title" type="text" onChange={props.onChange}/>
       <TabImg src={demoPic}></TabImg>
-      <MainText
-      name="date"
-      label="date"
-      type="text"
-      value={props.date}
-      />
+      <MainText name="date" label="date" type="text" onChange={props.onChange}/>
     </CardWrapper>
   );
 };
@@ -64,6 +52,10 @@ font-size: 1.3em;
 letter-spacing: 1px;
  color: #041e29;
  margin: 0px;
+ width: 120px;
+ background-color: transparent;
+border: none;
+outline: none;
 `;
 const TabImg = Styled.img`
 border: 1px solid black;
@@ -73,10 +65,14 @@ height: 90px;
 `;
 const MainText = Styled.input`
 color: #041e29;
+width: 100px;
 margin: 0px;
 font-family: "Roboto";
-font-size: 1.2em;
+font-size: 1.1em;
 letter-spacing: 1px;
+background-color: transparent;
+border: none;
+outline: none;
 `;
 
 export default TrippTab;
