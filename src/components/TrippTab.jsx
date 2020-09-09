@@ -5,9 +5,9 @@ import demoPic from "../Assets/pictures/demoPicture1.jpg";
 const TrippTab = (props) => {
   console.log(props)
   return (
-    <CardWrapper onClick={props.onClick}>
+    <CardWrapper>
       <TitleText name="title" label="title" type="text" onChange={props.onChange} value={props.data.title}/>
-      <TabImg src={demoPic}></TabImg>
+      <TabImg src={demoPic} onClick={props.onClick}></TabImg>
       <MainText name="date" label="date" type="text" onChange={props.onChange} value={props.data.date}/>
     </CardWrapper>
   );

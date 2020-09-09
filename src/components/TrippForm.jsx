@@ -23,6 +23,20 @@ const TrippForm = (props) => {
 
   const [formRowArrays, setRowArrays] = useState([]);
 
+  const handleNewRow = () => {
+    let newObject = new Object(
+      { 
+        id: id,
+        category: "",
+        details: "",
+        whoPays: "",
+        pictures: "",
+        expense: 0,
+      }
+    );
+    setId(id + 1);
+    formRowArrays.push(newObject);
+  };
   const handleFormInput = (index, event) => {
     //use spread so i wont mutate
     const values = [...formRowArrays];
@@ -35,21 +49,7 @@ const TrippForm = (props) => {
     setRowArrays(newList);
   };
 
-  const handleNewRow = () => {
-    let newObject = new Object(forObject);
-    setId(id + 1);
-    formRowArrays.push(newObject);
-    console.log(newObject)
-  };
-  /* const closeForm = () => { 
-    if(!trippFormState){
-      setFormState(true)
-      console.log(trippFormState)
-    } else { 
-      setFormState(false) 
-      console.log("false")
-    }
-  } */
+   
   
   return (
     <AddFormCont>

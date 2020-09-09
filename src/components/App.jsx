@@ -47,6 +47,7 @@ const App = () => {
   const toggleForm = () => {
     if (trippFormState) {
       setFormState(false);
+      console.log('hello')
     } else {
       setFormState(true)
     }
@@ -55,7 +56,7 @@ const App = () => {
     <React.Fragment>
       <MainContainer>
         <Header />
-        {trippFormState ? <TrippForm></TrippForm> : undefined}
+        {trippFormState ? <TrippForm onClick={toggleForm}></TrippForm> : undefined}
         <TabWrapper>
           {tabsArray.map((tabArray, index) => {
             return (
