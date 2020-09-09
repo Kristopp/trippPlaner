@@ -9,7 +9,7 @@ const TrippForm = (props) => {
   const [trippFormState, setFormState] = useState(true);
   const [id, setId] = useState(0);
   const [forObject, setFormObject] = useState({
-    id: id,
+    id: 0,
     category: "",
     details: "",
     whoPays: "",
@@ -26,7 +26,7 @@ const TrippForm = (props) => {
   const handleNewRow = () => {
     let newObject = new Object(
       { 
-        id: id,
+        id: 0,
         category: "",
         details: "",
         whoPays: "",
@@ -100,14 +100,14 @@ const TrippForm = (props) => {
               />
             </ChildText>
             <Image></Image>
-            <ChildText style={{ width: "100px", "margin-left": "100px" }}>
+            <ChildText style={{ width: "100px"}}>
               <FormInput
                 name="expense"
                 label="expense"
                 type="number"
                 value={formRowArray.expense}
                 onChange={(event) => handleFormInput(index, event)}
-                style={{ width: "100px", "margin-left": "100px"}}
+                style={{ width: "100px"}}
               />
             </ChildText>
             <DeleteRow onClick={() => deleteRow(formRowArray.id)}></DeleteRow>
@@ -132,12 +132,11 @@ const boxShdow = keyframes`
 const CloseButtonWrapper = Styled.div`
 display: flex;
 justify-content: flex-end;
-align-items: flex-end;
-width: 50px;
+align-items: center;
+width: 100%;
 `;
 
 const CloseTab = Styled.button`
-margin-right: 20px;
 border-radius: 50%;
 background-color: transparent;
 `;

@@ -10,7 +10,7 @@ import TrippForm from "./TrippForm";
 const App = () => {
   const [addButtonShow, setaddButtonShow] = useState(true);
   const [trippTabState, setTripTabState] = useState(true);
-  const [trippFormState, setFormState] = useState(false);
+  const [trippFormState, setFormState] = useState(true);
 
   const [tabsArray, setTabsArray] = useState([]);
   const [id, setId] = useState(0);
