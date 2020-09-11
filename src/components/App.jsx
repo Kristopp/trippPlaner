@@ -8,11 +8,10 @@ import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 
 const App = () => {
-  const [addButtonShow, setaddButtonShow] = useState(true);
-  const [trippTabState, setTripTabState] = useState(true);
+  const [tabsArray, setTabsArray] = useState([]);
+
   const [trippFormState, setFormState] = useState(true);
 
-  const [tabsArray, setTabsArray] = useState([]);
   const [id, setId] = useState(0);
   //Holds input values until pushed
   const [tabForm, setTabForm] = useState({
@@ -26,9 +25,9 @@ const App = () => {
     //Create new object and push into array
     let newObject = new Object({
       id: 0,
-      title: "name",
+      title: "Where?",
       picture: "",
-      date: "dd/mm/yyyy",
+      date: "when?",
     });
     setId(id + 1);
     newObject.id = id;
@@ -43,7 +42,6 @@ const App = () => {
     setTabForm(values);
   };
   //Kui Form on open siis hide add ja hide
-
   const toggleForm = () => {
     if (trippFormState) {
       setFormState(false);
@@ -56,7 +54,9 @@ const App = () => {
     <React.Fragment>
       <MainContainer>
         <Header />
+        <FormWrapper>
         {trippFormState ? <TrippForm onClick={toggleForm}></TrippForm> : undefined}
+        </FormWrapper>
         <TabWrapper>
           {tabsArray.map((tabArray, index) => {
             return (

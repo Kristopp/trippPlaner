@@ -20,13 +20,12 @@ const TrippForm = (props) => {
   const [expenseCount, setExpenseCount] = useState({
     expenseCount: 0,
   });
-
   const [formRowArrays, setRowArrays] = useState([]);
 
   const handleNewRow = () => {
     let newObject = new Object(
       { 
-        id: 0,
+        id: id,
         category: "",
         details: "",
         whoPays: "",
@@ -43,16 +42,13 @@ const TrippForm = (props) => {
     values[index][event.target.name] = event.target.value;
     setFormObject(values);
   };
-  const deleteRow = (id) => {
-    const values = [...formRowArrays];
-    const newList = values.filter((item) => item.id !== id);
-    setRowArrays(newList);
-  };
+  const handleRemoveItem = id => {
+    setRowArrays(formRowArrays.filter(item => item.id !== id))
+}
+console.log(formRowArrays)
 
-   
-  
   return (
-    <AddFormCont>
+    <AddFormCont >
       <AddForm>
         <CloseButtonWrapper>
           <CloseTab  onClick={props.onClick}>
@@ -71,7 +67,9 @@ const TrippForm = (props) => {
           <TitleText>expense</TitleText>
         </MainText>
         {formRowArrays.map((formRowArray, index) => (
-          <ListWrapper key={index + id}>
+          <ListWrapper 
+          id={id} 
+          key={index + id}>
             <ChildText>
               <FormInput
                 name="category"
@@ -110,7 +108,7 @@ const TrippForm = (props) => {
                 style={{ width: "100px"}}
               />
             </ChildText>
-            <DeleteRow onClick={() => deleteRow(formRowArray.id)}></DeleteRow>
+            <DeleteRow onClick={() =>handleRemoveItem(formRowArray.id)}></DeleteRow>
           </ListWrapper>
         ))}
         <AddNewRow onClick={handleNewRow}>add new row</AddNewRow>
@@ -172,7 +170,16 @@ align-items: center;
 position: absolute;
 margin: 50px;
 z-index: 10;
-height: fit-content;
+overflow: auto;
+background: #0f2027; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #0f2027, #203a43, #2c5364); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(
+                                  45deg,
+                                  #02aab0,
+                                  #00cdac
+                                );
+box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.45);
+border-radius: 2%;
 `;
 const ListWrapper = Styled.div`
 display: flex;
@@ -188,15 +195,6 @@ margin-bottom: 10px;
 const AddForm = Styled.div`
 width: 1360px;
 height: 600px;
-background: #0f2027; /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #0f2027, #203a43, #2c5364); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(
-                                  45deg,
-                                  #02aab0,
-                                  #00cdac
-                                );
-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.45);
-border-radius: 2%;
 padding: 20px;
 `;
 const BudgetContainer = Styled.div`

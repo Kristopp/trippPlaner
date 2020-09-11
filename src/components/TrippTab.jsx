@@ -3,7 +3,6 @@ import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 const TrippTab = (props) => {
-  console.log(props)
   return (
     <CardWrapper>
       <TitleText name="title" label="title" type="text" onChange={props.onChange} value={props.data.title}/>
@@ -24,7 +23,6 @@ const boxShadow = keyframes`
   }
 }
 `;
-
 const CardWrapper = Styled.div`
 display: flex;
 justify-content: center;
