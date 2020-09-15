@@ -19,11 +19,11 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }
   })
   //Get routes
 
-/*   const usersRouter = require('./routes/users');
-  const formRouter = require('./routes/form'); */
-  
-  app.use('/routes');
- /*  app.use('/routes'); */
+  const usersRouter = require('./routes/users');
+  const mainFormRouter = require('./routes/form')
+
+  app.use('/users', usersRouter);
+  app.use('/form', mainFormRouter)
   
 app.listen(port, () => { 
     console.log(`We are running: ${port}`);

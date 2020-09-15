@@ -22,12 +22,12 @@ connection.once('open', function () {
   console.log("MongoDB database connection established successfully");
 }); //Get routes
 
-/*   const usersRouter = require('./routes/users');
-  const formRouter = require('./routes/form'); */
+var usersRouter = require('./routes/users');
 
-app.use('/routes');
-/*  app.use('/routes'); */
+var mainFormRouter = require('./routes/form');
 
+app.use('/users', usersRouter);
+app.use('/form', mainFormRouter);
 app.listen(port, function () {
   console.log("We are running: ".concat(port));
 });
