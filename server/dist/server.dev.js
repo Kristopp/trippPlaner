@@ -20,7 +20,14 @@ mongoose.connect(uri, {
 var connection = mongoose.connection;
 connection.once('open', function () {
   console.log("MongoDB database connection established successfully");
-});
+}); //Get routes
+
+/*   const usersRouter = require('./routes/users');
+  const formRouter = require('./routes/form'); */
+
+app.use('/routes');
+/*  app.use('/routes'); */
+
 app.listen(port, function () {
   console.log("We are running: ".concat(port));
 });
