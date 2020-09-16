@@ -9,7 +9,6 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => { 
-const id = Number(req.body.id);
 const category = req.body.category;
 const details = req.body.details;
 const whoPays = req.body.whoPays;
@@ -17,7 +16,6 @@ const pictures = req.body.pictures;
 const expense = req.body.expense;
 
 const newForm = new Form({ 
-    id,
     category,
     details,
     whoPays,

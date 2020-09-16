@@ -8,5 +8,23 @@
 [x] tap open/close function
 [] budget calc
 [] show right form data onCLick
-[] gzip 
+
 [] vastused tabelist kas üks või mitmele
+//BACKEND
+[] install dependencies
+[] install linter
+[] setup Express App
+[] setup Not found and Error middleware
+[] model DB
+{ 
+    *What data will i store?
+    [] setup Mongoose Models
+    [] POST/logs
+    *create a new log entry
+    [] GET / logs
+    *List all log entries
+    [] Setup Client
+    [] create form
+}
+[] gzip 
+

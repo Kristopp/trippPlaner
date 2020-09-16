@@ -13,14 +13,12 @@ router.route('/').get(function (req, res) {
   });
 });
 router.route('/add').post(function (req, res) {
-  var id = Number(req.body.id);
   var category = req.body.category;
   var details = req.body.details;
   var whoPays = req.body.whoPays;
   var pictures = req.body.pictures;
   var expense = req.body.expense;
   var newForm = new Form({
-    id: id,
     category: category,
     details: details,
     whoPays: whoPays,

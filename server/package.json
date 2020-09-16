@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Kristopp/trippPlaner/issues"
   },
-  "homepage": "https://github.com/Kristopp/trippPlaner#readme"
+  "homepage": "https://github.com/Kristopp/trippPlaner#readme",
+  "dependencies": {
+    "helmet": "^4.1.1",
+    "morgan": "^1.10.0"
+  }
 }
