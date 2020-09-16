@@ -2,9 +2,31 @@
 
 var mongoose = require("mongoose");
 
-var Schema = mongoose.Schema;
+var Schema = mongoose.Schema; //required: true we validate data
+//Before we insert
+
 var formSchema = new Schema({
-  id: {
+  title: {
+    type: String,
+    required: true
+  },
+  startDate: {
+    type: String,
+    required: true
+  },
+  endDate: {
+    type: String,
+    required: true
+  },
+  Latitude: {
+    type: Number,
+    required: true
+  },
+  Longitude: {
+    type: Number,
+    required: true
+  },
+  rating: {
     type: Number,
     required: true
   },
@@ -31,5 +53,5 @@ var formSchema = new Schema({
 }, {
   timestamps: true
 });
-var Form = mongoose.model('Form', formSchema);
+var Form = mongoose.model("Form", formSchema);
 module.exports = Form;

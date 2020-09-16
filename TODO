@@ -8,14 +8,17 @@
 [x] tap open/close function
 [] budget calc
 [] show right form data onCLick
+[] raiting
 
 [] vastused tabelist kas üks või mitmele
-//BACKEND
-[] install dependencies
-[] install linter
-[] setup Express App
-[] setup Not found and Error middleware
+//BACKEND basic Express app
+[x] install dependencies
+[x] install linter
+[x] setup Express App
+[x] setup Not found and Error middleware
+-----
 [] model DB
+
 { 
     *What data will i store?
     [] setup Mongoose Models
@@ -25,6 +28,14 @@
     *List all log entries
     [] Setup Client
     [] create form
+    [] upload images
+    [] Setup Map SDK on Client
+    [] List all log entries on map
 }
 [] gzip 
 
+
+
+TIP { 
+    [] u can use app.use next paramater if token is invalid and then redirect into next middleware
+}
