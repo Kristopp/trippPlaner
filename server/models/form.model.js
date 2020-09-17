@@ -4,19 +4,42 @@ const Schema = mongoose.Schema;
 
 //required: true we validate data
 //Before we insert
+const reqString = {
+  type: String,
+  required: true,
+};
+const reqNumber = {
+  type: Number,
+  required: true,
+};
+
 const formSchema = new Schema(
   {
-    title: { type: String, required: true },
-    startDate: { type: String, required: true },
-    endDate: { type: String, required: true },
-    Latitude: { type: Number, required: true },
-    Longitude: { type: Number, required: true },
-    rating: { type: Number, required: true },
-    category: { type: String, required: true },
-    details: { type: String, required: true },
-    whoPays: { type: String, required: true },
-    pictures: { type: String, required: true },
-    expense: { type: Number, required: true },
+    title: reqString,
+    startDate: {
+      type: Date,
+    },
+    Latitude: { 
+      ...reqNumber,
+      min: -90,
+      max: 90,
+    },
+    Longitude: { 
+     ...reqNumber,
+      min: -180,
+      max: 180,
+    },
+    rating: {
+      type: Number,
+      min: 0,
+      max: 10,
+      default: 0,
+    },
+    category: String,
+    details: String,
+    whoPays: String,
+    pictures: String,
+    expense: Number,
   },
   {
     timestamps: true,

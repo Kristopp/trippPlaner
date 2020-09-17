@@ -12,23 +12,49 @@ router.route('/').get(function (req, res) {
     return res.status(400).json('Error: ' + err);
   });
 });
-router.route('/add').post(function (req, res) {
-  var category = req.body.category;
-  var details = req.body.details;
-  var whoPays = req.body.whoPays;
-  var pictures = req.body.pictures;
-  var expense = req.body.expense;
-  var newForm = new Form({
-    category: category,
-    details: details,
-    whoPays: whoPays,
-    pictures: pictures,
-    expense: expense
-  });
-  newForm.save().then(function () {
-    return res.json('form add!');
-  })["catch"](function (err) {
-    return res.status(400).json('Error ' + err);
-  });
+router.route('/').post(function _callee(req, res, next) {
+  var newForm, createFormEntry;
+  return regeneratorRuntime.async(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+
+          /*     const category = req.body.category;
+          const details = req.body.details;
+          const whoPays = req.body.whoPays;
+          const pictures = req.body.pictures;
+          const expense = req.body.expense; */
+          //Create new form body
+          newForm = new Form(req.body);
+          console.log(newForm);
+          _context.next = 5;
+          return regeneratorRuntime.awrap(newForm.save());
+
+        case 5:
+          createFormEntry = _context.sent;
+          res.json(createFormEntry);
+          _context.next = 13;
+          break;
+
+        case 9:
+          _context.prev = 9;
+          _context.t0 = _context["catch"](0);
+
+          if (_context.t0.name === 'ValidationError') {
+            res.status(422);
+          }
+
+          next(_context.t0);
+
+        case 13:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, null, null, [[0, 9]]);
 });
+/* .then(() => res.json('form add!'))
+.catch(err => res.status(400).json('Error ' + err)) */
+
 module.exports = router;

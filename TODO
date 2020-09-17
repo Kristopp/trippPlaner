@@ -18,6 +18,7 @@
 [x] setup Not found and Error middleware
 -----
 [] model DB
+[x] setUp body parser middleware
 
 { 
     *What data will i store?

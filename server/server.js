@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const helmet = require("helmet");
 
+
+const usersRouter = require("./routes/users");
+const mainFormRouter = require("./routes/form");
 //Import middlewares
 const middleware = require('./middlewares')
 require("dotenv").config();
@@ -15,19 +18,26 @@ app.use(helmet());
 //react front end
 app.use(
   cors({
-    origin: "http://localhost3000",
+    origin: process.env.CORS_ORIGIN,
   })
 );
+
 app.use(express.json());
 
-app.use(middleware.notFound);
+app.use("/users", usersRouter);
+app.use("/form", mainFormRouter);
 
+app.use(middleware.notFound);
 app.use(middleware.errorHandler);
 
 const port = process.env.PORT || 5000;
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(uri, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 const connection = mongoose.connection;
 
 connection.once("open", () => {
@@ -44,11 +54,9 @@ app.get("/", (req, res) => {
 
 //Not found middleware  usulay u want it to be last middleware to be registerd
 
-const usersRouter = require("./routes/users");
-const mainFormRouter = require("./routes/form");
 
-app.use("/users", usersRouter);
-app.use("/form", mainFormRouter);
+
+
 
 app.listen(port, () => {
   console.log(`We are running: ${port}`);

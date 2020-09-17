@@ -8,23 +8,27 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => { 
-const category = req.body.category;
+
+router.route('/').post( async (req, res, next) => { 
+  try {
+/*     const category = req.body.category;
 const details = req.body.details;
 const whoPays = req.body.whoPays;
 const pictures = req.body.pictures;
-const expense = req.body.expense;
-
-const newForm = new Form({ 
-    category,
-    details,
-    whoPays,
-    pictures,
-    expense
+const expense = req.body.expense; */
+//Create new form body
+const newForm = new Form(req.body);
+console.log(newForm)
+const createFormEntry = await newForm.save()
+res.json(createFormEntry)
+} catch (error) {
+  if (error.name === 'ValidationError') {
+    res.status(422);
+  }
+  next(error);
+}
 })
-newForm.save()
-.then(() => res.json('form add!'))
-.catch(err => res.status(400).json('Error ' + err))
-})
 
+/* .then(() => res.json('form add!'))
+.catch(err => res.status(400).json('Error ' + err)) */
 module.exports = router;
