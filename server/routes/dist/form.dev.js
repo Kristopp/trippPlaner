@@ -27,18 +27,17 @@ router.route('/').post(function _callee(req, res, next) {
           const expense = req.body.expense; */
           //Create new form body
           newForm = new Form(req.body);
-          console.log(newForm);
-          _context.next = 5;
+          _context.next = 4;
           return regeneratorRuntime.awrap(newForm.save());
 
-        case 5:
+        case 4:
           createFormEntry = _context.sent;
           res.json(createFormEntry);
-          _context.next = 13;
+          _context.next = 12;
           break;
 
-        case 9:
-          _context.prev = 9;
+        case 8:
+          _context.prev = 8;
           _context.t0 = _context["catch"](0);
 
           if (_context.t0.name === 'ValidationError') {
@@ -47,12 +46,12 @@ router.route('/').post(function _callee(req, res, next) {
 
           next(_context.t0);
 
-        case 13:
+        case 12:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[0, 9]]);
+  }, null, null, [[0, 8]]);
 });
 /* .then(() => res.json('form add!'))
 .catch(err => res.status(400).json('Error ' + err)) */

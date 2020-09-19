@@ -18,7 +18,6 @@ const pictures = req.body.pictures;
 const expense = req.body.expense; */
 //Create new form body
 const newForm = new Form(req.body);
-console.log(newForm)
 const createFormEntry = await newForm.save()
 res.json(createFormEntry)
 } catch (error) {

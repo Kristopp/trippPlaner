@@ -8,10 +8,6 @@ const reqString = {
   type: String,
   required: true,
 };
-const reqNumber = {
-  type: Number,
-  required: true,
-};
 
 const formSchema = new Schema(
   {
@@ -20,12 +16,12 @@ const formSchema = new Schema(
       type: Date,
     },
     Latitude: { 
-      ...reqNumber,
+      type: Number,
       min: -90,
       max: 90,
     },
     Longitude: { 
-     ...reqNumber,
+     type: Number,
       min: -180,
       max: 180,
     },
@@ -35,7 +31,7 @@ const formSchema = new Schema(
       max: 10,
       default: 0,
     },
-    category: String,
+    category: {type: String, required: true},
     details: String,
     whoPays: String,
     pictures: String,

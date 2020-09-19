@@ -50,8 +50,7 @@ app.get("/", function (req, res) {
   res.json({
     messge: "Hello World! Response"
   });
-}); //Not found middleware  usulay u want it to be last middleware to be registerd
-
+});
 app.listen(port, function () {
   console.log("We are running: ".concat(port));
 });

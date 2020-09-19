@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import "../index.css";
-
+//Components
 import Header from "./Header";
 import AddButton from "./AddButton.jsx";
 import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
+//API functions
+import { listFormEntries } from "../API/API";
 
 const App = () => {
   const [tabsArray, setTabsArray] = useState([]);
-
   const [trippFormState, setFormState] = useState(true);
-
   const [id, setId] = useState(0);
   //Holds input values until pushed
   const [tabForm, setTabForm] = useState({
@@ -20,6 +20,15 @@ const App = () => {
     picture: "",
     date: "",
   });
+
+  useEffect(() => {
+    //Becouse we api call is async func
+    //we need to use iffi becouse we can make iffi async
+    (async () => {
+      const logEntries = await listFormEntries();
+      console.log(logEntries);
+    })();
+  }, []);
 
   const createNewTab = () => {
     //Create new object and push into array
@@ -45,9 +54,9 @@ const App = () => {
   const toggleForm = () => {
     if (trippFormState) {
       setFormState(false);
-      console.log('hello')
+      console.log("hello");
     } else {
-      setFormState(true)
+      setFormState(true);
     }
   };
   return (
@@ -55,7 +64,9 @@ const App = () => {
       <MainContainer>
         <Header />
         <FormWrapper>
-        {trippFormState ? <TrippForm onClick={toggleForm}></TrippForm> : undefined}
+          {trippFormState ? (
+            <TrippForm onClick={toggleForm}></TrippForm>
+          ) : undefined}
         </FormWrapper>
         <TabWrapper>
           {tabsArray.map((tabArray, index) => {

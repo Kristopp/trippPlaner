@@ -1,3 +1,4 @@
+//Not found middleware  usulay u want it to be last middleware to be registerd
 const notFound = (req, res, next) => {
   //Creates not found error
   const error = new Error(`Not Found - ${req.originalUrl}`);
@@ -10,14 +11,11 @@ const notFound = (req, res, next) => {
 //when next it goes to next middleware
 //Importan must have 4 pararmaeters
 const errorHandler = (error, req, res, next) => {
-  const statusCode = res.stastusCode === 200 ? 500 : res.stastusCode;
+  const statusCode = res.stastusCode === 200 ? 500 : res.statusCode;
+  console.log(statusCode)
   res.status(statusCode);
   res.json({
     message: error.message,
-    //stack shows terminal error message
-    //show only DEV mode
-    stack:
-      process.env.NODE_ENV === "production" ? "Not production" : error.stack,
   });
 };
 // is object

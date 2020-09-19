@@ -52,11 +52,6 @@ app.get("/", (req, res) => {
   });
 });
 
-//Not found middleware  usulay u want it to be last middleware to be registerd
-
-
-
-
 
 app.listen(port, () => {
   console.log(`We are running: ${port}`);
