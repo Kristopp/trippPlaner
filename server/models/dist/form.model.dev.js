@@ -30,10 +30,7 @@ var formSchema = new Schema({
     max: 10,
     "default": 0
   },
-  category: {
-    type: String,
-    required: true
-  },
+  category: String,
   details: String,
   whoPays: String,
   pictures: String,

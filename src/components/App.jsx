@@ -8,9 +8,11 @@ import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 //API functions
 import { listFormEntries } from "../API/API";
+import { GlobalProvider } from '../context/GlobalState';
 
 const App = () => {
-  const [tabsArray, setTabsArray] = useState([]);
+  const [fromDB, setFormDb] = useState([]);
+  const [tabsArray, setTabsArray] = useState(['1']);
   const [trippFormState, setFormState] = useState(true);
   const [id, setId] = useState(0);
   //Holds input values until pushed
@@ -18,7 +20,7 @@ const App = () => {
     id: 0,
     title: "",
     picture: "",
-    date: "",
+    date: "YYYY-MM-DD",
   });
 
   useEffect(() => {
@@ -26,21 +28,12 @@ const App = () => {
     //we need to use iffi becouse we can make iffi async
     (async () => {
       const logEntries = await listFormEntries();
-      console.log(logEntries);
+      setFormDb(logEntries);
     })();
   }, []);
 
   const createNewTab = () => {
-    //Create new object and push into array
-    let newObject = new Object({
-      id: 0,
-      title: "Where?",
-      picture: "",
-      date: "when?",
-    });
-    setId(id + 1);
-    newObject.id = id;
-    tabsArray.push(newObject);
+    console.log(fromDB);
   };
 
   const handleTrippInput = (index, event) => {
@@ -60,7 +53,7 @@ const App = () => {
     }
   };
   return (
-    <React.Fragment>
+    <GlobalProvider>
       <MainContainer>
         <Header />
         <FormWrapper>
@@ -73,7 +66,7 @@ const App = () => {
             return (
               <TrippTab
                 key={id + index}
-                data={tabArray}
+                data={fromDB}
                 onClick={toggleForm}
                 onChange={(event) => handleTrippInput(index, event)}
               ></TrippTab>
@@ -81,10 +74,10 @@ const App = () => {
           })}
         </TabWrapper>
         <ButtonContainer>
-          <AddButton onClick={() => createNewTab()}></AddButton>
+          <AddButton onClick={toggleForm}></AddButton>
         </ButtonContainer>
       </MainContainer>
-    </React.Fragment>
+    </GlobalProvider>
   );
 };
 

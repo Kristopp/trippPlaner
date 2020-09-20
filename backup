@@ -1,101 +1,13 @@
-  const [formData, setFormData] = useState({
-    category: "",
-    details: "",
-    whoPays: "",
-    image: "",
-    expense: 0,
-  });
-
-  const handleNewRow = () => {
-    setRowArray(rowArray.concat(formData));
-    console.log(formData)
-    console.log(rowArray)
-  };
-
-  const handleFormInputCategory = (event) => {
-    const category = event.target.value;
-    setFormData({
-      ...formData,
-      category: category,
+//   const createNewTab = () => {
+    console.log(fromDB)
+    //Create new object and push into array
+    let newObject = new Object({
+      id: 0,
+      title: "Where?",
+      picture: "",
+      date: "when we go?",
     });
+    setId(id + 1);
+    newObject.id = id;
+    tabsArray.push(newObject);
   };
-  const handleFormInputDetails = (event) => {
-    const details = event.target.value;
-    setFormData({
-      ...formData,
-      details: details,
-    });
-  };
-  const handleFormInputWhoPays = (event) => {
-    const whoPays = event.target.value;
-    setFormData({
-      ...formData,
-      whoPays: whoPays,
-    });
-  };
-  const handleFormInputExpense = (event) => {
-    const expense = event.target.value;
-    setFormData({
-      ...formData,
-      expense: expense,
-    });
-  };
-
-   <AddForm>
-          <BudgetContainer>
-            <BudgetText>Budget</BudgetText>
-            <BudgetNumber>0</BudgetNumber>
-          </BudgetContainer>
-          <MainText>
-            <TitleText>
-              category
-              <ChildText>
-                <FormInput
-                  type="text"
-                  name="category"
-                  placeholder="click me"
-                  onChange={handleFormInputCategory}
-                />
-              </ChildText>
-            </TitleText>
-            <TitleText>
-              details
-              <ChildText>
-                <FormInput
-                  type="text"
-                  name="details"
-                  placeholder="click me"
-                  onChange={handleFormInputDetails}
-                />
-
-              </ChildText>
-            </TitleText>
-            <TitleText>
-              who pays
-              <ChildText>
-                <FormInput
-                  type="text"
-                  name="who pays"
-                  placeholder="click me"
-                  onChange={handleFormInputWhoPays}
-                />
-              </ChildText>
-            </TitleText>
-            <TitleText>
-              picture
-              <Image src={demoPic}></Image>
-            </TitleText>
-            <TitleText>
-              expense
-              <ChildText>
-                <FormInput
-                  type="text"
-                  name="expense"
-                  placeholder="click me"
-                  onChange={handleFormInputExpense}
-                />
-              </ChildText>
-            </TitleText>
-          </MainText>
-          <AddNewRow onClick={handleNewRow}>add new row</AddNewRow>
-        </AddForm>

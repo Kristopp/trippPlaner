@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Styled, { keyframes } from "styled-components";
-import demoPic from "../Assets/pictures/demoPicture1.jpg";
+import { addFormEntries } from "../API/API"
 
-//unquie key gen
 
 const TrippForm = (props) => {
 
+  const [usersTripp, setUsersTripp] = useState()
   const [trippFormState, setFormState] = useState(true);
   const [id, setId] = useState(0);
   const [forObject, setFormObject] = useState({
@@ -21,6 +21,15 @@ const TrippForm = (props) => {
     expenseCount: 0,
   });
   const [formRowArrays, setRowArrays] = useState([]);
+
+  const createNewTripp = async (data) => { 
+    try {
+      const created = addFormEntries(data)
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleNewRow = () => {
     let newObject = new Object(

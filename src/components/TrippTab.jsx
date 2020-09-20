@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 const TrippTab = (props) => {
-  return (
+  const [data, setData] = useState();
+  //on mount set data
+  useEffect(() => { 
+    setData(props.data)
+  }, [])
+  console.log(props.data)
+ return ( 
+ data.map((e, index) =>  ( 
     <CardWrapper>
-      <TitleText name="title" label="title" type="text" onChange={props.onChange} value={props.data.title}/>
-      <TabImg src={demoPic} onClick={props.onClick}></TabImg>
-      <MainText name="date" label="date" type="text" onChange={props.onChange} value={props.data.date}/>
-    </CardWrapper>
-  );
+    <TitleText
+      name="title"
+      label="title"
+      type="text"
+      onChange={props.onChange}
+      value={props.data.title}
+    />
+    <TabImg src={demoPic} onClick={props.onClick}></TabImg>
+    <AddDate
+      name="date"
+      label="date"
+      type="date"
+      onChange={props.onChange}
+      value={props.data.date}
+    />
+  </CardWrapper>
+   )
+ )
+ )
 };
+
+/*     <CardWrapper>
+        <TitleText name="title" label="title" type="text" onChange={props.onChange} value={props.data.title}/>
+        <TabImg src={demoPic} onClick={props.onClick}></TabImg>
+        <AddDate name="date" label="date" type="date" onChange={props.onChange} value={props.data.date}/>
+      </CardWrapper> */
 
 const boxShadow = keyframes`
    0% {
@@ -62,7 +89,7 @@ margin: 10px;
 width: 130px;
 height: 90px;
 `;
-const MainText = Styled.input`
+const AddDate = Styled.input`
 color: #041e29;
 width: 100px;
 margin: 0px;
