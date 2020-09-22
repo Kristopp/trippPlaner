@@ -3,12 +3,7 @@ import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
 const TrippTab = (props) => {
-  const [data, setData] = useState();
-  //on mount set data
-  useEffect(() => { 
-    setData(props.data)
-  }, [])
-  console.log(props.data)
+  const [data, setData] = useState([]);
  return ( 
  data.map((e, index) =>  ( 
     <CardWrapper>

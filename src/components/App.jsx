@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Styled from "styled-components";
 import "../index.css";
 //Components
@@ -8,13 +8,14 @@ import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 //API functions
 import { listFormEntries } from "../API/API";
-import { GlobalProvider } from '../context/GlobalState';
+import { GlobalContext, GlobalProvider } from "../context/GlobalState";
 
-const App = () => {
+const App = (props) => {
   const [fromDB, setFormDb] = useState([]);
-  const [tabsArray, setTabsArray] = useState(['1']);
+  const [tabsArray, setTabsArray] = useState(["1"]);
   const [trippFormState, setFormState] = useState(true);
   const [id, setId] = useState(0);
+  const { logConsole } = useContext(GlobalContext);
   //Holds input values until pushed
   const [tabForm, setTabForm] = useState({
     id: 0,
@@ -32,10 +33,6 @@ const App = () => {
     })();
   }, []);
 
-  const createNewTab = () => {
-    console.log(fromDB);
-  };
-
   const handleTrippInput = (index, event) => {
     //Get object and add input values
     const values = [...tabsArray];
@@ -47,7 +44,6 @@ const App = () => {
   const toggleForm = () => {
     if (trippFormState) {
       setFormState(false);
-      console.log("hello");
     } else {
       setFormState(true);
     }
@@ -74,7 +70,7 @@ const App = () => {
           })}
         </TabWrapper>
         <ButtonContainer>
-          <AddButton onClick={toggleForm}></AddButton>
+          <AddButton onClick={logConsole}></AddButton>
         </ButtonContainer>
       </MainContainer>
     </GlobalProvider>
