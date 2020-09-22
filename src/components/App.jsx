@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useReducer } from "react";
 import Styled from "styled-components";
 import "../index.css";
 //Components
@@ -8,14 +8,14 @@ import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 //API functions
 import { listFormEntries } from "../API/API";
-import { GlobalContext, GlobalProvider } from "../context/GlobalState";
+import { GlobalState, GlobalProvider } from "../context/GlobalState"
 
-const App = (props) => {
+const App = () => {
+  const { state, dispatch } = useContext(GlobalState)
   const [fromDB, setFormDb] = useState([]);
   const [tabsArray, setTabsArray] = useState(["1"]);
   const [trippFormState, setFormState] = useState(true);
   const [id, setId] = useState(0);
-  const { logConsole } = useContext(GlobalContext);
   //Holds input values until pushed
   const [tabForm, setTabForm] = useState({
     id: 0,
@@ -23,7 +23,7 @@ const App = (props) => {
     picture: "",
     date: "YYYY-MM-DD",
   });
-
+  
   useEffect(() => {
     //Becouse we api call is async func
     //we need to use iffi becouse we can make iffi async
@@ -32,7 +32,11 @@ const App = (props) => {
       setFormDb(logEntries);
     })();
   }, []);
-
+  const handleCloseTab = () => {
+    dispatch({ 
+      type: "HELLO"
+    })
+  };
   const handleTrippInput = (index, event) => {
     //Get object and add input values
     const values = [...tabsArray];
@@ -70,7 +74,7 @@ const App = (props) => {
           })}
         </TabWrapper>
         <ButtonContainer>
-          <AddButton onClick={logConsole}></AddButton>
+          <AddButton onClick={handleCloseTab}></AddButton>
         </ButtonContainer>
       </MainContainer>
     </GlobalProvider>

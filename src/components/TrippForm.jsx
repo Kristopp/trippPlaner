@@ -54,7 +54,6 @@ const TrippForm = (props) => {
   const handleRemoveItem = id => {
     setRowArrays(formRowArrays.filter(item => item.id !== id))
 }
-console.log(formRowArrays)
 
   return (
     <AddFormCont >
