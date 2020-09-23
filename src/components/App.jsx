@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useReducer } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Styled from "styled-components";
 import "../index.css";
 //Components
@@ -8,10 +8,12 @@ import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 //API functions
 import { listFormEntries } from "../API/API";
-import { GlobalState, GlobalProvider } from "../context/GlobalState"
+import Provider from '../context/Provider'
+import mainContext from "../context/mainContext";
 
 const App = () => {
-  const { state, dispatch } = useContext(GlobalState)
+  const context = useContext(mainContext)
+  const { getLog } = Provider;
   const [fromDB, setFormDb] = useState([]);
   const [tabsArray, setTabsArray] = useState(["1"]);
   const [trippFormState, setFormState] = useState(true);
@@ -23,7 +25,7 @@ const App = () => {
     picture: "",
     date: "YYYY-MM-DD",
   });
-  
+
   useEffect(() => {
     //Becouse we api call is async func
     //we need to use iffi becouse we can make iffi async
@@ -33,9 +35,7 @@ const App = () => {
     })();
   }, []);
   const handleCloseTab = () => {
-    dispatch({ 
-      type: "HELLO"
-    })
+console.log(getLog)
   };
   const handleTrippInput = (index, event) => {
     //Get object and add input values
@@ -53,7 +53,7 @@ const App = () => {
     }
   };
   return (
-    <GlobalProvider>
+    <Provider>
       <MainContainer>
         <Header />
         <FormWrapper>
@@ -77,7 +77,7 @@ const App = () => {
           <AddButton onClick={handleCloseTab}></AddButton>
         </ButtonContainer>
       </MainContainer>
-    </GlobalProvider>
+    </Provider>
   );
 };
 
