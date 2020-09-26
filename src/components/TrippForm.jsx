@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Styled, { keyframes } from "styled-components";
-import { addFormEntries } from "../API/API"
 
 
 const TrippForm = (props) => {
@@ -21,15 +20,6 @@ const TrippForm = (props) => {
     expenseCount: 0,
   });
   const [formRowArrays, setRowArrays] = useState([]);
-
-  const createNewTripp = async (data) => { 
-    try {
-      const created = addFormEntries(data)
-      console.log(data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const handleNewRow = () => {
     let newObject = new Object(

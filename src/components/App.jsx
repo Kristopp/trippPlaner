@@ -6,16 +6,14 @@ import Header from "./Header";
 import AddButton from "./AddButton.jsx";
 import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
+import { UserContext } from '../context/Provider';
 //API functions
-import { listFormEntries } from "../API/API";
-import Provider from '../context/Provider'
-import mainContext from "../context/mainContext";
+/* import MyContext from "../context/GlobalState"; */
+//Context
 
 const App = () => {
-  const context = useContext(mainContext)
-  const { getLog } = Provider;
-  const [fromDB, setFormDb] = useState([]);
-  const [tabsArray, setTabsArray] = useState(["1"]);
+  const user = useContext(UserContext);
+  const [tabsArray, setTabsArray] = useState([]);
   const [trippFormState, setFormState] = useState(true);
   const [id, setId] = useState(0);
   //Holds input values until pushed
@@ -26,23 +24,13 @@ const App = () => {
     date: "YYYY-MM-DD",
   });
 
-  useEffect(() => {
-    //Becouse we api call is async func
-    //we need to use iffi becouse we can make iffi async
-    (async () => {
-      const logEntries = await listFormEntries();
-      setFormDb(logEntries);
-    })();
-  }, []);
-  const handleCloseTab = () => {
-console.log(getLog)
-  };
+  console.log(user)
   const handleTrippInput = (index, event) => {
     //Get object and add input values
     const values = [...tabsArray];
     //we change values of array copy
     values[index][event.target.name] = event.target.value;
-    setTabForm(values);
+    /* setTabForm(form); */
   };
   //Kui Form on open siis hide add ja hide
   const toggleForm = () => {
@@ -53,7 +41,6 @@ console.log(getLog)
     }
   };
   return (
-    <Provider>
       <MainContainer>
         <Header />
         <FormWrapper>
@@ -66,7 +53,6 @@ console.log(getLog)
             return (
               <TrippTab
                 key={id + index}
-                data={fromDB}
                 onClick={toggleForm}
                 onChange={(event) => handleTrippInput(index, event)}
               ></TrippTab>
@@ -74,10 +60,9 @@ console.log(getLog)
           })}
         </TabWrapper>
         <ButtonContainer>
-          <AddButton onClick={handleCloseTab}></AddButton>
+          <AddButton onClick={toggleForm}></AddButton>
         </ButtonContainer>
       </MainContainer>
-    </Provider>
   );
 };
 

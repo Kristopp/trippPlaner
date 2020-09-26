@@ -1,20 +1,30 @@
-import React, { useReducer } from "react";
-import MainContext from "./mainContext";
-import { firstReducer } from "./reducers";
+import React, { createContext, useEffect, useState } from "react";
+import axios from 'axios'
 
-const FormProvider = (props) => {
-  const [state, dispatch] = useReducer(firstReducer, MainContext);
-  console.log(state)
-  const getLog = () => { 
-      dispatch({
-          type: "WORK"
-      });
-  }
+const API_URL = "http://localhost:5000/form"
 
-  return <MainContext.Provider value={{
-      MainContext,
-      getLog
-  }}>{props.children}</MainContext.Provider>;
+export const UserContext = createContext();
+
+// This context provider is passed to any component requiring the context
+export const UserProvider = ({ children }) => {
+    const [ iniTialData, setInitialData] = useState()
+/*   const [name, setName] = useState("William");
+  const [location, setLocation] = useState("Mars"); */
+  useEffect(() => { 
+    axios.get(`http://localhost:5000/form`)
+    .then(res => {
+      const mainData = res.data;
+      setInitialData(mainData)
+    })
+  }, [])
+  return (
+    <UserContext.Provider
+      value={{
+        iniTialData,
+        setInitialData
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
-
-export default FormProvider;
