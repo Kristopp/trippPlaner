@@ -1,10 +1,12 @@
+
 export default (state, action) => { 
-    switch (action.type) {
-        case "REMOVE_TAB":
-        return { 
-            ...state,
-        }
-                default:
+  switch (action.type) {
+    case "REMOVE_TAB":
+      return { 
+        ...state,
+      }
+      default:
+        console.log(state)
                     return state
     }
 }

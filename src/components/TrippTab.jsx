@@ -1,43 +1,41 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useReducer } from "react";
 import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
 import { FormContext } from "../context/Provider";
+import reducer from "../context/reducer";
 
 const TrippTab = (props) => {
+  const { initialData } = useContext(FormContext);
   const [tabsArray, setTabsArray] = useState([]);
-  const { getReminders, initialData } = useContext(FormContext);
+  const [state, dispatch] = useReducer(reducer, tabsArray);
+  const [dataLoaded, setLoaded] = useState(false);
+  //i use useEffect hook to load data
+  console.log(state)
   useEffect(() => {
-    const setData = () => {
-      if (initialData === undefined) {
-        setTabsArray([]);
-      } else {
-        setTabsArray(initialData);
-      }
-    };
-    setData();
-  }, [tabsArray]);
- return ( 
-  tabsArray.map((e, index) =>  ( 
+    setTabsArray(initialData);
+  }, [initialData]);
+  return tabsArray.map((e, index) => (
     <CardWrapper key={e._id}>
-    <TitleText
-      name="title"
-      label="title"
-      type="text"
-      onChange={props.onChange}
-      value={"hello"}
-    />
-    <TabImg src={demoPic} onClick={props.onClick}></TabImg>
-    <AddDate
-      name="date"
-      label="date"
-      type="date"
-      onChange={props.onChange}
-      value={"hello"}
-    />
-  </CardWrapper>
-   )
- )
- )
+      {/**no need input */}
+      <TitleText
+        name="Title"
+        label="title"
+        type="text"
+        onChange={props.onChange}
+        value={e.category}
+      />
+      <TabImg src={demoPic} onClick={props.onClick}></TabImg>
+      <AddDate
+        name="date"
+        label="date"
+        type="date"
+        onChange={props.onChange}
+        value={"hello"}
+      />
+      <button onClick={() => dispatch({type: "REMOVE_TAB"})}></button>
+    </CardWrapper>
+  ));
 };
 
 /*     <CardWrapper>

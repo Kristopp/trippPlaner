@@ -13,7 +13,7 @@
 [] raiting
 [] on click open form and close and save to create new trippTab
 [] delete tab by index deleteing from app file main data
-[] fetch data on load
+[x] fetch data on load
 
 
 
@@ -34,10 +34,9 @@
     [x] GET / logs
     *List all log entries
     [x] Setup Client
-    [] create form
+    [x] create form
     [] upload images
-    [] Setup Map SDK on Client
-    [] List all log entries on map
+    [?] Setup Map SDK on Client
 }
 [] gzip 
 
