@@ -1,18 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
+import { FormContext } from "../context/Provider";
 
 const TrippTab = (props) => {
-  const [data, setData] = useState([]);
+  const [tabsArray, setTabsArray] = useState([]);
+  const { getReminders, initialData } = useContext(FormContext);
+  useEffect(() => {
+    const setData = () => {
+      if (initialData === undefined) {
+        setTabsArray([]);
+      } else {
+        setTabsArray(initialData);
+      }
+    };
+    setData();
+  }, [tabsArray]);
  return ( 
- data.map((e, index) =>  ( 
-    <CardWrapper>
+  tabsArray.map((e, index) =>  ( 
+    <CardWrapper key={e._id}>
     <TitleText
       name="title"
       label="title"
       type="text"
       onChange={props.onChange}
-      value={props.data.title}
+      value={"hello"}
     />
     <TabImg src={demoPic} onClick={props.onClick}></TabImg>
     <AddDate
@@ -20,7 +32,7 @@ const TrippTab = (props) => {
       label="date"
       type="date"
       onChange={props.onChange}
-      value={props.data.date}
+      value={"hello"}
     />
   </CardWrapper>
    )

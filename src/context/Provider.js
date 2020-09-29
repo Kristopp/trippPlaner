@@ -1,30 +1,37 @@
-import React, { createContext, useEffect, useState } from "react";
-import axios from 'axios'
+import React, { createContext, useEffect, useState, useContext } from "react";
+import reducers from '../context/reducers'
+import axios from "axios";
 
-const API_URL = "http://localhost:5000/form"
+//Get inital data from server
+//http://localhost:5000/form
 
-export const UserContext = createContext();
+export const FormContext = createContext([]);
 
 // This context provider is passed to any component requiring the context
 export const UserProvider = ({ children }) => {
-    const [ iniTialData, setInitialData] = useState()
-/*   const [name, setName] = useState("William");
-  const [location, setLocation] = useState("Mars"); */
-  useEffect(() => { 
-    axios.get(`http://localhost:5000/form`)
-    .then(res => {
-      const mainData = res.data;
-      setInitialData(mainData)
-    })
-  }, [])
+    const [initialData, setInitialData] = useState();
+ 
+    const getReminders = async () => {
+        const response = await axios.get("http://localhost:5000/form").catch((err) => {
+          console.log("Error:", err);
+        });
+        if (response && response.data) {
+            console.log(response.data)
+            setInitialData(response.data) 
+        }
+    }
+    useEffect(() => { 
+        getReminders()
+    }, [])
   return (
-    <UserContext.Provider
+    <FormContext.Provider
       value={{
-        iniTialData,
-        setInitialData
+        initialData,
+        setInitialData,
+        getReminders
       }}
     >
       {children}
-    </UserContext.Provider>
+    </FormContext.Provider>
   );
 };
