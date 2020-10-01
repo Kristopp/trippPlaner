@@ -1,15 +1,30 @@
-
-export default (state, action) => { 
+export default (state, action) => {
   switch (action.type) {
+    case "GET_USERFORMS":
+      console.log(action.payload);
+      return action.payload;
+    case "GET_ERROR":
+      return {
+        loading: false,
+        post: {},
+        error: "something went wrong!",
+      };
     case "REMOVE_TAB":
-      return { 
-        ...state,
-      }
-      default:
-        console.log(state)
-                    return state
-    }
-}
+      return {
+        loading: false,
+        post: action.payload,
+        error: "",
+      };
+    case "REMOVE_ERROR":
+      return {
+        loading: false,
+        post: {},
+        error: "something went wrong!",
+      };
+    default:
+      return state;
+  }
+};
 
 /* export default (state, action) => {
     switch (action.type) {

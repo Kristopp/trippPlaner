@@ -1,13 +1,8 @@
-"use strict";
 
 var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 var formSchema = new Schema({
-  id: {
-    type: Number,
-    required: true
-  },
   category: {
     type: String,
     required: true

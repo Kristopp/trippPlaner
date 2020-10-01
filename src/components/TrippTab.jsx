@@ -6,15 +6,16 @@ import { FormContext } from "../context/Provider";
 import reducer from "../context/reducer";
 
 const TrippTab = (props) => {
-  const { initialData } = useContext(FormContext);
+ /* const { state } = useContext(FormContext); */
+ const context = useContext(FormContext)
   const [tabsArray, setTabsArray] = useState([]);
   const [state, dispatch] = useReducer(reducer, FormContext);
   const [dataLoaded, setLoaded] = useState(false);
   //i use useEffect hook to load data
   console.log(state)
-  useEffect(() => {
-    setTabsArray(initialData);
-  }, [initialData]);
+/* useEffect(() => {
+    setTabsArray(state);
+  }, [tabsArray]);  */
   return tabsArray.map((e, index) => (
     <CardWrapper key={e._id}>
       {/**no need input */}
