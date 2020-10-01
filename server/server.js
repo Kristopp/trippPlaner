@@ -4,8 +4,6 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const helmet = require("helmet");
 
-
-const usersRouter = require("./routes/users");
 const mainFormRouter = require("./routes/form");
 //Import middlewares
 const middleware = require('./middlewares')
@@ -24,8 +22,7 @@ app.use(
 
 app.use(express.json());
 
-app.use("/users", usersRouter);
-app.use("/form", mainFormRouter);
+app.use("/allTrips", mainFormRouter);
 
 app.use(middleware.notFound);
 app.use(middleware.errorHandler);

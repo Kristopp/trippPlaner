@@ -8,7 +8,7 @@ import reducer from "../context/reducer";
 const TrippTab = (props) => {
   const { initialData } = useContext(FormContext);
   const [tabsArray, setTabsArray] = useState([]);
-  const [state, dispatch] = useReducer(reducer, tabsArray);
+  const [state, dispatch] = useReducer(reducer, FormContext);
   const [dataLoaded, setLoaded] = useState(false);
   //i use useEffect hook to load data
   console.log(state)

@@ -24,6 +24,7 @@
 [x] setup Not found and Error middleware
 -----
 [] model DB
+[] CRUD 
 [x] setUp body parser middleware
 
 { 

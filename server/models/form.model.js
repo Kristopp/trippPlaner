@@ -11,6 +11,9 @@ const reqString = {
 
 const formSchema = new Schema(
   {
+    username: String
+  },
+  {
     title: reqString,
     startDate: {
       type: Date,
@@ -27,9 +30,6 @@ const formSchema = new Schema(
     pictures: String,
     expense: Number,
   },
-  {
-    timestamps: true,
-  }
 );
 
 const Form = mongoose.model("Form", formSchema);
