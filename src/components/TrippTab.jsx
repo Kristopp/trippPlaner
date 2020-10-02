@@ -12,11 +12,8 @@ const TrippTab = (props) => {
   const [state, dispatch] = useReducer(reducer, FormContext);
   const [dataLoaded, setLoaded] = useState(false);
   //i use useEffect hook to load data
-  console.log(state)
-/* useEffect(() => {
-    setTabsArray(state);
-  }, [tabsArray]);  */
-  return tabsArray.map((e, index) => (
+  
+  return context.state.map((e, index) => (
     <CardWrapper key={e._id}>
       {/**no need input */}
       <TitleText
