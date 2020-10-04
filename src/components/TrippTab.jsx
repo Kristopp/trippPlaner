@@ -1,41 +1,82 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useReducer } from "react";
 import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
-import { FormContext } from "../context/Provider";
-import reducer from "../context/reducer";
 
-const TrippTab = (props) => {
- /* const { state } = useContext(FormContext); */
- const context = useContext(FormContext)
-  const [tabsArray, setTabsArray] = useState([]);
-  const [state, dispatch] = useReducer(reducer, FormContext);
-  const [dataLoaded, setLoaded] = useState(false);
-  //i use useEffect hook to load data
-  
-  return context.state.map((e, index) => (
-    <CardWrapper key={e._id}>
-      {/**no need input */}
-      <TitleText
-        name="Title"
-        label="title"
-        type="text"
-        onChange={props.onChange}
-        value={e.category}
-      />
+const initialState = {
+  trippList: [],
+  isfetching: false,
+  hasError: false,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "FETCH_LIST_REQUEST":
+      return {
+        ...state,
+        isFetching: true,
+        hasError: false,
+      };
+    case "FETCH_LIST_SUCCESS":
+      return {
+        ...state,
+        isFetching: false,
+        songs: action.payload,
+      };
+    case "FETCH_LIST_FAILURE":
+      return {
+        ...state,
+        hasError: true,
+        isFetching: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export const TrippTab = (props) => {
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [tabsArray, setTabsArray] = useState([1]);
+
+React.useEffect(() => { 
+    dispatch({ 
+      type: "FETCH_LIST_REQUEST",
+    });
+    fetch("http://localhost:5000/allTrips")
+    .then((res) => { 
+      console.log(res)
+      if (res.ok) { 
+        return res.json();
+      } else { 
+        throw res;
+      }
+    })
+    .then((resJson) => { 
+      console.log(resJson)
+      dispatch({ 
+        type: "FETCH_LIST_SUCCESS",
+        payload: resJson,
+      })
+    })
+    .catch((error) => { 
+      console.log(error);
+      dispatch({ 
+        type: "FETCH_LIST_FAILURE",
+      })
+    })
+  }, []) 
+
+  return tabsArray.map((data, index) => (
+    <CardWrapper key={data._id}>
+      <TitleText name="Title" label="title" type="text">
+        {data.title}
+      </TitleText>
       <TabImg src={demoPic} onClick={props.onClick}></TabImg>
-      <AddDate
-        name="date"
-        label="date"
-        type="date"
-        onChange={props.onChange}
-        value={"hello"}
-      />
-      <button onClick={() => dispatch({type: "REMOVE_TAB"})}></button>
+      <AddDate name="date" label="date" type="date" onChange={props.onChange} />
+      <button></button>
     </CardWrapper>
   ));
 };
-
+export default TrippTab
 /*     <CardWrapper>
         <TitleText name="title" label="title" type="text" onChange={props.onChange} value={props.data.title}/>
         <TabImg src={demoPic} onClick={props.onClick}></TabImg>
@@ -75,7 +116,7 @@ height: 190px;
 }
 
 `;
-const TitleText = Styled.input`
+const TitleText = Styled.p`
 font-family: "Yeseva One";
 font-size: 1.3em;
 letter-spacing: 1px;
@@ -103,5 +144,3 @@ background-color: transparent;
 border: none;
 outline: none;
 `;
-
-export default TrippTab;

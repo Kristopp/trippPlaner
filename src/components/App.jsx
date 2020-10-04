@@ -6,13 +6,11 @@ import Header from "./Header";
 import AddButton from "./AddButton.jsx";
 import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
-import { FormContext } from "../context/Provider";
 //API functions
 /* import MyContext from "../context/GlobalState"; */
 //Context
 
 const App = () => {
-  const { getReminders, initialData } = useContext(FormContext);
   const [trippFormState, setFormState] = useState(true);
   const [id, setId] = useState(0);
   //Holds input values until pushed
@@ -22,16 +20,6 @@ const App = () => {
     picture: "",
     date: "YYYY-MM-DD",
   });
-
-/*   console.log(tabsArray);
-  const handleTrippInput = (index, event) => {
-    //Get object and add input values
-    const values = [...tabsArray];
-    //we change values of array copy
-    values[index][event.target.name] = event.target.value;
-    /* setTabForm(form); */
-  
-  //Kui Form on open siis hide add ja hide
   const toggleForm = () => {
     if (trippFormState) {
       setFormState(false);
@@ -43,21 +31,9 @@ const App = () => {
     <MainContainer>
       <Header />
       <FormWrapper>
-        {/* {trippFormState ? (
-          <TrippForm onClick={toggleForm}></TrippForm>
-        ) : undefined} */}
       </FormWrapper>
       <TabWrapper>
         <TrippTab></TrippTab>
-      {/*   {tabsArray.map((tabArray, index) => {
-          return (
-            <TrippTab
-              key={id + index}
-              onClick={toggleForm}
-              onChange={(event) => handleTrippInput(index, event)}
-            ></TrippTab>
-          );
-        })} */}
       </TabWrapper>
       <ButtonContainer>
         <AddButton onClick={toggleForm}></AddButton>
