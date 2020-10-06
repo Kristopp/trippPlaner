@@ -20,13 +20,23 @@ const reducer = (state, action) => {
       return {
         ...state,
         isFetching: false,
-        songs: action.payload,
+        trippList: action.payload,
       };
     case "FETCH_LIST_FAILURE":
       return {
         ...state,
         hasError: true,
         isFetching: false,
+      };
+    case "ADD_NEW_TRIPP":
+
+    case "DELETE_TRIP":
+      let filter = state.trippList.filter((item) => {
+        return item._id !== action.payload;
+      });
+      return {
+        ...state,
+        trippList: filter,
       };
     default:
       return state;
@@ -35,53 +45,52 @@ const reducer = (state, action) => {
 
 export const TrippTab = (props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  const [tabsArray, setTabsArray] = useState([1]);
+  const [loaded, setStateLoaded] = useState(false);
 
-React.useEffect(() => { 
-    dispatch({ 
+  console.log(state);
+  React.useEffect(() => {
+    dispatch({
       type: "FETCH_LIST_REQUEST",
     });
     fetch("http://localhost:5000/allTrips")
-    .then((res) => { 
-      console.log(res)
-      if (res.ok) { 
-        return res.json();
-      } else { 
-        throw res;
-      }
-    })
-    .then((resJson) => { 
-      console.log(resJson)
-      dispatch({ 
-        type: "FETCH_LIST_SUCCESS",
-        payload: resJson,
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw res;
+        }
       })
-    })
-    .catch((error) => { 
-      console.log(error);
-      dispatch({ 
-        type: "FETCH_LIST_FAILURE",
+      .then((resJson) => {
+        dispatch({
+          type: "FETCH_LIST_SUCCESS",
+          payload: resJson,
+        });
+        setStateLoaded(true);
       })
-    })
-  }, []) 
+      .catch((error) => {
+        console.log(error);
+        dispatch({
+          type: "FETCH_LIST_FAILURE",
+        });
+      });
+  }, []);
 
-  return tabsArray.map((data, index) => (
+  return state.trippList.map((data) => (
     <CardWrapper key={data._id}>
+      <DeleteTabWrapper>
+        <DeleteTab
+          onClick={() => dispatch({ type: "DELETE_TRIP", payload: data._id })}
+        ></DeleteTab>
+      </DeleteTabWrapper>
       <TitleText name="Title" label="title" type="text">
         {data.title}
       </TitleText>
-      <TabImg src={demoPic} onClick={props.onClick}></TabImg>
-      <AddDate name="date" label="date" type="date" onChange={props.onChange} />
-      <button></button>
+      <TabImg src={demoPic}></TabImg>
+      {/*  <AddDate name="date" label="date" type="date" onChange={props.onChange} /> */}
     </CardWrapper>
   ));
 };
-export default TrippTab
-/*     <CardWrapper>
-        <TitleText name="title" label="title" type="text" onChange={props.onChange} value={props.data.title}/>
-        <TabImg src={demoPic} onClick={props.onClick}></TabImg>
-        <AddDate name="date" label="date" type="date" onChange={props.onChange} value={props.data.date}/>
-      </CardWrapper> */
+export default TrippTab;
 
 const boxShadow = keyframes`
    0% {
@@ -109,7 +118,7 @@ background: linear-gradient(
 box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 margin: 60px 10px 0 10px;
 border-radius: 5%;
-width: 150px;
+width: 270px;
 height: 190px;
 &:hover { 
     animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -117,11 +126,13 @@ height: 190px;
 
 `;
 const TitleText = Styled.p`
+display: flex;
+align-items: center;
+justify-content: center;
 font-family: "Yeseva One";
 font-size: 1.3em;
 letter-spacing: 1px;
  color: #041e29;
- margin: 0px;
  width: 120px;
  background-color: transparent;
 border: none;
@@ -130,17 +141,32 @@ outline: none;
 const TabImg = Styled.img`
 border: 1px solid black;
 margin: 10px;
-width: 130px;
+width: 170px;
 height: 90px;
 `;
 const AddDate = Styled.input`
 color: #041e29;
-width: 100px;
-margin: 0px;
-font-family: "Roboto";
-font-size: 1.1em;
-letter-spacing: 1px;
+width: 200dpx;
+margin: px;
+font-size: 1em;
+letter-spacing: 5px;
 background-color: transparent;
 border: none;
 outline: none;
+`;
+
+const DeleteTabWrapper = Styled.div`
+display: flex;
+justify-content: flex-end;
+width: 100%;
+height: 20px;
+`;
+
+const DeleteTab = Styled.button`
+width: 15px;
+height: 15px;
+margin: 10px;
+border-radius: 50%;
+border: none;
+box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 `;

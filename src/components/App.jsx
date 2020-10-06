@@ -6,27 +6,9 @@ import Header from "./Header";
 import AddButton from "./AddButton.jsx";
 import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
-//API functions
-/* import MyContext from "../context/GlobalState"; */
-//Context
 
 const App = () => {
-  const [trippFormState, setFormState] = useState(true);
-  const [id, setId] = useState(0);
-  //Holds input values until pushed
-  const [tabForm, setTabForm] = useState({
-    id: 0,
-    title: "",
-    picture: "",
-    date: "YYYY-MM-DD",
-  });
-  const toggleForm = () => {
-    if (trippFormState) {
-      setFormState(false);
-    } else {
-      setFormState(true);
-    }
-  };
+  /* const [state, dispatch] = React.useReducer(reducer, initialState); */
   return (
     <MainContainer>
       <Header />
@@ -36,7 +18,7 @@ const App = () => {
         <TrippTab></TrippTab>
       </TabWrapper>
       <ButtonContainer>
-        <AddButton onClick={toggleForm}></AddButton>
+        <AddButton></AddButton>
       </ButtonContainer>
     </MainContainer>
   );
