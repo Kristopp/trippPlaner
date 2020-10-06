@@ -4,9 +4,8 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const helmet = require("helmet");
 
-
-const usersRouter = require("./routes/users");
 const mainFormRouter = require("./routes/form");
+const usersRouter = require("./routes/users")
 //Import middlewares
 const middleware = require('./middlewares')
 require("dotenv").config();
@@ -24,8 +23,8 @@ app.use(
 
 app.use(express.json());
 
-app.use("/users", usersRouter);
-app.use("/form", mainFormRouter);
+app.use('/allTrips', mainFormRouter);
+app.use('/users', usersRouter)
 
 app.use(middleware.notFound);
 app.use(middleware.errorHandler);
@@ -51,7 +50,16 @@ app.get("/", (req, res) => {
     messge: "Hello World! Response",
   });
 });
-
+app.get("/allTrips", (req, res) => {
+  res.json({
+    messge: "Hello allTrips! Response",
+  });
+});
+app.get("/users", (req, res) => {
+  res.json({
+    messge: "Hello users! Response",
+  });
+});
 
 app.listen(port, () => {
   console.log(`We are running: ${port}`);

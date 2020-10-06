@@ -11,19 +11,12 @@ const reqString = {
 
 const formSchema = new Schema(
   {
+    username: String
+  },
+  {
     title: reqString,
     startDate: {
       type: Date,
-    },
-    Latitude: { 
-      type: Number,
-      min: -90,
-      max: 90,
-    },
-    Longitude: { 
-     type: Number,
-      min: -180,
-      max: 180,
     },
     rating: {
       type: Number,
@@ -31,15 +24,12 @@ const formSchema = new Schema(
       max: 10,
       default: 0,
     },
-    category: {type: String, required: true},
+    category: String,
     details: String,
     whoPays: String,
     pictures: String,
     expense: Number,
   },
-  {
-    timestamps: true,
-  }
 );
 
 const Form = mongoose.model("Form", formSchema);

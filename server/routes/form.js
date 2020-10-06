@@ -11,12 +11,6 @@ router.route('/').get((req, res) => {
 
 router.route('/').post( async (req, res, next) => { 
   try {
-/*     const category = req.body.category;
-const details = req.body.details;
-const whoPays = req.body.whoPays;
-const pictures = req.body.pictures;
-const expense = req.body.expense; */
-//Create new form body
 const newForm = new Form(req.body);
 const createFormEntry = await newForm.save()
 res.json(createFormEntry)
@@ -28,6 +22,4 @@ res.json(createFormEntry)
 }
 })
 
-/* .then(() => res.json('form add!'))
-.catch(err => res.status(400).json('Error ' + err)) */
 module.exports = router;

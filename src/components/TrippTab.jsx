@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useReducer } from "react";
 import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
+import { Context } from "../context/Store";
 
-const TrippTab = (props) => {
+export const TrippTab = () => {
+  const [state, dispatch] = useContext(Context);
+  const [loaded, setStateLoaded] = useState(false);
+
+  console.log(state);
   return (
-    <CardWrapper>
-      <TitleText name="title" label="title" type="text" onChange={props.onChange} value={props.data.title}/>
-      <TabImg src={demoPic} onClick={props.onClick}></TabImg>
-      <MainText name="date" label="date" type="text" onChange={props.onChange} value={props.data.date}/>
-    </CardWrapper>
+    <React.Fragment>
+      {state.trippList.map((data) => (
+        <CardWrapper key={data._id}>
+          <DeleteTabWrapper>
+            <DeleteTab
+              onClick={() =>
+                dispatch({ type: "DELETE_TRIP", payload: data._id })
+              }
+            ></DeleteTab>
+          </DeleteTabWrapper>
+          <TitleText name="Title" label="title" type="text">
+            {data.title}
+          </TitleText>
+          <TabImg src={demoPic}></TabImg>
+          {/*  <AddDate name="date" label="date" type="date" onChange={props.onChange} /> */}
+        </CardWrapper>
+      ))}
+    </React.Fragment>
   );
 };
+export default TrippTab;
 
 const boxShadow = keyframes`
    0% {
@@ -38,19 +58,21 @@ background: linear-gradient(
 box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 margin: 60px 10px 0 10px;
 border-radius: 5%;
-width: 150px;
+width: 270px;
 height: 190px;
 &:hover { 
     animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 `;
-const TitleText = Styled.input`
+const TitleText = Styled.p`
+display: flex;
+align-items: center;
+justify-content: center;
 font-family: "Yeseva One";
 font-size: 1.3em;
 letter-spacing: 1px;
  color: #041e29;
- margin: 0px;
  width: 120px;
  background-color: transparent;
 border: none;
@@ -59,19 +81,32 @@ outline: none;
 const TabImg = Styled.img`
 border: 1px solid black;
 margin: 10px;
-width: 130px;
+width: 170px;
 height: 90px;
 `;
-const MainText = Styled.input`
+const AddDate = Styled.input`
 color: #041e29;
-width: 100px;
-margin: 0px;
-font-family: "Roboto";
-font-size: 1.1em;
-letter-spacing: 1px;
+width: 200dpx;
+margin: px;
+font-size: 1em;
+letter-spacing: 5px;
 background-color: transparent;
 border: none;
 outline: none;
 `;
 
-export default TrippTab;
+const DeleteTabWrapper = Styled.div`
+display: flex;
+justify-content: flex-end;
+width: 100%;
+height: 20px;
+`;
+
+const DeleteTab = Styled.button`
+width: 15px;
+height: 15px;
+margin: 10px;
+border-radius: 50%;
+border: none;
+box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
+`;

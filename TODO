@@ -1,3 +1,5 @@
+
+//FRONTEND React boiler
 [x] form window 
 [x] add inputs for form
 [x] addable list for form
@@ -9,8 +11,13 @@
 [] budget calc
 [] show right form data onCLick
 [] raiting
+[] on click open form and close and save to create new trippTab
+[] delete tab by index deleteing from app file main data
+[x] fetch data on load
+[] fetch loading/error component
 
-[] vastused tabelist kas üks või mitmele
+
+
 //BACKEND basic Express app
 [x] install dependencies
 [x] install linter
@@ -18,20 +25,20 @@
 [x] setup Not found and Error middleware
 -----
 [] model DB
+[] CRUD 
 [x] setUp body parser middleware
 
 { 
     *What data will i store?
-    [] setup Mongoose Models
-    [] POST/logs
+    [x] setup Mongoose Models
+    [x] POST/logs
     *create a new log entry
-    [] GET / logs
+    [x] GET / logs
     *List all log entries
-    [] Setup Client
-    [] create form
+    [x] Setup Client
+    [x] create form
     [] upload images
-    [] Setup Map SDK on Client
-    [] List all log entries on map
+    [?] Setup Map SDK on Client
 }
 [] gzip 
 

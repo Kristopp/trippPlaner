@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Styled, { keyframes } from "styled-components";
-import demoPic from "../Assets/pictures/demoPicture1.jpg";
 
-//unquie key gen
 
 const TrippForm = (props) => {
 
+  const [usersTripp, setUsersTripp] = useState()
   const [trippFormState, setFormState] = useState(true);
   const [id, setId] = useState(0);
   const [forObject, setFormObject] = useState({
@@ -45,7 +44,6 @@ const TrippForm = (props) => {
   const handleRemoveItem = id => {
     setRowArrays(formRowArrays.filter(item => item.id !== id))
 }
-console.log(formRowArrays)
 
   return (
     <AddFormCont >

@@ -1,20 +1,25 @@
 const router = require('express').Router();
-let User = require('../models/user.model');
+let User = require('../models/users.model');
 
 router.route('/').get((req, res) => {
+    //returns promise
   User.find()
-    .then(users => res.json(users))
+    .then(user => res.json(user))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
-  const username = req.body.username;
 
-  const newUser = new User({username});
-
-  newUser.save()
-    .then(() => res.json('User added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+router.route('/').post( async (req, res, next) => { 
+  try {
+const newUser = new User(req.body);
+const createNewUser = await newUser.save()
+res.json(createNewUser)
+} catch (error) {
+  if (error.name === 'ValidationError') {
+    res.status(422);
+  }
+  next(error);
+}
+})
 
 module.exports = router;
