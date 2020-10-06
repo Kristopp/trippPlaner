@@ -1,27 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
 import Styled from "styled-components";
 import "../index.css";
+
+
 //Components
 import Header from "./Header";
 import AddButton from "./AddButton.jsx";
 import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 
-const App = () => {
-  /* const [state, dispatch] = React.useReducer(reducer, initialState); */
+export const App = () => {
   return (
-    <MainContainer>
-      <Header />
-      <FormWrapper>
-      </FormWrapper>
-      <TabWrapper>
-        <TrippTab></TrippTab>
-      </TabWrapper>
-      <ButtonContainer>
-        <AddButton></AddButton>
-      </ButtonContainer>
-    </MainContainer>
-  );
+      <MainContainer>
+        <Header />
+        <FormWrapper>
+          <TrippForm></TrippForm>
+        </FormWrapper>
+        <TabWrapper>
+          <TrippTab></TrippTab>
+        </TabWrapper>
+        <ButtonContainer>
+          <AddButton></AddButton>
+        </ButtonContainer>
+      </MainContainer>
+  )
 };
 
 const MainContainer = Styled.div`

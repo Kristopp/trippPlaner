@@ -1,94 +1,34 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useReducer } from "react";
 import Styled, { keyframes } from "styled-components";
 import demoPic from "../Assets/pictures/demoPicture1.jpg";
+import { Context } from "../context/Store";
 
-const initialState = {
-  trippList: [],
-  isfetching: false,
-  hasError: false,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "FETCH_LIST_REQUEST":
-      return {
-        ...state,
-        isFetching: true,
-        hasError: false,
-      };
-    case "FETCH_LIST_SUCCESS":
-      return {
-        ...state,
-        isFetching: false,
-        trippList: action.payload,
-      };
-    case "FETCH_LIST_FAILURE":
-      return {
-        ...state,
-        hasError: true,
-        isFetching: false,
-      };
-    case "ADD_NEW_TRIPP":
-
-    case "DELETE_TRIP":
-      let filter = state.trippList.filter((item) => {
-        return item._id !== action.payload;
-      });
-      return {
-        ...state,
-        trippList: filter,
-      };
-    default:
-      return state;
-  }
-};
-
-export const TrippTab = (props) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+export const TrippTab = () => {
+  const [state, dispatch] = useContext(Context);
   const [loaded, setStateLoaded] = useState(false);
 
   console.log(state);
-  React.useEffect(() => {
-    dispatch({
-      type: "FETCH_LIST_REQUEST",
-    });
-    fetch("http://localhost:5000/allTrips")
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw res;
-        }
-      })
-      .then((resJson) => {
-        dispatch({
-          type: "FETCH_LIST_SUCCESS",
-          payload: resJson,
-        });
-        setStateLoaded(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch({
-          type: "FETCH_LIST_FAILURE",
-        });
-      });
-  }, []);
-
-  return state.trippList.map((data) => (
-    <CardWrapper key={data._id}>
-      <DeleteTabWrapper>
-        <DeleteTab
-          onClick={() => dispatch({ type: "DELETE_TRIP", payload: data._id })}
-        ></DeleteTab>
-      </DeleteTabWrapper>
-      <TitleText name="Title" label="title" type="text">
-        {data.title}
-      </TitleText>
-      <TabImg src={demoPic}></TabImg>
-      {/*  <AddDate name="date" label="date" type="date" onChange={props.onChange} /> */}
-    </CardWrapper>
-  ));
+  return (
+    <React.Fragment>
+      {state.trippList.map((data) => (
+        <CardWrapper key={data._id}>
+          <DeleteTabWrapper>
+            <DeleteTab
+              onClick={() =>
+                dispatch({ type: "DELETE_TRIP", payload: data._id })
+              }
+            ></DeleteTab>
+          </DeleteTabWrapper>
+          <TitleText name="Title" label="title" type="text">
+            {data.title}
+          </TitleText>
+          <TabImg src={demoPic}></TabImg>
+          {/*  <AddDate name="date" label="date" type="date" onChange={props.onChange} /> */}
+        </CardWrapper>
+      ))}
+    </React.Fragment>
+  );
 };
 export default TrippTab;
 
