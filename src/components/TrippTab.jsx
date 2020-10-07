@@ -5,10 +5,10 @@ import demoPic from "../Assets/pictures/demoPicture1.jpg";
 import { Context } from "../context/Store";
 
 export const TrippTab = () => {
+
   const [state, dispatch] = useContext(Context);
   const [loaded, setStateLoaded] = useState(false);
 
-  console.log(state);
   return (
     <React.Fragment>
       {state.trippList.map((data) => (
@@ -45,7 +45,6 @@ const boxShadow = keyframes`
 `;
 const CardWrapper = Styled.div`
 display: flex;
-justify-content: center;
 align-items: center;
 flex-direction: column;
 background: #0f2027; /* fallback for old browsers */
@@ -58,16 +57,15 @@ background: linear-gradient(
 box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 margin: 60px 10px 0 10px;
 border-radius: 5%;
-width: 270px;
-height: 190px;
+width: 190px;
+height: 210px;
 &:hover { 
     animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
-
+position: relative;
 `;
 const TitleText = Styled.p`
 display: flex;
-align-items: center;
 justify-content: center;
 font-family: "Yeseva One";
 font-size: 1.3em;
@@ -80,11 +78,11 @@ outline: none;
 `;
 const TabImg = Styled.img`
 border: 1px solid black;
-margin: 10px;
+margin-bottom: 30px;
 width: 170px;
 height: 90px;
 `;
-const AddDate = Styled.input`
+/* const AddDate = Styled.input`
 color: #041e29;
 width: 200dpx;
 margin: px;
@@ -93,7 +91,7 @@ letter-spacing: 5px;
 background-color: transparent;
 border: none;
 outline: none;
-`;
+`; */
 
 const DeleteTabWrapper = Styled.div`
 display: flex;

@@ -4,6 +4,7 @@ html, body {
   overflow: auto;
 margin: 0;
 padding: 0;
+background: linear-gradient(45deg,#00cdac,#02aab0) no-repeat, repeat center center / cover;
 }
 /* #root {
   height: 100%;

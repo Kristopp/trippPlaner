@@ -26,7 +26,10 @@ const reducer = (state, action) => {
         hasError: true,
         isFetching: false,
       };
+      case "ADD_NEW_TRIPP":
+      return { 
 
+      }
     case "DELETE_TRIP":
       let filter = state.trippList.filter((item) => {
         return item._id !== action.payload;
@@ -39,7 +42,6 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
 
 const Store = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
