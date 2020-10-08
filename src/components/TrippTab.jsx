@@ -20,7 +20,7 @@ export const TrippTab = () => {
               }
             ></DeleteTab>
           </DeleteTabWrapper>
-          <TitleText name="Title" label="title" type="text">
+          <TitleText name="Title" label="title">
             {data.title}
           </TitleText>
           <TabImg src={demoPic}></TabImg>
@@ -82,16 +82,6 @@ margin-bottom: 30px;
 width: 170px;
 height: 90px;
 `;
-/* const AddDate = Styled.input`
-color: #041e29;
-width: 200dpx;
-margin: px;
-font-size: 1em;
-letter-spacing: 5px;
-background-color: transparent;
-border: none;
-outline: none;
-`; */
 
 const DeleteTabWrapper = Styled.div`
 display: flex;

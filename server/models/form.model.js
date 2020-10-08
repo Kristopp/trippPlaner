@@ -27,7 +27,7 @@ const formSchema = new Schema(
     category: String,
     details: String,
     whoPays: String,
-    pictures: String,
+    imgURl: reqString,
     expense: Number,
   },
 );

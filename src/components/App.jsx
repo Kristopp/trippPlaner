@@ -28,12 +28,10 @@ export const App = () => {
         <TabWrapper>
           <TrippTab />
         </TabWrapper>
-        {/*   <FormWrapper>
-          <TrippForm></TrippForm>
-        </FormWrapper>  */}
         {openTabForm ? (
           <TabFormWrapper>
             <TabForm />
+          <TrippForm></TrippForm>
           </TabFormWrapper>
         ) : null}
         <ButtonContainer>
