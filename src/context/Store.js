@@ -23,12 +23,15 @@ const reducer = (state, action) => {
     case "FETCH_LIST_FAILURE":
       return {
         ...state,
-        hasError: true,
+        hasError: true, 
         isFetching: false,
       };
       case "ADD_NEW_TRIPP":
       return { 
-
+        ...state,
+        hasError: true, 
+        isFetching: false,
+        trippList: state.trippList.concat(action.payload)
       }
     case "DELETE_TRIP":
       let filter = state.trippList.filter((item) => {

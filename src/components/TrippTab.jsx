@@ -8,7 +8,7 @@ export const TrippTab = () => {
 
   const [state, dispatch] = useContext(Context);
   const [loaded, setStateLoaded] = useState(false);
-
+console.log(state)
   return (
     <React.Fragment>
       {state.trippList.map((data) => (
@@ -23,7 +23,7 @@ export const TrippTab = () => {
           <TitleText name="Title" label="title">
             {data.title}
           </TitleText>
-          <TabImg src={demoPic}></TabImg>
+          <TabImg src={data.imgURL}></TabImg>
           {/*  <AddDate name="date" label="date" type="date" onChange={props.onChange} /> */}
         </CardWrapper>
       ))}
@@ -77,10 +77,10 @@ border: none;
 outline: none;
 `;
 const TabImg = Styled.img`
-border: 1px solid black;
-margin-bottom: 30px;
-width: 170px;
-height: 90px;
+height: 150px;
+width: auto;
+object-fit: fill;
+text-align: center;
 `;
 
 const DeleteTabWrapper = Styled.div`

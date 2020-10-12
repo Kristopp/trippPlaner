@@ -1,53 +1,59 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState } from "react";
 import Styled, { keyframes } from "styled-components";
-import { Context } from "../context/Store"
+import { Context } from "../context/Store";
 
-const NewCardForm = () => { 
-  
+const NewCardForm = () => {
   const [state, dispatch] = useContext(Context);
-  const [selectedFile,setselectedFile] = useState("");
+  const [selectedFile, setselectedFile] = useState("");
   const [newTrippObject, setNewTrippObject] = useState({
     title: "",
     imgURl: "",
   });
-  const [togglePrewImg, setTogglePrewImg] = useState()
+  const [togglePrewImg, setTogglePrewImg] = useState();
   const [loaded, setStateLoaded] = useState(false);
 
-    const titleInputHandler = (event) => { 
-      const title = event.target.value;
-      setNewTrippObject({...newTrippObject, title: title});
-    };
-    const imgUploadHandler = (event) => { 
-      const getImg = URL.createObjectURL(event.target.files[0]);
-      setNewTrippObject({...newTrippObject, imgURl: getImg})
-    };
-    const createHandler = () => { 
-      dispatch({type: "ADD_NEW_TRIPP", payload: newTrippObject})
+  const titleInputHandler = (event) => {
+    const title = event.target.value;
+    setNewTrippObject({ ...newTrippObject, title: title });
+  };
+  const imgUploadHandler = (event) => {
+    const getImg = URL.createObjectURL(event.target.files[0]);
+    setNewTrippObject({ ...newTrippObject, imgURl: getImg });
+  };
+  const createHandler = () => {
+    if (newTrippObject.imgURl === "" || newTrippObject.title === "" ) {
+      alert("fill all fields");
+    } else {
+      dispatch({
+        type: "ADD_NEW_TRIPP",
+        payload: { title: newTrippObject.title, imgURL: newTrippObject.imgURl },
+      });
     }
-  return ( 
-        <CardFormContainer>
-            <TitleInput 
-            name="Title"
-            label="Title"
-            type="text"
-            placeholder="Title"
-            value={newTrippObject.title} 
-            onChange={titleInputHandler}
-            />
-            <AddPicture
-               name="upLoadImg"
-               type="file"
-               value={selectedFile}
-               onChange={imgUploadHandler}
-            >
-              <ImgInput type="file" style={{visibility:"hidden"}}/>
-              <PrewImg src={newTrippObject.imgURl} alt="add img" ></PrewImg>
-            </AddPicture>
-            <CreateNewTab>createHandler</CreateNewTab>
-        </CardFormContainer>
-    )
-}
-export default NewCardForm
+  };
+  return (
+    <CardFormContainer>
+      <TitleInput
+        name="Title"
+        label="Title"
+        type="text"
+        placeholder="Title"
+        value={newTrippObject.title}
+        onChange={titleInputHandler}
+      />
+      <AddPicture
+        name="upLoadImg"
+        type="file"
+        value={selectedFile}
+        onChange={imgUploadHandler}
+      >
+        <ImgInput type="file" style={{ visibility: "hidden" }} />
+        <PrewImg src={newTrippObject.imgURl} alt="add img"></PrewImg>
+      </AddPicture>
+      <CreateNewTab onClick={createHandler}>create</CreateNewTab>
+    </CardFormContainer>
+  );
+};
+export default NewCardForm;
 
 const boxShdow = keyframes`
   0% {
@@ -116,14 +122,14 @@ const ImgInput = Styled.input`
 width: 0;
 height: 0;
 visibility:hidden;
-`
+`;
 const PrewImg = Styled.img`
 height: 100%;
 width: auto;
 object-fit: fill;
 text-align: center;
 
-`
+`;
 const CreateNewTab = Styled.button`
 width: 150px;
 height: 40px;
