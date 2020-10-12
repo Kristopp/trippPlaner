@@ -8,18 +8,22 @@ const NewCardForm = () => {
   const [selectedFile,setselectedFile] = useState("");
   const [newTrippObject, setNewTrippObject] = useState({
     title: "",
-    picture: "",
     imgURl: "",
   });
+  const [togglePrewImg, setTogglePrewImg] = useState()
   const [loaded, setStateLoaded] = useState(false);
 
     const titleInputHandler = (event) => { 
       const title = event.target.value;
-      setNewTrippObject({...setNewTrippObject, title: title});
+      setNewTrippObject({...newTrippObject, title: title});
     };
     const imgUploadHandler = (event) => { 
+      const getImg = URL.createObjectURL(event.target.files[0]);
+      setNewTrippObject({...newTrippObject, imgURl: getImg})
     };
-
+    const createHandler = () => { 
+      dispatch({type: "ADD_NEW_TRIPP", payload: newTrippObject})
+    }
   return ( 
         <CardFormContainer>
             <TitleInput 
@@ -32,12 +36,14 @@ const NewCardForm = () => {
             />
             <AddPicture
                name="upLoadImg"
-               label="upload img"
                type="file"
                value={selectedFile}
                onChange={imgUploadHandler}
-            ></AddPicture>
-            <CreateNewTab>Create</CreateNewTab>
+            >
+              <ImgInput type="file" style={{visibility:"hidden"}}/>
+              <PrewImg src={newTrippObject.imgURl} alt="add img" ></PrewImg>
+            </AddPicture>
+            <CreateNewTab>createHandler</CreateNewTab>
         </CardFormContainer>
     )
 }
@@ -91,9 +97,12 @@ letter-spacing: 1px;
   color: black;
   }
 `;
-const AddPicture = Styled.input` 
-width: 130px;
-height: 100px;
+const AddPicture = Styled.label` 
+display: flex;
+align-items: center;
+justify-content: center;
+width: 150px;
+height: 120px;
 border: none;
 outline: none;
 font: 1em 'Roboto', sans-serif;
@@ -103,8 +112,20 @@ box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.15);
     animation: ${boxShdow} cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   }
 `;
+const ImgInput = Styled.input`
+width: 0;
+height: 0;
+visibility:hidden;
+`
+const PrewImg = Styled.img`
+height: 100%;
+width: auto;
+object-fit: fill;
+text-align: center;
+
+`
 const CreateNewTab = Styled.button`
-width: 130px;
+width: 150px;
 height: 40px;
 margin: 10px;
 border: none;
