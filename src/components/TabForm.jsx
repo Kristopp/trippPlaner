@@ -7,8 +7,9 @@ const NewCardForm = () => {
   const [selectedFile, setselectedFile] = useState("");
   const [newTrippObject, setNewTrippObject] = useState({
     title: "",
-    imgURl: "",
+    imgUrl: "",
   });
+  const [postDataId, setPostId] = useState()
   const [togglePrewImg, setTogglePrewImg] = useState();
   const [loaded, setStateLoaded] = useState(false);
 
@@ -24,12 +25,20 @@ const NewCardForm = () => {
     if (newTrippObject.imgURl === "" || newTrippObject.title === "" ) {
       alert("fill all fields");
     } else {
-      dispatch({
-        type: "ADD_NEW_TRIPP",
-        payload: { title: newTrippObject.title, imgURL: newTrippObject.imgURl },
-      });
+      console.log(newTrippObject)
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( { title: newTrippObject.title, imgUrl: newTrippObject.imgURl })
+    };
+    fetch('http://localhost:5000/allTrips', requestOptions)
+        .then(response => response.json())
+        .then(data => setPostId(data.id));
     }
   };
+
+ 
+
   return (
     <CardFormContainer>
       <TitleInput

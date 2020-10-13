@@ -6,6 +6,10 @@ const initialState = {
   hasError: false,
 };
 
+const postHandler = () => { 
+
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_LIST_REQUEST":
@@ -29,9 +33,9 @@ const reducer = (state, action) => {
       case "ADD_NEW_TRIPP":
       return { 
         ...state,
-        hasError: true, 
+        hasError: false, 
         isFetching: false,
-        trippList: state.trippList.concat(action.payload)
+        /* trippList: state.trippList.concat(action.payload) */
       }
     case "DELETE_TRIP":
       let filter = state.trippList.filter((item) => {
@@ -48,7 +52,9 @@ const reducer = (state, action) => {
 
 const Store = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [postDataId, setPostId] = useState()
     const [loaded, setStateLoaded] = useState(false)
+
     React.useEffect(() => {
       dispatch({
         type: "FETCH_LIST_REQUEST",
