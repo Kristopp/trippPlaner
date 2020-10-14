@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import axios from 'axios';
 import Styled, { keyframes } from "styled-components";
 import { Context } from "../context/Store";
 
@@ -7,7 +8,6 @@ const NewCardForm = () => {
   const [selectedFile, setselectedFile] = useState("");
   const [newTrippObject, setNewTrippObject] = useState({
     title: "",
-    imgUrl: "",
   });
   const [postDataId, setPostId] = useState()
   const [togglePrewImg, setTogglePrewImg] = useState();
@@ -21,21 +21,17 @@ const NewCardForm = () => {
     const getImg = URL.createObjectURL(event.target.files[0]);
     setNewTrippObject({ ...newTrippObject, imgURl: getImg });
   };
-  const createHandler = () => {
+  const createHandler = (e) => {
     if (newTrippObject.imgURl === "" || newTrippObject.title === "" ) {
       alert("fill all fields");
     } else {
-      console.log(newTrippObject)
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( { title: newTrippObject.title, imgUrl: newTrippObject.imgURl })
-    };
-    fetch('http://localhost:5000/allTrips', requestOptions)
-        .then(response => response.json())
-        .then(data => setPostId(data.id));
-    }
-  };
+      e.preventDefault();
+      axios.post('http://localhost:5000/allTrips', newTrippObject)
+      .then(res => console.log(res.data));
+      setNewTrippObject({
+        title: "",
+      });
+   } };
 
  
 
