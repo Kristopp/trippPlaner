@@ -9,10 +9,9 @@ router.route('/').get((req, res) => {
 });
 
 
-router.route('/allTrips').post( async (req, res, next) => { 
+router.route('/').post( async (req, res, next) => { 
   try {
 const newForm = new Form(req.body);
-console.log(newForm)
 const createFormEntry = await newForm.save()
 res.json(createFormEntry)
 } catch (error) {

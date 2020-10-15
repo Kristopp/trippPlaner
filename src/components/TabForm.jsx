@@ -8,6 +8,7 @@ const NewCardForm = () => {
   const [selectedFile, setselectedFile] = useState("");
   const [newTrippObject, setNewTrippObject] = useState({
     title: "",
+    imageURL: "",
   });
   const [postDataId, setPostId] = useState()
   const [togglePrewImg, setTogglePrewImg] = useState();
@@ -19,22 +20,21 @@ const NewCardForm = () => {
   };
   const imgUploadHandler = (event) => {
     const getImg = URL.createObjectURL(event.target.files[0]);
-    setNewTrippObject({ ...newTrippObject, imgURl: getImg });
+    setNewTrippObject({ ...newTrippObject, imageURL: getImg });
   };
   const createHandler = (e) => {
-    if (newTrippObject.imgURl === "" || newTrippObject.title === "" ) {
+    if (newTrippObject.imageURL === "" || newTrippObject.title === "" ) {
       alert("fill all fields");
     } else {
       e.preventDefault();
-      axios.post('http://localhost:5000/allTrips', newTrippObject)
+      console.log(newTrippObject)
+      axios.post('http://localhost:5000/allTrips/', newTrippObject)
       .then(res => console.log(res.data));
       setNewTrippObject({
         title: "",
+        imageURL: "",
       });
-   } };
-
- 
-
+   }};
   return (
     <CardFormContainer>
       <TitleInput

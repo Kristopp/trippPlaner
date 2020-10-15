@@ -45,9 +45,9 @@ connection.once("open", () => {
 //Get routes
 //when some makes request on my server
 //no next paramater needed becose it is just a response
-app.get("/allTrips", (req, res) => {
+app.get("/allTrips/", (req, res) => {
   res.json({
-    messge: "Hello allTrips! Response",
+    messge: "Tripp added",
   });
 });
 app.get("/users", (req, res) => {

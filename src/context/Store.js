@@ -59,7 +59,7 @@ const Store = ({children}) => {
       dispatch({
         type: "FETCH_LIST_REQUEST",
       });
-      fetch("http://localhost:5000/allTrips")
+      fetch("http://localhost:5000/allTrips/")
         .then((res) => {
           if (res.ok) {
             return res.json();

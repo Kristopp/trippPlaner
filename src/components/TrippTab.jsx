@@ -7,7 +7,6 @@ import { Context } from "../context/Store";
 export const TrippTab = () => {
   const [state, dispatch] = useContext(Context);
   const [loaded, setStateLoaded] = useState(false);
-  console.log(state);
   return (
     <React.Fragment>
       {state.trippList.map((data) => (
