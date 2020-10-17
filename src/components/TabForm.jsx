@@ -1,40 +1,72 @@
 import React, { useContext, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Styled, { keyframes } from "styled-components";
 import { Context } from "../context/Store";
+
+const CLOUDINARY_ID = process.env.REACT_APP_CLOUDINARY_ID;
+const UPLOAD_PRESET = process.env.REACT_APP_NAME_OF_UPLOAD_PRESET;
+const API_KEY = process.env.REACT_APP_CLOUDINARY_API;
+
+const uploadImage = async (file) => {
+  let formData = new FormData();
+  formData.append("api_key",API_KEY);
+  formData.append("file", file);
+  console.log(file)
+  formData.append("public_id", CLOUDINARY_ID);
+  formData.append("upload_preset",UPLOAD_PRESET); 
+  axios
+    .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload`, formData)
+    .then((res) => console.log(res))
+    .catch((err) => { 
+      console.log(err)
+    })
+};
 
 const NewCardForm = () => {
   const [state, dispatch] = useContext(Context);
   const [selectedFile, setselectedFile] = useState("");
-  const [newTrippObject, setNewTrippObject] = useState({
+  const [newTripp, setNewTrippObject] = useState({
     title: "",
-    imageURL: "",
+    imageURL: null,
   });
-  const [postDataId, setPostId] = useState()
+
   const [togglePrewImg, setTogglePrewImg] = useState();
   const [loaded, setStateLoaded] = useState(false);
 
   const titleInputHandler = (event) => {
     const title = event.target.value;
-    setNewTrippObject({ ...newTrippObject, title: title });
+    setNewTrippObject({ ...newTripp, title: title });
   };
   const imgUploadHandler = (event) => {
     const getImg = URL.createObjectURL(event.target.files[0]);
-    setNewTrippObject({ ...newTrippObject, imageURL: getImg });
+    setNewTrippObject({ ...newTripp, imageURL: getImg });
   };
-  const createHandler = (e) => {
-    if (newTrippObject.imageURL === "" || newTrippObject.title === "" ) {
+  const createHandler = () => {
+    console.log(newTripp.imageURL)
+    const file = newTripp.imageURL
+    console.log(file)
+    switch (file) {
+      case file > 1024:
+        alert("File size to big try less then 1mb");
+        break;
+      case newTripp.title === "":
+        alert("fill title pls");
+        break;
+      default:
+        uploadImage(file);
+    }
+
+    /*     
+   if ( file.size > 1024 || newTrippObject.title === "") {
       alert("fill all fields");
     } else {
       e.preventDefault();
-      console.log(newTrippObject)
-      axios.post('http://localhost:5000/allTrips/', newTrippObject)
-      .then(res => console.log(res.data));
-      setNewTrippObject({
-        title: "",
-        imageURL: "",
-      });
-   }};
+      if(file.size > 1024) { 
+        alert("File size to big try less than 1mb");
+      else uploadImage(file);
+
+      }  */
+  };
   return (
     <CardFormContainer>
       <TitleInput
@@ -42,7 +74,7 @@ const NewCardForm = () => {
         label="Title"
         type="text"
         placeholder="Title"
-        value={newTrippObject.title}
+        value={newTripp.title}
         onChange={titleInputHandler}
       />
       <AddPicture
@@ -51,8 +83,15 @@ const NewCardForm = () => {
         value={selectedFile}
         onChange={imgUploadHandler}
       >
-        <ImgInput type="file" style={{ visibility: "hidden" }} />
-        <PrewImg src={newTrippObject.imgURl} alt="add img"></PrewImg>
+        <ImgInput
+          name="file"
+          type="file"
+          className="file-upload"
+          data-cloudinary-field="image_id"
+          data-form-data="{ 'transformation': {'crop':'limit','tags':'samples','width':300,'height':200}}"
+          style={{ visibility: "hidden" }}
+        />
+        <PrewImg src={newTripp.imageURL} alt="add img"></PrewImg>
       </AddPicture>
       <CreateNewTab onClick={createHandler}>create</CreateNewTab>
     </CardFormContainer>

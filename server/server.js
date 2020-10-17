@@ -5,9 +5,10 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 
 const mainFormRouter = require("./routes/form");
-const usersRouter = require("./routes/users")
+const usersRouter = require("./routes/users");
+const cloudinary = require("./routes/cloudinary");
 //Import middlewares
-const middleware = require('./middlewares')
+const middleware = require("./middlewares");
 require("dotenv").config();
 
 const app = express();
@@ -23,17 +24,20 @@ app.use(
 
 app.use(express.json());
 
-app.use('/allTrips', mainFormRouter);
-app.use('/users', usersRouter)
-
+app.use("/allTrips", mainFormRouter);
+app.use("/users", usersRouter);
+app.use("/");
+app.use(express.static("public"));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(middleware.notFound);
 app.use(middleware.errorHandler);
 
 const port = process.env.PORT || 5000;
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { 
-  useNewUrlParser: true, 
+mongoose.connect(uri, {
+  useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
@@ -45,17 +49,29 @@ connection.once("open", () => {
 //Get routes
 //when some makes request on my server
 //no next paramater needed becose it is just a response
-app.get("/allTrips/", (req, res) => {
-  res.json({
-    messge: "Tripp added",
-  });
-});
-app.get("/users", (req, res) => {
-  res.json({
-    messge: "Hello users! Response",
-  });
-});
+app.get("/api/images", async (req, res) => {
+  const { resources } = await cloudinary.search
+    .expression("folder:dev_setups")
+    .sort_by("public_id", "desc")
+    .max_results(30)
+    .exceute();
 
+  const publicIds = resources.map((file) => file.public_id);
+  res.send(publicIds);
+});
+app.post("/api/upload", async (req, res) => {
+  try {
+    const fileStr = req.body.data;
+    const uploadResponse = await cloudinary.uploader(fileStr, {
+      upload_preset: "dev_setups",
+    });
+    console.log(uploadResponse);
+    res.json({ msg: "yaya" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ err: "Something went wrong" });
+  }
+});
 app.listen(port, () => {
   console.log(`We are running: ${port}`);
 });
