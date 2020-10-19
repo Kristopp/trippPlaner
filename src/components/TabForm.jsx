@@ -1,25 +1,30 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
+import { CloudinaryContext } from "cloudinary-react";
 import Styled, { keyframes } from "styled-components";
 import { Context } from "../context/Store";
 
-const CLOUDINARY_ID = process.env.REACT_APP_CLOUDINARY_ID;
+const CLOUDINARY_ID = process.env.REACT_APP_CLOUDINARY_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_NAME_OF_UPLOAD_PRESET;
 const API_KEY = process.env.REACT_APP_CLOUDINARY_API;
+const URL = process.env.REACT_APP_CLOUDINARY_URL;
 
 const uploadImage = async (file) => {
-  let formData = new FormData();
-  formData.append("api_key",API_KEY);
+  /*   let formData = new FormData();
+  formData.append("api_key", API_KEY);
   formData.append("file", file);
-  console.log(file)
   formData.append("public_id", CLOUDINARY_ID);
-  formData.append("upload_preset",UPLOAD_PRESET); 
-  axios
-    .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload`, formData)
-    .then((res) => console.log(res))
-    .catch((err) => { 
-      console.log(err)
+  formData.append("upload_preset", UPLOAD_PRESET);
+  console.log(formData) */
+  axios({
+      url: '/api/upload',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
     })
+    .then((res) => console.log(res))
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const NewCardForm = () => {
@@ -39,12 +44,13 @@ const NewCardForm = () => {
   };
   const imgUploadHandler = (event) => {
     const getImg = URL.createObjectURL(event.target.files[0]);
+    console.log(getImg)
     setNewTrippObject({ ...newTripp, imageURL: getImg });
   };
   const createHandler = () => {
-    console.log(newTripp.imageURL)
-    const file = newTripp.imageURL
-    console.log(file)
+    console.log(newTripp.imageURL);
+    const file = newTripp.imageURL;
+    console.log(file);
     switch (file) {
       case file > 1024:
         alert("File size to big try less then 1mb");
@@ -55,46 +61,37 @@ const NewCardForm = () => {
       default:
         uploadImage(file);
     }
-
-    /*     
-   if ( file.size > 1024 || newTrippObject.title === "") {
-      alert("fill all fields");
-    } else {
-      e.preventDefault();
-      if(file.size > 1024) { 
-        alert("File size to big try less than 1mb");
-      else uploadImage(file);
-
-      }  */
   };
   return (
-    <CardFormContainer>
-      <TitleInput
-        name="Title"
-        label="Title"
-        type="text"
-        placeholder="Title"
-        value={newTripp.title}
-        onChange={titleInputHandler}
-      />
-      <AddPicture
-        name="upLoadImg"
-        type="file"
-        value={selectedFile}
-        onChange={imgUploadHandler}
-      >
-        <ImgInput
-          name="file"
-          type="file"
-          className="file-upload"
-          data-cloudinary-field="image_id"
-          data-form-data="{ 'transformation': {'crop':'limit','tags':'samples','width':300,'height':200}}"
-          style={{ visibility: "hidden" }}
+    <CloudinaryContext cloudName={CLOUDINARY_ID}>
+      <CardFormContainer>
+        <TitleInput
+          name="Title"
+          label="Title"
+          type="text"
+          placeholder="Title"
+          value={newTripp.title}
+          onChange={titleInputHandler}
         />
-        <PrewImg src={newTripp.imageURL} alt="add img"></PrewImg>
-      </AddPicture>
-      <CreateNewTab onClick={createHandler}>create</CreateNewTab>
-    </CardFormContainer>
+        <AddPicture
+          name="upLoadImg"
+          type="file"
+          value={selectedFile}
+          onChange={imgUploadHandler}
+        >
+          <ImgInput
+            name="file"
+            type="file"
+            className="file-upload"
+            data-cloudinary-field="image_id"
+            data-form-data="{ 'transformation': {'crop':'limit','tags':'samples','width':300,'height':200}}"
+            style={{ visibility: "hidden" }}
+          />
+          <PrewImg src={newTripp.imageURL} alt="add img"></PrewImg>
+        </AddPicture>
+        <CreateNewTab onClick={createHandler}>create</CreateNewTab>
+      </CardFormContainer>
+    </CloudinaryContext>
   );
 };
 export default NewCardForm;
