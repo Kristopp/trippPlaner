@@ -1,49 +1,48 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { CloudinaryContext } from "cloudinary-react";
 import Styled, { keyframes } from "styled-components";
 import { Context } from "../context/Store";
-
-import demoimg from "../Assets/pictures/demoPicture1.jpg";
 
 const CLOUDINARY_ID = process.env.REACT_APP_CLOUDINARY_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_NAME_OF_UPLOAD_PRESET;
 const API_KEY = process.env.REACT_APP_CLOUDINARY_API;
-const URL = process.env.REACT_APP_CLOUDINARY_URL;
+const CLOUDINARY_IMAGE_UPLOAD_URL =
+  process.env.REACT_APP_CLOUDINARY_IMAGE_UPLOAD_URL;
 
 const uploadImage = async (file) => {
-  /*   let formData = new FormData();
-  formData.append("api_key", API_KEY);
-  formData.append("file", file);
-  formData.append("public_id", CLOUDINARY_ID);
-  formData.append("upload_preset", UPLOAD_PRESET);
-  console.log(formData) */
-  axios({
-    url: "/api/upload",
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-  })
+  const data = new FormData();
+  data.append("upload_preset", "qqklcwhc");
+  data.append("api_key", API_KEY);
+  data.append("file", file);
+  axios
+    .post(
+      "https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload/",
+      data
+    )
     .then((res) => console.log(res))
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
+
+  for (var pair of data.entries()) {
+    console.log(pair[0] + ", " + pair[1]);
+  }
 };
 
 const NewCardForm = () => {
   const [state, dispatch] = useContext(Context);
-  const [selectedFile, setSelectedFile] = useState();
   const [previewUrl, setPreviewUrl] = useState(undefined);
   const [newTripp, setNewTrippObject] = useState({
     title: "",
     imageURL: "",
   });
-  const [togglePrewImg, setTogglePrewImg] = useState();
+
+  const [toggleTab, setToggleTab] = useState(false);
   const [loaded, setStateLoaded] = useState(false);
 
   const titleInputHandler = (event) => {
     const title = event.target.value;
     setNewTrippObject({ ...newTripp, title: title });
   };
+
   const pickImgHandler = (e) => {
     if (e.target.files[0]) {
       const reader = new FileReader();
@@ -55,57 +54,52 @@ const NewCardForm = () => {
       alert("Error");
     }
   };
-  useEffect(() => { 
-setNewTrippObject({ ...newTripp, imageURL: previewUrl})
-console.log(newTripp.imageURL)
-  }, [previewUrl])
 
-  // create a preview as a side effect, whenever selected file is changed
+  useEffect(() => {
+    setNewTrippObject({ ...newTripp, imageURL: previewUrl });
+  }, [previewUrl]);
+
   const createHandler = () => {
     const file = newTripp.imageURL;
     console.log(file);
     switch (file) {
-      case file > 1024:
-        alert("File size to big try less then 1mb");
+      case file !== "":
+        alert("No image!");
         break;
       case newTripp.title === "":
         alert("fill title pls");
         break;
       default:
         uploadImage(file);
+        setNewTrippObject({ ...newTripp, title: "", imageURL: "" });
     }
   };
   return (
-    <CloudinaryContext>
-      <CardFormContainer>
-        <div>
-          <TitleInput
-            name="Title"
-            label="Title"
-            type="text"
-            placeholder="Title"
-            onChange={titleInputHandler}
-          />
-        </div>
-        <AddPicture
-          name="upLoadImg"
-          type="file"
-          value={newTripp.title.name}
-          onChange={pickImgHandler}
-        >
-          <ImgInput
-            name="file"
+    <React.Fragment>
+      {toggleTab ? (
+        <CardFormContainer>
+          <div>
+            <TitleInput
+              name="Title"
+              label="Title"
+              type="text"
+              placeholder="Title"
+              onChange={titleInputHandler}
+            />
+          </div>
+          <AddPicture
+            name="upLoadImg"
             type="file"
-            /*    className="file-upload"
-            data-cloudinary-field="image_id"
-            data-form-data="{ 'transformation': {'crop':'limit','tags':'samples','width':300,'height':200}}"
-            style={{ visibility: "hidden" }} */
-          />
-          <PrewImg src={previewUrl}></PrewImg>
-        </AddPicture>
-        <CreateNewTab onClick={createHandler}>create</CreateNewTab>
-      </CardFormContainer>
-    </CloudinaryContext>
+            value={newTripp.title.name}
+            onChange={pickImgHandler}
+          >
+            <ImgInput name="file" type="file" />
+            <PrewImg src={previewUrl}></PrewImg>
+          </AddPicture>
+          <CreateNewTab onClick={createHandler}>create</CreateNewTab>
+        </CardFormContainer>
+      ) : null}
+    </React.Fragment>
   );
 };
 export default NewCardForm;
@@ -183,7 +177,6 @@ height: 100%;
 width: auto;
 object-fit: fill;
 text-align: center;
-border: 1px solid black;
 
 `;
 const CreateNewTab = Styled.button`
