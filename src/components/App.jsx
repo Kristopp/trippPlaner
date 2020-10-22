@@ -8,16 +8,18 @@ import AddButton from "./AddButton.jsx";
 import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 import TabForm from "./TabForm";
+import { Context } from "../context/Store";
 
 export const App = () => {
-  const [openTabForm, setOpenTabForm] = useState(true);
+  const [state, dispatch, toggleTab, setToggleTab] = useContext(Context);
   const [openTrippForm, setTrippForm] = useState(false);
 
   const openTabFormHandler = () => {
-    if (openTabForm === false) {
-      setOpenTabForm(true);
+    if (toggleTab === false) {
+      setToggleTab(true);
     } else {
-      setOpenTabForm(false);
+      setToggleTab(false);
+      console.log(toggleTab)
     }
   };
 
@@ -28,7 +30,7 @@ export const App = () => {
         <TabWrapper>
           <TrippTab />
         </TabWrapper>
-        {openTabForm ? (
+        {toggleTab ? (
           <TabFormWrapper>
             <TabForm />
           <TrippForm></TrippForm>

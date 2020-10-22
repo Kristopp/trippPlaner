@@ -28,16 +28,15 @@ const uploadImage = async (file) => {
 };
 
 const NewCardForm = () => {
-  const [state, dispatch] = useContext(Context);
+  const [state, dispatch, toggleTab, setToggleTab] = useContext(Context);
   const [previewUrl, setPreviewUrl] = useState(undefined);
   const [newTripp, setNewTrippObject] = useState({
     title: "",
     imageURL: "",
   });
 
-  const [toggleTab, setToggleTab] = useState(false);
   const [loaded, setStateLoaded] = useState(false);
-
+console.log(toggleTab)
   const titleInputHandler = (event) => {
     const title = event.target.value;
     setNewTrippObject({ ...newTripp, title: title });
@@ -72,6 +71,7 @@ const NewCardForm = () => {
       default:
         uploadImage(file);
         setNewTrippObject({ ...newTripp, title: "", imageURL: "" });
+        setToggleTab(false)
     }
   };
   return (

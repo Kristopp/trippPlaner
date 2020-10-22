@@ -54,6 +54,7 @@ const Store = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [postDataId, setPostId] = useState()
     const [loaded, setStateLoaded] = useState(false)
+    const [toggleTab, setToggleTab] = useState(false);
 
     React.useEffect(() => {
       dispatch({
@@ -82,7 +83,7 @@ const Store = ({children}) => {
         });
     }, []);
     return (
-        <Context.Provider value={[state, dispatch]}>
+        <Context.Provider value={[state,dispatch,toggleTab,setToggleTab]}>
             {children}
         </Context.Provider>
     )
