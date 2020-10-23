@@ -6,26 +6,32 @@ import { Context } from "../context/Store";
 const CLOUDINARY_ID = process.env.REACT_APP_CLOUDINARY_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_NAME_OF_UPLOAD_PRESET;
 const API_KEY = process.env.REACT_APP_CLOUDINARY_API;
-const CLOUDINARY_IMAGE_UPLOAD_URL =
-  process.env.REACT_APP_CLOUDINARY_IMAGE_UPLOAD_URL;
+
+
+
 
 const uploadImage = async (file) => {
   const data = new FormData();
-  data.append("upload_preset", "qqklcwhc");
+  data.append("upload_preset", UPLOAD_PRESET);
   data.append("api_key", API_KEY);
   data.append("file", file);
   axios
-    .post(
-      "https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload/",
-      data
+  .post(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload/`,
+    data
     )
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
-
-  for (var pair of data.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
+  };
+  const mongoPostHandler = async (formFile) => { 
+    axios.post("http://localhost:5000/userTrips",formFile)
+    .then((response) => {
+        alert("The file is successfully uploaded");
+    }).catch((error) => {
+  });
   }
-};
+  
+
 
 const NewCardForm = () => {
   const [state, dispatch, toggleTab, setToggleTab] = useContext(Context);
@@ -69,7 +75,8 @@ console.log(toggleTab)
         alert("fill title pls");
         break;
       default:
-        uploadImage(file);
+        /* uploadImage(file); */
+        mongoPostHandler(newTripp)
         setNewTrippObject({ ...newTripp, title: "", imageURL: "" });
         setToggleTab(false)
     }

@@ -1,14 +1,12 @@
 import React, {createContext, useReducer, useState} from "react";
+import axios from "axios"
+import { act } from "react-dom/test-utils";
 
 const initialState = {
   trippList: [],
   isfetching: false,
   hasError: false,
 };
-
-const postHandler = () => { 
-
-}
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -30,13 +28,6 @@ const reducer = (state, action) => {
         hasError: true, 
         isFetching: false,
       };
-      case "ADD_NEW_TRIPP":
-      return { 
-        ...state,
-        hasError: false, 
-        isFetching: false,
-        /* trippList: state.trippList.concat(action.payload) */
-      }
     case "DELETE_TRIP":
       let filter = state.trippList.filter((item) => {
         return item._id !== action.payload;
@@ -60,7 +51,7 @@ const Store = ({children}) => {
       dispatch({
         type: "FETCH_LIST_REQUEST",
       });
-      fetch("http://localhost:5000/allTrips/")
+      fetch("http://localhost:5000/upload")
         .then((res) => {
           if (res.ok) {
             return res.json();

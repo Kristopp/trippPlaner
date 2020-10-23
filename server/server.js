@@ -1,4 +1,3 @@
-const { cloudinary } = require('./util/CloudinaryService');
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -24,7 +23,7 @@ app.use(
 
 app.use(express.json());
 
-app.use("/allTrips", mainFormRouter);
+app.use("/userTrips", mainFormRouter);
 app.use("/users", usersRouter);
 app.use(express.static("public"));
 app.use(express.json({ limit: "50mb" }));
@@ -41,14 +40,6 @@ mongoose.connect(uri, {
   useCreateIndex: true,
 });
 const connection = mongoose.connection;
-app.post('/api/upload', async (req, res) => {
- try {
-   const fileStr = req.body.data
-   console.log(fileStr)
- } catch (error) {
-   console.log(error)
- }
-});
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
