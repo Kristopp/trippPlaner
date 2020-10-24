@@ -1,6 +1,5 @@
-import React, {createContext, useReducer, useState} from "react";
-import axios from "axios"
-import { act } from "react-dom/test-utils";
+import React, { createContext, useReducer, useState } from "react";
+import axios from "axios";
 
 const initialState = {
   trippList: [],
@@ -25,7 +24,7 @@ const reducer = (state, action) => {
     case "FETCH_LIST_FAILURE":
       return {
         ...state,
-        hasError: true, 
+        hasError: true,
         isFetching: false,
       };
     case "DELETE_TRIP":
@@ -41,48 +40,54 @@ const reducer = (state, action) => {
   }
 };
 
-const Store = ({children}) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const [postDataId, setPostId] = useState()
-    const [loaded, setStateLoaded] = useState(false)
-    const [toggleTab, setToggleTab] = useState(false);
+const Store = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [postDataId, setPostId] = useState();
+  const [loaded, setStateLoaded] = useState(false);
+  const [toggleTab, setToggleTab] = useState(false);
+  const [newTrippUpload, setNewTrippUploaded] = useState(false);
 
-    React.useEffect(() => {
-      dispatch({
-        type: "FETCH_LIST_REQUEST",
-      });
-      fetch("http://localhost:5000/upload")
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw res;
-          }
-        })
-        .then((resJson) => {
-          dispatch({
-            type: "FETCH_LIST_SUCCESS",
-            payload: resJson,
-          });
-          setStateLoaded(true);
-        })
-        .catch((error) => {
-          console.log(error);
-          dispatch({
-            type: "FETCH_LIST_FAILURE",
-          });
+  React.useEffect(() => {
+    dispatch({
+      type: "FETCH_LIST_REQUEST",
+    });
+    fetch("http://localhost:5000/allTrips")
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw res;
+        }
+      })
+      .then((resJson) => {
+        dispatch({
+          type: "FETCH_LIST_SUCCESS",
+          payload: resJson,
         });
-    }, []);
-    return (
-        <Context.Provider value={[state,dispatch,toggleTab,setToggleTab]}>
-            {children}
-        </Context.Provider>
-    )
+        setStateLoaded(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch({
+          type: "FETCH_LIST_FAILURE",
+        });
+      });
+  }, [newTrippUpload]);
+  return (
+    <Context.Provider
+      value={[
+        state,
+        dispatch,
+        toggleTab,
+        setToggleTab,
+        newTrippUpload,
+        setNewTrippUploaded,
+      ]}
+    >
+      {children}
+    </Context.Provider>
+  );
 };
 
 export const Context = createContext(initialState);
 export default Store;
-
-
-
-

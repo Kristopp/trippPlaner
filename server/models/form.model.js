@@ -12,7 +12,6 @@ const reqString = {
 const formSchema = new Schema(
   {
     title: reqString,
-    imageURL: reqString,
     startDate: {
       type: Date,
     },

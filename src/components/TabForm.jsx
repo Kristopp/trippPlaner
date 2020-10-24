@@ -7,42 +7,38 @@ const CLOUDINARY_ID = process.env.REACT_APP_CLOUDINARY_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_NAME_OF_UPLOAD_PRESET;
 const API_KEY = process.env.REACT_APP_CLOUDINARY_API;
 
-
-
-
 const uploadImage = async (file) => {
   const data = new FormData();
   data.append("upload_preset", UPLOAD_PRESET);
   data.append("api_key", API_KEY);
   data.append("file", file);
   axios
-  .post(
-    `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload/`,
-    data
+    .post(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload/`,
+      data
     )
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
-  };
-  const mongoPostHandler = async (formFile) => { 
-    axios.post("http://localhost:5000/userTrips",formFile)
-    .then((response) => {
-        alert("The file is successfully uploaded");
-    }).catch((error) => {
-  });
-  }
-  
-
+};
+const mongoPostHandler = (formFile) => {
+  axios
+    .post("http://localhost:5000/allTrips/create", formFile)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const NewCardForm = () => {
-  const [state, dispatch, toggleTab, setToggleTab] = useContext(Context);
+  const [state, dispatch, toggleTab, setToggleTab,newTrippUpload, setNewTrippUploaded] = useContext(Context);
   const [previewUrl, setPreviewUrl] = useState(undefined);
   const [newTripp, setNewTrippObject] = useState({
     title: "",
     imageURL: "",
   });
 
-  const [loaded, setStateLoaded] = useState(false);
-console.log(toggleTab)
   const titleInputHandler = (event) => {
     const title = event.target.value;
     setNewTrippObject({ ...newTripp, title: title });
@@ -66,7 +62,6 @@ console.log(toggleTab)
 
   const createHandler = () => {
     const file = newTripp.imageURL;
-    console.log(file);
     switch (file) {
       case file !== "":
         alert("No image!");
@@ -76,9 +71,10 @@ console.log(toggleTab)
         break;
       default:
         /* uploadImage(file); */
-        mongoPostHandler(newTripp)
+        mongoPostHandler({title: newTripp.title});
+        newTrippUpload ? setNewTrippUploaded(false): setNewTrippUploaded(true);
         setNewTrippObject({ ...newTripp, title: "", imageURL: "" });
-        setToggleTab(false)
+        setToggleTab(false);
     }
   };
   return (
