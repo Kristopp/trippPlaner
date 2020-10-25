@@ -15,7 +15,7 @@
 [x] fetch data on load
 [x] fetch loading/error component
 [x] upLoad image/prew img
-[] upload new Tripp into mongo and then fetch again;
+[x] upload new Tripp into mongo and then fetch again;
 [] useLocal storage or  cookies
 
 
@@ -25,9 +25,10 @@
 [x] setup Express App
 [x] setup Not found and Error middleware
 -----
-[] model DB
+[x] model DB
 [] CRUD 
 [x] setUp body parser middleware
+[] set proper backend for cloudinary to optimize pictures
 
 { 
     *What data will i store?

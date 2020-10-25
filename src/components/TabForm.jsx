@@ -7,37 +7,56 @@ const CLOUDINARY_ID = process.env.REACT_APP_CLOUDINARY_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_NAME_OF_UPLOAD_PRESET;
 const API_KEY = process.env.REACT_APP_CLOUDINARY_API;
 
-const uploadImage = async (file) => {
-  const data = new FormData();
-  data.append("upload_preset", UPLOAD_PRESET);
-  data.append("api_key", API_KEY);
-  data.append("file", file);
-  axios
-    .post(
-      `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload/`,
-      data
-    )
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
-};
-const mongoPostHandler = (formFile) => {
-  axios
-    .post("http://localhost:5000/allTrips/create", formFile)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
 const NewCardForm = () => {
-  const [state, dispatch, toggleTab, setToggleTab,newTrippUpload, setNewTrippUploaded] = useContext(Context);
+  const [
+    state,
+    dispatch,
+    toggleTab,
+    setToggleTab,
+    newTrippUpload,
+    setNewTrippUploaded,
+  ] = useContext(Context);
   const [previewUrl, setPreviewUrl] = useState(undefined);
   const [newTripp, setNewTrippObject] = useState({
     title: "",
-    imageURL: "",
+    secureImgUrl: "",
   });
+  
+  const mongoPostHandler = async (newTripp) => {
+    console.log(newTripp)
+    axios
+      .post("http://localhost:5000/allTrips/create", newTripp)
+      .then((res) => {
+        console.log(res);
+        /* setNewTrippObject({ ...newTripp, title: "", secureImgUrl: "" }); */
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const uploadTabHandler= async (file) => {
+    const data = new FormData();
+    data.append("upload_preset", UPLOAD_PRESET);
+    data.append("api_key", API_KEY);
+    data.append("file", file);
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload/`,
+        data
+      )
+      .then((res) => {
+        let secureUrl = res.data.secure_url;
+        setNewTrippObject({...newTripp, secureImgUrl: secureUrl})
+        setToggleTab(false);
+        /*     
+        setNewTrippObject({secureImgUrl: secureUrl});
+        console.log(newTripp.secureImgUrl)
+        mongoPostHandler(newTripp);
+        newTrippUpload ? setNewTrippUploaded(false) : setNewTrippUploaded(true); */
+      })
+      .catch((err) => console.log(err));
+    };
+    
 
   const titleInputHandler = (event) => {
     const title = event.target.value;
@@ -56,25 +75,19 @@ const NewCardForm = () => {
     }
   };
 
-  useEffect(() => {
-    setNewTrippObject({ ...newTripp, imageURL: previewUrl });
-  }, [previewUrl]);
-
-  const createHandler = () => {
-    const file = newTripp.imageURL;
+  const createHandler = async () => {
+    const file = previewUrl;
     switch (file) {
       case file !== "":
-        alert("No image!");
+        alert("Add image!");
         break;
       case newTripp.title === "":
         alert("fill title pls");
         break;
       default:
-        /* uploadImage(file); */
-        mongoPostHandler({title: newTripp.title});
-        newTrippUpload ? setNewTrippUploaded(false): setNewTrippUploaded(true);
-        setNewTrippObject({ ...newTripp, title: "", imageURL: "" });
-        setToggleTab(false);
+        uploadTabHandler(file);
+        mongoPostHandler(newTripp)
+        
     }
   };
   return (
@@ -90,12 +103,7 @@ const NewCardForm = () => {
               onChange={titleInputHandler}
             />
           </div>
-          <AddPicture
-            name="upLoadImg"
-            type="file"
-            value={newTripp.title.name}
-            onChange={pickImgHandler}
-          >
+          <AddPicture name="upLoadImg" type="file" onChange={pickImgHandler}>
             <ImgInput name="file" type="file" />
             <PrewImg src={previewUrl}></PrewImg>
           </AddPicture>

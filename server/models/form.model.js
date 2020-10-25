@@ -12,6 +12,7 @@ const reqString = {
 const formSchema = new Schema(
   {
     title: reqString,
+    secureImgUrl: String,
     startDate: {
       type: Date,
     },

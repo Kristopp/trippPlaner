@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useReducer } from "react";
+import React, { useState, useContext } from "react";
 import Styled, { keyframes } from "styled-components";
-import demoPic from "../Assets/pictures/demoPicture1.jpg";
 import { Context } from "../context/Store";
 
 export const TrippTab = () => {
@@ -24,7 +22,7 @@ export const TrippTab = () => {
             </DeleteTabWrapper>
           </HeaderWrapper>
           <ImgWrapper>
-            <TabImg src={data.imgURL}></TabImg>
+            <TabImg src={data.secureImgUrl}></TabImg>
           </ImgWrapper>
           {/*  <AddDate name="date" label="date" type="date" onChange={props.onChange} /> */}
         </CardWrapper>

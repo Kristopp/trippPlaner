@@ -42,8 +42,6 @@ const reducer = (state, action) => {
 
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [postDataId, setPostId] = useState();
-  const [loaded, setStateLoaded] = useState(false);
   const [toggleTab, setToggleTab] = useState(false);
   const [newTrippUpload, setNewTrippUploaded] = useState(false);
 
@@ -64,7 +62,6 @@ const Store = ({ children }) => {
           type: "FETCH_LIST_SUCCESS",
           payload: resJson,
         });
-        setStateLoaded(true);
       })
       .catch((error) => {
         console.log(error);
