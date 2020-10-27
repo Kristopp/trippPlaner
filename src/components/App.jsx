@@ -13,15 +13,7 @@ import { Context } from "../context/Store";
 export const App = () => {
   const [state, dispatch, toggleTab, setToggleTab] = useContext(Context);
   const [openTrippForm, setTrippForm] = useState(false);
-
-  const openTabFormHandler = () => {
-    if (toggleTab === false) {
-      setToggleTab(true);
-    } else {
-      setToggleTab(false);
-      console.log(toggleTab)
-    }
-  };
+  console.log(toggleTab)
 
   return (
     <React.Fragment>
@@ -37,7 +29,7 @@ export const App = () => {
           </TabFormWrapper>
         ) : null}
         <ButtonContainer>
-          <AddButton onClick={openTabFormHandler} />
+          <AddButton onClick={() => setToggleTab(toggleTab => !toggleTab)} />
         </ButtonContainer>
       </MainContainer>
     </React.Fragment>

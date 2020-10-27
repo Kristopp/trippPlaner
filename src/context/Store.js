@@ -5,11 +5,8 @@ const initialState = {
   trippList: [],
   isfetching: false,
   hasError: false,
+  toggleTabComp: false,
 };
-
-const deletFromMongoDbById = () =>{ 
-  
-}
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -47,13 +44,13 @@ const reducer = (state, action) => {
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [toggleTab, setToggleTab] = useState(false);
-  const [newTrippUpload, setNewTrippUploaded] = useState(false);
+  const [loadPage, setLoadPage] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:5000/allTrips")
     .then((res) => dispatch({type: "FETCH_LIST_SUCCESS",payload: res.data }))
     .catch((error) => console.log(console.log(error)))
-  }, [])
+  }, [loadPage])
 
   return (
     <Context.Provider
@@ -61,9 +58,9 @@ const Store = ({ children }) => {
         state,
         dispatch,
         toggleTab,
-        setToggleTab,
-        newTrippUpload,
-        setNewTrippUploaded,
+        setToggleTab, 
+        loadPage,
+        setLoadPage,
       ]}
     >
       {children}

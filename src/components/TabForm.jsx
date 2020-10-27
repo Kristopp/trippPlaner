@@ -13,8 +13,9 @@ const NewCardForm = () => {
     dispatch,
     toggleTab,
     setToggleTab,
-    newTrippUpload,
-    setNewTrippUploaded,
+    loadPage,
+    setLoadPage,
+    ,
   ] = useContext(Context);
   const [previewUrl, setPreviewUrl] = useState(undefined);
   const [newTripp, setNewTrippObject] = useState({
@@ -42,9 +43,9 @@ const NewCardForm = () => {
         })
         .then((res) => {
           console.log(res);
-            newTrippUpload
-              ? setNewTrippUploaded(false)
-              : setNewTrippUploaded(true);
+          loadPage
+              ? setLoadPage(false)
+              : setLoadPage(true);
               setToggleTab(false)
           })
           .catch((error) => {

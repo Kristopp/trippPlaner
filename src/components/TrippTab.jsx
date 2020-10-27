@@ -1,10 +1,20 @@
 import React, { useState, useContext } from "react";
 import Styled, { keyframes } from "styled-components";
 import { Context } from "../context/Store";
+import axios from "axios";
 
 export const TrippTab = () => {
-  const [state, dispatch] = useContext(Context);
-  const [loaded, setStateLoaded] = useState(false);
+  const [state, dispatch, loadPage, setLoadPage] = useContext(Context);
+  /* dispatch({ type: "DELETE_TRIP", payload: data._id }
+   */
+  const mongoDbDeleteHandler = (_id) => {
+    console.log(_id);
+    axios
+      .delete(`http://localhost:5000/allTrips/delete/${_id}`)
+      .then((res) => {
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <React.Fragment>
       {state.trippList.map((data) => (
@@ -15,9 +25,7 @@ export const TrippTab = () => {
             </TitleText>
             <DeleteTabWrapper>
               <DeleteTab
-                onClick={() =>
-                  dispatch({ type: "DELETE_TRIP", payload: data._id })
-                }
+                onClick={() => mongoDbDeleteHandler(data._id)}
               ></DeleteTab>
             </DeleteTabWrapper>
           </HeaderWrapper>

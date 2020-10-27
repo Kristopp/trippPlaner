@@ -21,19 +21,19 @@ router.route("/create").post(async (req, res, next) => {
   }
 });
 
-router.route("/:id").get(async (req, res) => {
+router.route("/:id").get((req, res) => {
   Form.findById(req.params.id).then((form) => {
     res.json(form).catch((err) => res.status(400).json("is-error:" + err));
   });
 });
 
-router.route("/:_id").delete(async (req, res) => {
+router.route("/delete/:id").delete((req, res) => {
   Form.findByIdAndDelete(req.params.id)
     .then(() => res.json("Tab deleted."))
     .catch((err) => res.status(400).json("Error:" + err));
 });
 
-router.route("/update/:id").post(async (req, res) => {
+router.route("/update/:id").post((req, res) => {
   Form.findById((form) => {
     form.title = req.body.title;
     form.secureImgUrl = req.body.secureImgUrl;
