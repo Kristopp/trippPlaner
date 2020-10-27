@@ -7,6 +7,10 @@ const initialState = {
   hasError: false,
 };
 
+const deletFromMongoDbById = () =>{ 
+  
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_LIST_REQUEST":

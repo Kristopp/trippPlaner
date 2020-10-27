@@ -19,22 +19,11 @@ const NewCardForm = () => {
   const [previewUrl, setPreviewUrl] = useState(undefined);
   const [newTripp, setNewTrippObject] = useState({
     title: "",
-    secureImgUrl: "",
+    secureImgUrl: undefined,
+    object_id: undefined,
   });
-  
-  const mongoPostHandler = async (newTripp) => {
-    console.log(newTripp)
-    axios
-      .post("http://localhost:5000/allTrips/create", newTripp)
-      .then((res) => {
-        console.log(res);
-        /* setNewTrippObject({ ...newTripp, title: "", secureImgUrl: "" }); */
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const uploadTabHandler= async (file) => {
+
+  const uploadImgHandler = (file) => {
     const data = new FormData();
     data.append("upload_preset", UPLOAD_PRESET);
     data.append("api_key", API_KEY);
@@ -46,17 +35,26 @@ const NewCardForm = () => {
       )
       .then((res) => {
         let secureUrl = res.data.secure_url;
-        setNewTrippObject({...newTripp, secureImgUrl: secureUrl})
-        setToggleTab(false);
-        /*     
-        setNewTrippObject({secureImgUrl: secureUrl});
-        console.log(newTripp.secureImgUrl)
-        mongoPostHandler(newTripp);
-        newTrippUpload ? setNewTrippUploaded(false) : setNewTrippUploaded(true); */
+        axios
+        .post("http://localhost:5000/allTrips/create", {
+          ...newTripp,
+          secureImgUrl: secureUrl,
+        })
+        .then((res) => {
+          console.log(res);
+            newTrippUpload
+              ? setNewTrippUploaded(false)
+              : setNewTrippUploaded(true);
+              setToggleTab(false)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
-      .catch((err) => console.log(err));
-    };
-    
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const titleInputHandler = (event) => {
     const title = event.target.value;
@@ -75,8 +73,9 @@ const NewCardForm = () => {
     }
   };
 
-  const createHandler = async () => {
+  const createHandler = () => {
     const file = previewUrl;
+    console.log()
     switch (file) {
       case file !== "":
         alert("Add image!");
@@ -85,9 +84,7 @@ const NewCardForm = () => {
         alert("fill title pls");
         break;
       default:
-        uploadTabHandler(file);
-        mongoPostHandler(newTripp)
-        
+        uploadImgHandler(file);
     }
   };
   return (

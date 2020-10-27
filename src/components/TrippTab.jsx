@@ -45,6 +45,7 @@ const boxShadow = keyframes`
 `;
 const CardWrapper = Styled.div`
 display: flex;
+align-items: center;
 flex-direction: column;
 background: #0f2027; /* fallback for old browsers */
 background: -webkit-linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Chrome 10-25, Safari 5.1-6 */
@@ -85,13 +86,17 @@ outline: none;
 const ImgWrapper = Styled.div`
 display: flex;
 justify-content: center;
+margin-top: 30px;
 height: 150px;
-width: 100%;
+width: 180px;
 
 `;
 const TabImg = Styled.img`
+display: flex;
+justify-content: center;
 height: 100%;
 width: auto;
+object-fit: fill;
 text-align: center;
 `;
 
