@@ -12,6 +12,7 @@ export const TrippTab = () => {
     axios
       .delete(`http://localhost:5000/allTrips/delete/${_id}`)
       .then((res) => {
+        dispatch({type: "DELETE_TRIP", payload: _id})
       })
       .catch((err) => console.log(err));
   };
