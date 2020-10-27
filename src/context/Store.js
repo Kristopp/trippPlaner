@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useReducer, useState, useEffect } from "react";
 import axios from "axios";
 
 const initialState = {
@@ -49,31 +49,12 @@ const Store = ({ children }) => {
   const [toggleTab, setToggleTab] = useState(false);
   const [newTrippUpload, setNewTrippUploaded] = useState(false);
 
-  React.useEffect(() => {
-    dispatch({
-      type: "FETCH_LIST_REQUEST",
-    });
-    fetch("http://localhost:5000/allTrips")
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw res;
-        }
-      })
-      .then((resJson) => {
-        dispatch({
-          type: "FETCH_LIST_SUCCESS",
-          payload: resJson,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch({
-          type: "FETCH_LIST_FAILURE",
-        });
-      });
-  }, [newTrippUpload]);
+  useEffect(() => {
+    axios.get("http://localhost:5000/allTrips")
+    .then((res) => dispatch({type: "FETCH_LIST_SUCCESS",payload: res.data }))
+    .catch((error) => console.log(console.log(error)))
+  }, [])
+
   return (
     <Context.Provider
       value={[
