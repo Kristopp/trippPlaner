@@ -9,7 +9,7 @@ router.route('/').get((req, res) => {
 });
 
 
-router.route('/').post( async (req, res, next) => { 
+router.route('/newUser').post( async (req, res, next) => { 
   try {
 const newUser = new User(req.body);
 const createNewUser = await newUser.save()

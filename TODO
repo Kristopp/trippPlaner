@@ -9,13 +9,14 @@
 [] header style
 [x] tap open/close function
 [] budget calc
-[] show right form data onCLick
 [] raiting
-[] on click open form and close and save to create new trippTab
+[x] on click open form and close and save to create new trippTab
 [] delete tab by index deleteing from app file main data
 [x] fetch data on load
-[] fetch loading/error component
-
+[x] fetch loading/error component
+[x] upLoad image/prew img
+[x] upload new Tripp into mongo and then fetch again;
+[] useLocal storage or  cookies
 
 
 //BACKEND basic Express app
@@ -24,9 +25,10 @@
 [x] setup Express App
 [x] setup Not found and Error middleware
 -----
-[] model DB
+[x] model DB
 [] CRUD 
 [x] setUp body parser middleware
+[] set proper backend for cloudinary to optimize pictures
 
 { 
     *What data will i store?

@@ -11,13 +11,8 @@ const reqString = {
 
 const formSchema = new Schema(
   {
-    username: String
-  },
-  {
     title: reqString,
-    startDate: {
-      type: Date,
-    },
+    secureImgUrl: String,
     rating: {
       type: Number,
       min: 0,
@@ -27,7 +22,6 @@ const formSchema = new Schema(
     category: String,
     details: String,
     whoPays: String,
-    pictures: String,
     expense: Number,
   },
 );
