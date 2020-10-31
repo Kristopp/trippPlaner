@@ -22,3 +22,17 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+gzipped/index.css.gz
+gzipped/index.js.gz
+gzipped/setupTests.js.gz
+gzipped/Assets/pictures/demoPicture1.jpg.gz
+gzipped/Assets/pictures/ey-ultra-wide-night-aerial-view-of-downtown-district-in-sofia-bulgaria.jpg.gz
+gzipped/Assets/pictures/M24WIIT5HTCKQEZT7R64DVUQWQ.jpg.gz
+gzipped/Assets/pictures/plus.png.gz
+gzipped/components/AddButton.jsx.gz
+gzipped/components/App.jsx.gz
+gzipped/components/Header.jsx.gz
+gzipped/components/TabForm.jsx.gz
+gzipped/components/TrippForm.jsx.gz
+gzipped/components/TrippTab.jsx.gz
+gzipped/context/Store.js.gz

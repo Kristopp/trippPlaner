@@ -18,6 +18,7 @@ const NewCardForm = () => {
     ,
   ] = useContext(Context);
   const [previewUrl, setPreviewUrl] = useState(undefined);
+  const [loadPic, setLoadPic] = useState(false);
   const [newTripp, setNewTrippObject] = useState({
     title: "",
     secureImgUrl: undefined,
@@ -25,6 +26,7 @@ const NewCardForm = () => {
   });
 
   const uploadImgHandler = (file) => {
+    setLoadPic(true);
     const data = new FormData();
     data.append("upload_preset", UPLOAD_PRESET);
     data.append("api_key", API_KEY);
@@ -37,26 +39,26 @@ const NewCardForm = () => {
       .then((res) => {
         let secureUrl = res.data.secure_url;
         axios
-        .post("http://localhost:5000/allTrips/create", {
-          ...newTripp,
-          secureImgUrl: secureUrl,
-        })
-        .then((res) => {
-          console.log(res);
-          loadPage
-              ? setLoadPage(false)
-              : setLoadPage(true);
-              setToggleTab(false)
+          .post("http://localhost:5000/allTrips/create", {
+            ...newTripp,
+            secureImgUrl: secureUrl,
+          })
+          .then((res) => {
+            console.log(res);
+            loadPage ? setLoadPage(false) : setLoadPage(true);
+            setLoadPic(false);
+            setToggleTab(false);
           })
           .catch((error) => {
+            setLoadPic(false);
             console.log(error);
           });
       })
       .catch((error) => {
+        setLoadPic(false);
         console.log(error);
       });
   };
-
   const titleInputHandler = (event) => {
     const title = event.target.value;
     setNewTrippObject({ ...newTripp, title: title });
@@ -64,9 +66,22 @@ const NewCardForm = () => {
 
   const pickImgHandler = (e) => {
     if (e.target.files[0]) {
+      setLoadPic(true);
       const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        setPreviewUrl(reader.result);
+      reader.addEventListener("load", (e) => {
+        let image = new Image();
+        image.src = e.target.result;
+        image.onload = function () {
+          let height = this.height;
+          let width = this.width;
+          console.log(height, width);
+          if (height === width || height > width) {
+            alert("Pls use picutres with higher width than length");
+          } else {
+            setPreviewUrl(reader.result);
+            setLoadPic(false);
+          }
+        };
       });
       reader.readAsDataURL(e.target.files[0]);
     } else {
@@ -76,7 +91,7 @@ const NewCardForm = () => {
 
   const createHandler = () => {
     const file = previewUrl;
-    console.log()
+    console.log();
     switch (file) {
       case file !== "":
         alert("Add image!");
@@ -103,7 +118,9 @@ const NewCardForm = () => {
           </div>
           <AddPicture name="upLoadImg" type="file" onChange={pickImgHandler}>
             <ImgInput name="file" type="file" />
-            <PrewImg src={previewUrl}></PrewImg>
+            {loadPic ? <Spinner /> : null}
+
+            <PrewImg src={previewUrl} />
           </AddPicture>
           <CreateNewTab onClick={createHandler}>create</CreateNewTab>
         </CardFormContainer>
@@ -120,6 +137,31 @@ const boxShdow = keyframes`
   100% {
     box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.35);
 }
+`;
+
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Spinner = Styled.div`
+  animation: ${rotate360} 1s linear infinite;
+  transform: translateZ(0);
+  
+  border-top: 2px solid grey;
+  border-right: 2px solid grey;
+  border-bottom: 2px solid grey;
+  border-left: 4px solid black;
+  background: transparent;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+z-index: 5;
 `;
 
 const CardFormContainer = Styled.div`
