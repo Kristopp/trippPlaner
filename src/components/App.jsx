@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import Styled from "styled-components";
 import "../index.css";
+import { Route, Switch } from "react-router-dom";
 
 //Components
 import Header from "./Header";
@@ -9,32 +10,7 @@ import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 import TabForm from "./TabForm";
 import { Context } from "../context/Store";
-
-export const App = () => {
-  const [state, dispatch, toggleTab, setToggleTab] = useContext(Context);
-  const [openTrippForm, setTrippForm] = useState(false);
-  console.log(toggleTab)
-
-  return (
-    <React.Fragment>
-      <Header />
-      <MainContainer>
-        <TabWrapper>
-          <TrippTab />
-        </TabWrapper>
-        {toggleTab ? (
-          <TabFormWrapper>
-            <TabForm />
-          <TrippForm></TrippForm>
-          </TabFormWrapper>
-        ) : null}
-        <ButtonContainer>
-          <AddButton onClick={() => setToggleTab(toggleTab => !toggleTab)} />
-        </ButtonContainer>
-      </MainContainer>
-    </React.Fragment>
-  );
-};
+import LandingPage from "./LandingPage";
 
 const MainContainer = Styled.div`
 display: flex;
@@ -65,5 +41,37 @@ bottom: 60px;
 right: 60px;
 position: absolute; 
 `;
+
+export const App = () => {
+  const [state, dispatch, toggleTab, setToggleTab] = useContext(Context);
+  const [openTrippForm, setTrippForm] = useState(false);
+
+  return (
+    <React.Fragment>
+      <Switch>
+        <Route path="/" component={LandingPage} exact />
+        <Route path="/trippApp">
+          <Header />
+          <MainContainer>
+            <TabWrapper>
+              <TrippTab />
+            </TabWrapper>
+            {toggleTab ? (
+              <TabFormWrapper>
+                <TabForm />
+                <TrippForm></TrippForm>
+              </TabFormWrapper>
+            ) : null}
+            <ButtonContainer>
+              <AddButton
+                onClick={() => setToggleTab((toggleTab) => !toggleTab)}
+              />
+            </ButtonContainer>
+          </MainContainer>
+        </Route>
+      </Switch>
+    </React.Fragment>
+  );
+};
 
 export default App;

@@ -1,125 +1,6 @@
 import React, { useState } from "react";
 import Styled, { keyframes } from "styled-components";
 
-const TrippForm = (props) => {
-  const [usersTripp, setUsersTripp] = useState();
-  const [trippFormState, setFormState] = useState(false);
-  const [id, setId] = useState(0);
-  const [forObject, setFormObject] = useState({
-    id: 0,
-    category: "",
-    details: "",
-    whoPays: "",
-    pictures: "",
-    expense: 0,
-  });
-
-  const [expenseCount, setExpenseCount] = useState({
-    expenseCount: 0,
-  });
-  const [formRowArrays, setRowArrays] = useState([]);
-
-  const openTrippFormHandler = () => {
-    if (trippFormState === false) {
-      setFormState(true);
-    } else {
-      setFormState(false);
-    }
-  };
-  const handleNewRow = () => {
-    let newObject = new Object({
-      id: id,
-      category: "",
-      details: "",
-      whoPays: "",
-      pictures: "",
-      expense: 0,
-    });
-    setId(id + 1);
-    formRowArrays.push(newObject);
-  };
-  const handleFormInput = (index, event) => {
-    //use spread so i wont mutate
-    const values = [...formRowArrays];
-    values[index][event.target.name] = event.target.value;
-    setFormObject(values);
-  };
-  const handleRemoveItem = (id) => {
-    setRowArrays(formRowArrays.filter((item) => item.id !== id));
-  };
-
-  return (
-    <React.Fragment>
-      { trippFormState ?
-        <AddFormCont>
-          <AddForm>
-            <CloseButtonWrapper>
-              <CloseTab onClick={props.onClick}>x</CloseTab>
-            </CloseButtonWrapper>
-            <BudgetContainer>
-              <BudgetText>Budget</BudgetText>
-              <BudgetNumber>0</BudgetNumber>
-            </BudgetContainer>
-            <MainText>
-              <TitleText>category</TitleText>
-              <TitleText>details</TitleText>
-              <TitleText>who pays</TitleText>
-              <TitleText>picture</TitleText>
-              <TitleText>expense</TitleText>
-            </MainText>
-            {formRowArrays.map((formRowArray, index) => (
-              <ListWrapper id={id} key={index + id}>
-                <ChildText>
-                  <FormInput
-                    name="category"
-                    label="category"
-                    type="text"
-                    value={formRowArray.category}
-                    onChange={(event) => handleFormInput(index, event)}
-                  />
-                </ChildText>
-                <ChildText>
-                  <FormInput
-                    name="details"
-                    label="details"
-                    type="text"
-                    value={formRowArray.details}
-                    onChange={(event) => handleFormInput(index, event)}
-                  />
-                </ChildText>
-                <ChildText>
-                  <FormInput
-                    name="whoPays"
-                    label="whoPays"
-                    type="text"
-                    value={formRowArray.whoPays}
-                    onChange={(event) => handleFormInput(index, event)}
-                  />
-                </ChildText>
-                <Image></Image>
-                <ChildText style={{ width: "100px" }}>
-                  <FormInput
-                    name="expense"
-                    label="expense"
-                    type="number"
-                    value={formRowArray.expense}
-                    onChange={(event) => handleFormInput(index, event)}
-                    style={{ width: "100px" }}
-                  />
-                </ChildText>
-                <DeleteRow
-                  onClick={() => handleRemoveItem(formRowArray.id)}
-                ></DeleteRow>
-              </ListWrapper>
-            ))}
-            <AddNewRow onClick={handleNewRow}>add new row</AddNewRow>
-          </AddForm>
-        </AddFormCont>
-      : null }
-    </React.Fragment>
-  );
-};
-
 const boxShdow = keyframes`
   0% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
@@ -260,5 +141,126 @@ width: 80px;
 height: 65px;
 margin: 14px;
 `;
+
+
+const TrippForm = (props) => {
+  const [usersTripp, setUsersTripp] = useState();
+  const [trippFormState, setFormState] = useState(false);
+  const [id, setId] = useState(0);
+  const [forObject, setFormObject] = useState({
+    id: 0,
+    category: "",
+    details: "",
+    whoPays: "",
+    pictures: "",
+    expense: 0,
+  });
+
+  const [expenseCount, setExpenseCount] = useState({
+    expenseCount: 0,
+  });
+  const [formRowArrays, setRowArrays] = useState([]);
+
+  const openTrippFormHandler = () => {
+    if (trippFormState === false) {
+      setFormState(true);
+    } else {
+      setFormState(false);
+    }
+  };
+  const handleNewRow = () => {
+    let newObject = new Object({
+      id: id,
+      category: "",
+      details: "",
+      whoPays: "",
+      pictures: "",
+      expense: 0,
+    });
+    setId(id + 1);
+    formRowArrays.push(newObject);
+  };
+  const handleFormInput = (index, event) => {
+    //use spread so i wont mutate
+    const values = [...formRowArrays];
+    values[index][event.target.name] = event.target.value;
+    setFormObject(values);
+  };
+  const handleRemoveItem = (id) => {
+    setRowArrays(formRowArrays.filter((item) => item.id !== id));
+  };
+
+  return (
+    <React.Fragment>
+      { trippFormState ?
+        <AddFormCont>
+          <AddForm>
+            <CloseButtonWrapper>
+              <CloseTab onClick={props.onClick}>x</CloseTab>
+            </CloseButtonWrapper>
+            <BudgetContainer>
+              <BudgetText>Budget</BudgetText>
+              <BudgetNumber>0</BudgetNumber>
+            </BudgetContainer>
+            <MainText>
+              <TitleText>category</TitleText>
+              <TitleText>details</TitleText>
+              <TitleText>who pays</TitleText>
+              <TitleText>picture</TitleText>
+              <TitleText>expense</TitleText>
+            </MainText>
+            {formRowArrays.map((formRowArray, index) => (
+              <ListWrapper id={id} key={index + id}>
+                <ChildText>
+                  <FormInput
+                    name="category"
+                    label="category"
+                    type="text"
+                    value={formRowArray.category}
+                    onChange={(event) => handleFormInput(index, event)}
+                  />
+                </ChildText>
+                <ChildText>
+                  <FormInput
+                    name="details"
+                    label="details"
+                    type="text"
+                    value={formRowArray.details}
+                    onChange={(event) => handleFormInput(index, event)}
+                  />
+                </ChildText>
+                <ChildText>
+                  <FormInput
+                    name="whoPays"
+                    label="whoPays"
+                    type="text"
+                    value={formRowArray.whoPays}
+                    onChange={(event) => handleFormInput(index, event)}
+                  />
+                </ChildText>
+                <Image></Image>
+                <ChildText style={{ width: "100px" }}>
+                  <FormInput
+                    name="expense"
+                    label="expense"
+                    type="number"
+                    value={formRowArray.expense}
+                    onChange={(event) => handleFormInput(index, event)}
+                    style={{ width: "100px" }}
+                  />
+                </ChildText>
+                <DeleteRow
+                  onClick={() => handleRemoveItem(formRowArray.id)}
+                ></DeleteRow>
+              </ListWrapper>
+            ))}
+            <AddNewRow onClick={handleNewRow}>add new row</AddNewRow>
+          </AddForm>
+        </AddFormCont>
+      : null }
+    </React.Fragment>
+  );
+};
+
 
 export default TrippForm;

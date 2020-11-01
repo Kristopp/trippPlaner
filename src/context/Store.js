@@ -45,6 +45,7 @@ const Store = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [toggleTab, setToggleTab] = useState(false);
   const [loadPage, setLoadPage] = useState(false);
+  const [authentication, setAuthentication] = useState(false)
 
   useEffect(() => {
     axios.get("http://localhost:5000/allTrips")
@@ -61,6 +62,8 @@ const Store = ({ children }) => {
         setToggleTab, 
         loadPage,
         setLoadPage,
+        authentication,
+        setAuthentication,
       ]}
     >
       {children}

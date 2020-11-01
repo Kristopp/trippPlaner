@@ -3,44 +3,6 @@ import Styled, { keyframes } from "styled-components";
 import { Context } from "../context/Store";
 import axios from "axios";
 
-export const TrippTab = () => {
-  const [state, dispatch, loadPage, setLoadPage] = useContext(Context);
-  /* dispatch({ type: "DELETE_TRIP", payload: data._id }
-   */
-  const mongoDbDeleteHandler = (_id) => {
-    console.log(_id);
-    axios
-      .delete(`http://localhost:5000/allTrips/delete/${_id}`)
-      .then((res) => {
-        dispatch({type: "DELETE_TRIP", payload: _id})
-      })
-      .catch((err) => console.log(err));
-  };
-  return (
-    <React.Fragment>
-      {state.trippList.map((data) => (
-        <CardWrapper key={data._id}>
-          <HeaderWrapper>
-            <TitleText name="Title" label="title">
-              {data.title}
-            </TitleText>
-            <DeleteTabWrapper>
-              <DeleteTab
-                onClick={() => mongoDbDeleteHandler(data._id)}
-              ></DeleteTab>
-            </DeleteTabWrapper>
-          </HeaderWrapper>
-          <ImgWrapper>
-            <TabImg src={data.secureImgUrl}></TabImg>
-          </ImgWrapper>
-          {/*  <AddDate name="date" label="date" type="date" onChange={props.onChange} /> */}
-        </CardWrapper>
-      ))}
-    </React.Fragment>
-  );
-};
-export default TrippTab;
-
 const boxShadow = keyframes`
    0% {
     transform: translateZ(0);
@@ -122,3 +84,43 @@ border-radius: 50%;
 border: none;
 box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 `;
+
+
+export const TrippTab = () => {
+  const [state, dispatch, loadPage, setLoadPage] = useContext(Context);
+  /* dispatch({ type: "DELETE_TRIP", payload: data._id }
+   */
+  const mongoDbDeleteHandler = (_id) => {
+    console.log(_id);
+    axios
+      .delete(`http://localhost:5000/allTrips/delete/${_id}`)
+      .then((res) => {
+        dispatch({type: "DELETE_TRIP", payload: _id})
+      })
+      .catch((err) => console.log(err));
+  };
+  return (
+    <React.Fragment>
+      {state.trippList.map((data) => (
+        <CardWrapper key={data._id}>
+          <HeaderWrapper>
+            <TitleText name="Title" label="title">
+              {data.title}
+            </TitleText>
+            <DeleteTabWrapper>
+              <DeleteTab
+                onClick={() => mongoDbDeleteHandler(data._id)}
+              ></DeleteTab>
+            </DeleteTabWrapper>
+          </HeaderWrapper>
+          <ImgWrapper>
+            <TabImg src={data.secureImgUrl}></TabImg>
+          </ImgWrapper>
+          {/*  <AddDate name="date" label="date" type="date" onChange={props.onChange} /> */}
+        </CardWrapper>
+      ))}
+    </React.Fragment>
+  );
+};
+export default TrippTab;
+
