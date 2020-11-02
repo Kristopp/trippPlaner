@@ -5,7 +5,6 @@ const helmet = require("helmet");
 const cors = require("cors");
 const passport = require('passport');
 const mainFormRouter = require("./routes/form");
-const usersRouter = require("./routes/users");
 //Import middlewares
 const middleware = require("./middlewares");
 require("dotenv").config();
@@ -24,7 +23,6 @@ app.use(
 app.use(express.json());
 
 app.use("/allTrips", mainFormRouter);
-app.use("/users", usersRouter);
 app.use(express.static("public"));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true}));
