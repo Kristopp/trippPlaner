@@ -2,15 +2,15 @@ import React, { useState, useContext } from "react";
 import Styled from "styled-components";
 import "../index.css";
 import { Route, Switch } from "react-router-dom";
+import { Context } from "../context/Store";
 
 //Components
+import LandingPage from "./LandingPage";
 import Header from "./Header";
 import AddButton from "./AddButton.jsx";
 import TrippTab from "./TrippTab";
 import TrippForm from "./TrippForm";
 import TabForm from "./TabForm";
-import { Context } from "../context/Store";
-import LandingPage from "./LandingPage";
 
 const MainContainer = Styled.div`
 display: flex;

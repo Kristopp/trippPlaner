@@ -5,11 +5,14 @@ const helmet = require("helmet");
 const cors = require("cors");
 const passport = require('passport');
 const mainFormRouter = require("./routes/form");
+const users = require('./routes/user'); 
 //Import middlewares
 const middleware = require("./middlewares");
 require("dotenv").config();
 
 const app = express();
+app.use(passport.initialize());
+require('./passport')(passport);
 app.use(morgan("common"));
 app.use(helmet());
 //only request from this origin can turned back
@@ -28,6 +31,7 @@ app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(middleware.notFound);
 app.use(middleware.errorHandler);
+app.use('/api/users', users);
 
 const port = process.env.PORT || 5000;
 
