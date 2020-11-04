@@ -46,6 +46,7 @@ const RegisterModal = () => {
       <FormContainer>
         <FormInput></FormInput>
         <FormInput></FormInput>
+        <FormInput></FormInput>
       </FormContainer>
     </MainContainer>
   );

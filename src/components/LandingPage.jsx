@@ -10,6 +10,8 @@ import {
   useLocation,
 } from "react-router-dom";
 
+import RegisterModal from './RegisterModal'
+
 const boxShadow = keyframes`
    0% {
     transform: translateZ(0);
@@ -40,6 +42,7 @@ align-items: center;
 justify-content: center;
 min-width: 100vh;
 min-height: 100vh;
+padding-bottom: 500px;
 `;
 
 const FormInput = Styled.input`
@@ -71,8 +74,36 @@ box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 &:hover { 
     animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
-
 `;
+const LogInButton =Styled.button`
+width: 100px;
+height: 20px;
+border-radius: 20px;
+margin: 10px;
+background-color: transparent;
+border: none;
+outline: none;
+font: 1em 'Roboto', sans-serif;
+letter-spacing: 1px;
+text-align: center;
+color: #000000;
+::placeholder,
+  ::-webkit-input-placeholder {
+    color: #000000;
+  }
+  :-ms-input-placeholder {
+     color: #000000;
+  }
+  ::-webkit-inner-spin-button{
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+box-sizing: border-box;
+box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
+&:hover { 
+    animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+`
 
 const LandingPage = () => {
   const [userInput, setUserInput] = useState({
@@ -85,7 +116,12 @@ const LandingPage = () => {
     event.target.name = event.target.value;
   };
 
+  const logInHandler = () => { 
+
+  }
+
   return (
+
     <MainContainer>
       <FormContainer>
         <FormInput
@@ -100,6 +136,11 @@ const LandingPage = () => {
           name="Password"
           onChange={inputHandler}
         />
+        <LogInButton 
+           type="button"
+          placeholder="LogIn"
+          name="LogIn"
+          onClick={logInHandler}>login</LogInButton>
       </FormContainer>
     </MainContainer>
   );
