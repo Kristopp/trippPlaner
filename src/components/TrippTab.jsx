@@ -71,11 +71,12 @@ object-fit: fill;
 text-align: center;
 `;
 
+/**need to make reusable */
 const DeleteTabWrapper = Styled.div`
 display: flex;
 justify-content: flex-end;
 `;
-
+/**need to make reusable */
 const DeleteTab = Styled.button`
 width: 12px;
 height: 12px;

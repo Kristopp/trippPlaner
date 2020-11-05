@@ -10,8 +10,9 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import RegisterModal from './RegisterModal'
+import RegisterModal from "./RegisterModal";
 
+/**need to make reusable */
 const boxShadow = keyframes`
    0% {
     transform: translateZ(0);
@@ -24,16 +25,16 @@ const boxShadow = keyframes`
 }
 `;
 
+/**need to make reusable */
 const MainContainer = Styled.div`
 display: flex;
 align-items: center;
-justify-content: center;
+flex-direction: column;
 min-width: 100vh;
 min-height: 100vh;
 overflow: auto;
 margin: 0;
 padding: 0;
-position: relative;
 `;
 const FormContainer = Styled.div`
 display: flex;
@@ -42,9 +43,10 @@ align-items: center;
 justify-content: center;
 min-width: 100vh;
 min-height: 100vh;
-padding-bottom: 500px;
+position: relative;
 `;
 
+/**need to make reusable */
 const FormInput = Styled.input`
 width: 300px;
 height: 50px;
@@ -75,7 +77,9 @@ box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
     animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 `;
-const LogInButton =Styled.button`
+
+/**make reusable */
+const LogInButton = Styled.button`
 width: 100px;
 height: 20px;
 border-radius: 20px;
@@ -103,7 +107,7 @@ box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 &:hover { 
     animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
-`
+`;
 
 const LandingPage = () => {
   const [userInput, setUserInput] = useState({
@@ -112,35 +116,40 @@ const LandingPage = () => {
     errors: {},
   });
 
+  const [openModal, setModal] = useState(true)
+
   const inputHandler = (event) => {
     event.target.name = event.target.value;
   };
 
-  const logInHandler = () => { 
+  const logInHandler = () => {};
 
-  }
+  const regModalHandler = () => {};
 
   return (
-
     <MainContainer>
+      {openModal ? <RegisterModal></RegisterModal> : null}
       <FormContainer>
         <FormInput
           type="text"
-          placeholder="Name"
-          name="name"
+          placeholder="email"
+          name="email"
           onChange={inputHandler}
         />
         <FormInput
           type="text"
-          placeholder="Password"
-          name="Password"
+          placeholder="password"
+          name="password"
           onChange={inputHandler}
         />
-        <LogInButton 
-           type="button"
-          placeholder="LogIn"
-          name="LogIn"
-          onClick={logInHandler}>login</LogInButton>
+        <LogInButton
+          type="button"
+          placeholder="login"
+          name="login"
+          onClick={logInHandler}
+        >
+          login
+        </LogInButton>
       </FormContainer>
     </MainContainer>
   );
