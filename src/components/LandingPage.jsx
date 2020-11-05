@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import Styled, { keyframes } from "styled-components";
+import { Context } from "../context/Store";
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,6 +9,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
+import Styled, { keyframes } from "styled-components";
 
 import RegisterModal from "./RegisterModal";
 
@@ -53,19 +54,19 @@ height: 50px;
 margin: 10px;
 border-radius: 20px;
 padding: 10px;
-background-color: transparent;
+background-color: #0f2027;
 border: none;
 outline: none;
 font: 1em 'Roboto', sans-serif;
 letter-spacing: 1px;
 text-align: center;
-color: #000000;
+color: #00cdac;
 ::placeholder,
   ::-webkit-input-placeholder {
-    color: #000000;
+    color: #00cdac;;
   }
   :-ms-input-placeholder {
-     color: #000000;
+    color: #00cdac;;
   }
   ::-webkit-inner-spin-button{
         -webkit-appearance: none; 
@@ -78,25 +79,58 @@ box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 }
 `;
 
+const ButtonContainer = Styled.div`
+display: flex;
+flex-direction: row;
+`;
 /**make reusable */
 const LogInButton = Styled.button`
 width: 100px;
-height: 20px;
+height: 30px;
 border-radius: 20px;
 margin: 10px;
-background-color: transparent;
+background-color: #0f2027;
 border: none;
 outline: none;
 font: 1em 'Roboto', sans-serif;
 letter-spacing: 1px;
 text-align: center;
-color: #000000;
+color: #00cdac;
 ::placeholder,
   ::-webkit-input-placeholder {
-    color: #000000;
+    color: #00cdac;
   }
   :-ms-input-placeholder {
-     color: #000000;
+    color: #00cdac;
+  }
+  ::-webkit-inner-spin-button{
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+box-sizing: border-box;
+box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
+&:hover { 
+    animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+`;
+const RegisterButton = Styled.button`
+width: 100px;
+height: 30px;
+border-radius: 20px;
+margin: 10px;
+background-color: #0f2027;
+border: none;
+outline: none;
+font: 1em 'Roboto', sans-serif;
+letter-spacing: 1px;
+text-align: center;
+color: #00cdac;
+::placeholder,
+  ::-webkit-input-placeholder {
+    color: #00cdac;
+  }
+  :-ms-input-placeholder {
+    color: #00cdac;
   }
   ::-webkit-inner-spin-button{
         -webkit-appearance: none; 
@@ -110,6 +144,7 @@ box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 `;
 
 const LandingPage = () => {
+  const [state, dispatch, toggleRegModal, setRegModal] = useContext(Context);
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
@@ -124,7 +159,9 @@ const LandingPage = () => {
 
   const logInHandler = () => {};
 
-  const regModalHandler = () => {};
+  const regModalHandler = () => {
+
+  };
 
   return (
     <MainContainer>
@@ -142,6 +179,8 @@ const LandingPage = () => {
           name="password"
           onChange={inputHandler}
         />
+        <ButtonContainer>
+
         <LogInButton
           type="button"
           placeholder="login"
@@ -150,6 +189,14 @@ const LandingPage = () => {
         >
           login
         </LogInButton>
+        <RegisterButton
+          type="button"
+          placeholder="register"
+          name="register"
+          onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}>
+            register
+        </RegisterButton>
+        </ButtonContainer>
       </FormContainer>
     </MainContainer>
   );

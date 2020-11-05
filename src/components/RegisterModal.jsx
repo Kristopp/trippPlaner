@@ -1,15 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import Styled, { keyframes } from "styled-components";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
-import Header from "./Header";
+import { Context } from "../context/Store";
 
 /**need to make reusable */
 const boxShadow = keyframes`
@@ -48,7 +39,9 @@ overflow: auto;
 margin: 0;
 padding: 0;
 `;
-
+const HeadlineText = Styled.h1`
+color: #00cdac;
+`;
 const FormContainer = Styled.div`
 display:flex;
 /* justify-content: center; */
@@ -63,19 +56,6 @@ border-radius: 5%;
     animation: ${boxShadowGreen} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 `;
-const HeaderContainer = Styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-width: 100%;
-height: 100%;
-`;
-const HeadlineText = Styled.h1`
-color: #00cdac;
-`;
-
 /**need to make reusable */
 const FormInput = Styled.input`
 width: 250px;
@@ -150,6 +130,7 @@ box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 `;
 
 const RegisterModal = () => {
+  const [state, dispatch, toggleRegModal, setRegModal] = useContext(Context);
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
@@ -160,35 +141,39 @@ const RegisterModal = () => {
   const inputHandler = (event) => {
     event.target.name = event.target.value;
   };
+  console.log(toggleRegModal)
 
   return (
-    <MainContainer>
-      <FormContainer>
-      {/*   <HeaderContainer>
-        </HeaderContainer> */}
-          <HeadlineText>Join us!</HeadlineText>
-          <CloseTab></CloseTab>
-        <FormInput
-          type="text"
-          placeholder="email"
-          name="email"
-          onChange={inputHandler}
-        />
-        <FormInput
-          type="text"
-          placeholder="password"
-          name="name"
-          onChange={inputHandler}
-        />
-        <FormInput
-          type="text"
-          placeholder="confirm password"
-          name="password_confirm"
-          onChange={inputHandler}
-        />
-        <RegisterButton>register</RegisterButton>
-      </FormContainer>
-    </MainContainer>
-  );
+    <React.Fragment>
+      {toggleRegModal ? <MainContainer>
+         <FormContainer>
+           <HeadlineText>Join us!</HeadlineText>
+           <CloseTab
+             onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}
+           ></CloseTab>
+           <FormInput
+             type="text"
+             placeholder="email"
+             name="email"
+             onChange={inputHandler}
+           />
+           <FormInput
+             type="text"
+             placeholder="password"
+             name="name"
+             onChange={inputHandler}
+           />
+           <FormInput
+             type="text"
+             placeholder="confirm password"
+             name="password_confirm"
+             onChange={inputHandler}
+           />
+           <RegisterButton>register</RegisterButton>
+         </FormContainer>
+       </MainContainer>
+     : null}
+    </React.Fragment>
+  )
 };
 export default RegisterModal;

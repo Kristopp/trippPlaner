@@ -44,6 +44,7 @@ const reducer = (state, action) => {
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [toggleTab, setToggleTab] = useState(false);
+  const [toggleRegModal, setRegModal] = useState(false)
   const [loadPage, setLoadPage] = useState(false);
   const [authentication, setAuthentication] = useState(false)
 
@@ -59,7 +60,9 @@ const Store = ({ children }) => {
         state,
         dispatch,
         toggleTab,
-        setToggleTab, 
+        setToggleTab,
+        toggleRegModal,
+        setRegModal, 
         loadPage,
         setLoadPage,
         authentication,

@@ -92,7 +92,6 @@ export const TrippTab = () => {
   /* dispatch({ type: "DELETE_TRIP", payload: data._id }
    */
   const mongoDbDeleteHandler = (_id) => {
-    console.log(_id);
     axios
       .delete(`http://localhost:5000/allTrips/delete/${_id}`)
       .then((res) => {
