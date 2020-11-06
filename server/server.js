@@ -26,12 +26,12 @@ app.use(
 app.use(express.json());
 
 app.use("/allTrips", mainFormRouter);
+app.use('/users', users);
 app.use(express.static("public"));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(middleware.notFound);
 app.use(middleware.errorHandler);
-app.use('/api/users', users);
 
 const port = process.env.PORT || 5000;
 

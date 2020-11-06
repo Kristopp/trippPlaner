@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../context/Store";
 import {
   BrowserRouter as Router,
@@ -9,6 +9,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
+import axios from 'axios'
 import Styled, { keyframes } from "styled-components";
 
 import RegisterModal from "./RegisterModal";
@@ -58,7 +59,7 @@ background-color: #0f2027;
 border: none;
 outline: none;
 font: 1em 'Roboto', sans-serif;
-letter-spacing: 1px;
+letter-spacing: 3px;
 text-align: center;
 color: #00cdac;
 ::placeholder,
@@ -93,7 +94,7 @@ background-color: #0f2027;
 border: none;
 outline: none;
 font: 1em 'Roboto', sans-serif;
-letter-spacing: 1px;
+letter-spacing: 2px;
 text-align: center;
 color: #00cdac;
 ::placeholder,
@@ -122,7 +123,7 @@ background-color: #0f2027;
 border: none;
 outline: none;
 font: 1em 'Roboto', sans-serif;
-letter-spacing: 1px;
+letter-spacing: 2px;
 text-align: center;
 color: #00cdac;
 ::placeholder,
@@ -157,10 +158,10 @@ const LandingPage = () => {
     event.target.name = event.target.value;
   };
 
-  const logInHandler = () => {};
-
-  const regModalHandler = () => {
-
+  const logInHandler = () => {
+   /*  axios.post('http://localhost:5000/users/login' userInput)
+    .then(res => console.log(res))
+    .catch(error) */
   };
 
   return (
@@ -194,7 +195,7 @@ const LandingPage = () => {
           placeholder="register"
           name="register"
           onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}>
-            register
+            Sign up!
         </RegisterButton>
         </ButtonContainer>
       </FormContainer>

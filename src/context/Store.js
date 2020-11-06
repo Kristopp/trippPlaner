@@ -5,11 +5,17 @@ const initialState = {
   trippList: [],
   isfetching: false,
   hasError: false,
-  toggleTabComp: false,
+  error:""
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "REGISTER_USER_ERROR": 
+    console.log(action.payload)
+    return { 
+      ...state,
+      error: action.payload
+    }
     case "FETCH_LIST_REQUEST":
       return {
         ...state,
@@ -43,7 +49,7 @@ const reducer = (state, action) => {
 
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [toggleTab, setToggleTab] = useState(false);
+  const [toggleTab, setToggleTab] = useState(true);
   const [toggleRegModal, setRegModal] = useState(false)
   const [loadPage, setLoadPage] = useState(false);
   const [authentication, setAuthentication] = useState(false)

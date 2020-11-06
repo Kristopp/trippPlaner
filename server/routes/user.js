@@ -23,7 +23,6 @@ router.post("/register", function (req, res) {
       });
     } else {
       const newUser = new User({
-        name: req.body.name,
         email: req.body.email,
         password: req.body.password,
       });
@@ -65,7 +64,6 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         const payload = {
           id: user.id,
-          name: user.name,
         };
         jwt.sign(
           payload,
@@ -97,7 +95,6 @@ router.get(
   (req, res) => {
     return res.json({
       id: req.user.id,
-      name: req.user.name,
       email: req.user.email,
     });
   }
