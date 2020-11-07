@@ -156,12 +156,12 @@ const RegisterModal = () => {
     console.log(userInput)
     axios
       .post(`http://localhost:5000/users/register`, userInput)
-      .then((res) => setRegModal(false))
       .catch((err) => {
         dispatch({
           type: "REGISTER_USER_ERROR",
           payload: err.response.data,
         });
+        setRegModal(false)
       });
   };
 

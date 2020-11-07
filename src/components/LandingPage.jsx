@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import setAuthToken from "../setAuthToken";
 import { Context } from "../context/Store";
 import {
   BrowserRouter as Router,
@@ -9,7 +10,8 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
+import jwt_decode from 'jwt-decode';
 import Styled, { keyframes } from "styled-components";
 
 import RegisterModal from "./RegisterModal";
@@ -152,16 +154,29 @@ const LandingPage = () => {
     errors: {},
   });
 
-  const [openModal, setModal] = useState(true)
+  const [openModal, setModal] = useState(true);
 
-  const inputHandler = (event) => {
-    event.target.name = event.target.value;
+  const inputHandlerEmail = (event) => {
+    let email = event.target.value;
+    setUserInput({ ...userInput, email: email });
+  };
+  const inputHandlerPassword = (event) => {
+    let pw = event.target.value;
+    setUserInput({ ...userInput, password: pw });
   };
 
   const logInHandler = () => {
-   /*  axios.post('http://localhost:5000/users/login' userInput)
-    .then(res => console.log(res))
-    .catch(error) */
+    console.log(userInput);
+    axios
+      .post("http://localhost:5000/users/login", userInput)
+      .then((res) => {
+        const { token } = res.data;
+        localStorage.setItem("jwtToken", token);
+        setAuthToken(token);
+        const decoded = jwt_decode(token);
+        dispatch({type: "SET_CURRENT_USER", payload: decoded})
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -172,31 +187,31 @@ const LandingPage = () => {
           type="text"
           placeholder="email"
           name="email"
-          onChange={inputHandler}
+          onChange={inputHandlerEmail}
         />
         <FormInput
           type="text"
           placeholder="password"
           name="password"
-          onChange={inputHandler}
+          onChange={inputHandlerPassword}
         />
         <ButtonContainer>
-
-        <LogInButton
-          type="button"
-          placeholder="login"
-          name="login"
-          onClick={logInHandler}
-        >
-          login
-        </LogInButton>
-        <RegisterButton
-          type="button"
-          placeholder="register"
-          name="register"
-          onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}>
+          <LogInButton
+            type="button"
+            placeholder="login"
+            name="login"
+            onClick={logInHandler}
+          >
+            login
+          </LogInButton>
+          <RegisterButton
+            type="button"
+            placeholder="register"
+            name="register"
+            onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}
+          >
             Sign up!
-        </RegisterButton>
+          </RegisterButton>
         </ButtonContainer>
       </FormContainer>
     </MainContainer>

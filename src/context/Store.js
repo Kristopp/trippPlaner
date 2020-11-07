@@ -1,8 +1,13 @@
 import React, { createContext, useReducer, useState, useEffect } from "react";
+import isEmpty from '../../server/validation/isEmpty'
 import axios from "axios";
 
 const initialState = {
   trippList: [],
+  currentUser: { 
+    isAuthenticated: false,
+    user: {}
+  },
   isfetching: false,
   hasError: false,
   error:""
@@ -15,6 +20,12 @@ const reducer = (state, action) => {
     return { 
       ...state,
       error: action.payload
+    }
+    case "SET_CURRENT_USER": 
+    return {
+      ...state,
+      isAuthenticated: !isEmpty(action.payload),
+      user: action.payload
     }
     case "FETCH_LIST_REQUEST":
       return {
@@ -49,7 +60,7 @@ const reducer = (state, action) => {
 
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [toggleTab, setToggleTab] = useState(true);
+  const [toggleTab, setToggleTab] = useState(false);
   const [toggleRegModal, setRegModal] = useState(false)
   const [loadPage, setLoadPage] = useState(false);
   const [authentication, setAuthentication] = useState(false)
