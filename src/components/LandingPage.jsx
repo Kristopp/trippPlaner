@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import setAuthToken from "../setAuthToken";
 import { Context } from "../context/Store";
 import {
@@ -40,7 +40,7 @@ overflow: auto;
 margin: 0;
 padding: 0;
 `;
-const FormContainer = Styled.div`
+const FormContainer = Styled.form`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -166,7 +166,6 @@ const LandingPage = () => {
   };
 
   const logInHandler = () => {
-    console.log(userInput);
     axios
       .post("http://localhost:5000/users/login", userInput)
       .then((res) => {
@@ -176,9 +175,11 @@ const LandingPage = () => {
         const decoded = jwt_decode(token);
         dispatch({type: "SET_CURRENT_USER", payload: decoded})
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   };
+/* useEffect(() => { 
 
+},[]) */
   return (
     <MainContainer>
       {openModal ? <RegisterModal></RegisterModal> : null}
@@ -190,9 +191,10 @@ const LandingPage = () => {
           onChange={inputHandlerEmail}
         />
         <FormInput
-          type="text"
+          type="password"
           placeholder="password"
           name="password"
+          autocomplete="current-password"
           onChange={inputHandlerPassword}
         />
         <ButtonContainer>
@@ -210,7 +212,7 @@ const LandingPage = () => {
             name="register"
             onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}
           >
-            Sign up!
+            sign up
           </RegisterButton>
         </ButtonContainer>
       </FormContainer>

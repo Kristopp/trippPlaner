@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState, useEffect } from "react";
-import isEmpty from '../../server/validation/isEmpty'
+import isEmpty from '../server/validation/isEmpty'
 import axios from "axios";
 
 const initialState = {
@@ -16,12 +16,12 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "REGISTER_USER_ERROR": 
-    console.log(action.payload)
     return { 
       ...state,
       error: action.payload
     }
     case "SET_CURRENT_USER": 
+    console.log(action.payload)
     return {
       ...state,
       isAuthenticated: !isEmpty(action.payload),

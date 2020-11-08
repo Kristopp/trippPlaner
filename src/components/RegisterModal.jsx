@@ -44,7 +44,7 @@ const HeadlineText = Styled.h1`
 color: #00cdac;
 letter-spacing: 2px;
 `;
-const FormContainer = Styled.div`
+const FormContainer = Styled.form`
 display:flex;
 /* justify-content: center; */
 align-items: center;
@@ -142,60 +142,63 @@ const RegisterModal = () => {
 
   const inputHandlerEmail = (event) => {
     let email = event.target.value;
-    setUserInput({...userInput, email:email })
+    setUserInput({ ...userInput, email: email });
   };
   const inputHandlerPassword = (event) => {
     let pw = event.target.value;
-    setUserInput({...userInput, password: pw})
+    setUserInput({ ...userInput, password: pw });
   };
   const inputHandlerConfirmedPassword = (event) => {
     let confirmedPw = event.target.value;
-    setUserInput({...userInput, password_confirm: confirmedPw })
+    setUserInput({ ...userInput, password_confirm: confirmedPw });
   };
   const confirmHandler = () => {
-    console.log(userInput)
     axios
       .post(`http://localhost:5000/users/register`, userInput)
+      .then((res) => setRegModal(false))
       .catch((err) => {
+        console.log(err);
         dispatch({
           type: "REGISTER_USER_ERROR",
           payload: err.response.data,
         });
-        setRegModal(false)
       });
   };
-
   return (
     <React.Fragment>
       {toggleRegModal ? (
         <MainContainer>
           <FormContainer>
-            <HeadlineText>Join us!</HeadlineText>
+            <HeadlineText>Join us</HeadlineText>
             <CloseTab
+            type="button"
+            name="close"
               onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}
             ></CloseTab>
             <FormInput
               type="text"
               placeholder="email"
               name="email"
+              autocomplete="email"
               onChange={inputHandlerEmail}
             />
             <FormInput
-              type="text"
+              type="password"
+              name="password"
               placeholder="password"
-              name="name"
+              autocomplete="new-password"
               onChange={inputHandlerPassword}
             />
             <FormInput
-              type="text"
-              placeholder="confirm password"
+              type="password"
               name="password_confirm"
+              placeholder="password confirm"
+              autocomplete="new-password"
               onChange={inputHandlerConfirmedPassword}
             />
-            <RegisterButton
-             name="confirm"
-             onClick={confirmHandler}
-            >confirm</RegisterButton>
+            <RegisterButton type="button" name="confirm" onClick={confirmHandler}>
+              confirm
+            </RegisterButton>
           </FormContainer>
         </MainContainer>
       ) : null}
