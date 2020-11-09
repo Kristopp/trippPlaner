@@ -1,15 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import setAuthToken from "../setAuthToken";
 import { Context } from "../context/Store";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import {  useHistory,Redirect } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 import Styled, { keyframes } from "styled-components";
@@ -153,8 +145,8 @@ const LandingPage = () => {
     password: "",
     errors: {},
   });
-
   const [openModal, setModal] = useState(true);
+ let history = useHistory()
 
   const inputHandlerEmail = (event) => {
     let email = event.target.value;
@@ -177,9 +169,6 @@ const LandingPage = () => {
       })
       .catch((err) => alert(err));
   };
-/* useEffect(() => { 
-
-},[]) */
   return (
     <MainContainer>
       {openModal ? <RegisterModal></RegisterModal> : null}

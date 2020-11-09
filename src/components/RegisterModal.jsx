@@ -4,16 +4,13 @@ import Styled, { keyframes } from "styled-components";
 import { Context } from "../context/Store";
 
 /**need to make reusable */
-const boxShadow = keyframes`
-   0% {
-    transform: translateZ(0);
-    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.45);
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
   }
-  100% {
-    transform: translatey(1px);
-    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.65);
+  to {
+    transform: rotate(360deg);
   }
-}
 `;
 const boxShadowGreen = keyframes`
    0% {
@@ -58,6 +55,22 @@ border-radius: 5%;
     animation: ${boxShadowGreen} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 `;
+const Spinner = Styled.div`
+  animation: ${rotate360} 1s linear infinite;
+  transform: translateZ(0);
+  
+  border-top: 2px solid grey;
+  border-right: 2px solid grey;
+  border-bottom: 2px solid grey;
+  border-left: 4px solid black;
+  background: transparent;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+z-index: 5;
+`;
+
 /**need to make reusable */
 const FormInput = Styled.input`
 width: 250px;
@@ -133,6 +146,7 @@ box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 
 const RegisterModal = () => {
   const [state, dispatch, toggleRegModal, setRegModal] = useContext(Context);
+  const [loadPic, setLoadPic] = useState(false);
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
@@ -153,9 +167,13 @@ const RegisterModal = () => {
     setUserInput({ ...userInput, password_confirm: confirmedPw });
   };
   const confirmHandler = () => {
+    setLoadPic(true);
     axios
       .post(`http://localhost:5000/users/register`, userInput)
-      .then((res) => setRegModal(false))
+      .then((res) => {
+        setLoadPic(false);
+        setRegModal(false);
+      })
       .catch((err) => {
         console.log(err);
         dispatch({
@@ -168,11 +186,12 @@ const RegisterModal = () => {
     <React.Fragment>
       {toggleRegModal ? (
         <MainContainer>
+          {loadPic ? <Spinner /> : null}
           <FormContainer>
             <HeadlineText>Join us</HeadlineText>
             <CloseTab
-            type="button"
-            name="close"
+              type="button"
+              name="close"
               onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}
             ></CloseTab>
             <FormInput
@@ -196,7 +215,11 @@ const RegisterModal = () => {
               autocomplete="new-password"
               onChange={inputHandlerConfirmedPassword}
             />
-            <RegisterButton type="button" name="confirm" onClick={confirmHandler}>
+            <RegisterButton
+              type="button"
+              name="confirm"
+              onClick={confirmHandler}
+            >
               confirm
             </RegisterButton>
           </FormContainer>

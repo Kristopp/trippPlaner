@@ -21,11 +21,12 @@ const reducer = (state, action) => {
       error: action.payload
     }
     case "SET_CURRENT_USER": 
-    console.log(action.payload)
+    
     return {
       ...state,
       isAuthenticated: !isEmpty(action.payload),
       user: action.payload
+
     }
     case "FETCH_LIST_REQUEST":
       return {
