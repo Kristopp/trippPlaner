@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import setAuthToken from "../setAuthToken";
 import { Context } from "../context/Store";
 import {  useHistory,Redirect } from "react-router-dom";
@@ -145,6 +145,7 @@ const LandingPage = () => {
     password: "",
     errors: {},
   });
+  const [logedIn, setLogedIn] = useState(false)
   const [openModal, setModal] = useState(true);
  let history = useHistory()
 
@@ -166,46 +167,49 @@ const LandingPage = () => {
         setAuthToken(token);
         const decoded = jwt_decode(token);
         dispatch({type: "SET_CURRENT_USER", payload: decoded})
+        history.push("/trippApp");
       })
       .catch((err) => alert(err));
   };
   return (
-    <MainContainer>
-      {openModal ? <RegisterModal></RegisterModal> : null}
-      <FormContainer>
-        <FormInput
-          type="text"
-          placeholder="email"
-          name="email"
-          onChange={inputHandlerEmail}
-        />
-        <FormInput
-          type="password"
-          placeholder="password"
-          name="password"
-          autocomplete="current-password"
-          onChange={inputHandlerPassword}
-        />
-        <ButtonContainer>
-          <LogInButton
-            type="button"
-            placeholder="login"
-            name="login"
-            onClick={logInHandler}
-          >
-            login
-          </LogInButton>
-          <RegisterButton
-            type="button"
-            placeholder="register"
-            name="register"
-            onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}
-          >
-            sign up
-          </RegisterButton>
-        </ButtonContainer>
-      </FormContainer>
-    </MainContainer>
-  );
+    <React.Fragment>
+      <MainContainer>
+        {openModal ? <RegisterModal></RegisterModal> : null}
+        <FormContainer>
+          <FormInput
+            type="text"
+            placeholder="email"
+            name="email"
+            onChange={inputHandlerEmail}
+          />
+          <FormInput
+            type="password"
+            placeholder="password"
+            name="password"
+            autocomplete="current-password"
+            onChange={inputHandlerPassword}
+          />
+          <ButtonContainer>
+            <LogInButton
+              type="button"
+              placeholder="login"
+              name="login"
+              onClick={logInHandler}
+            >
+              login
+            </LogInButton>
+            <RegisterButton
+              type="button"
+              placeholder="register"
+              name="register"
+              onClick={() => setRegModal((toggleRegModal) => !toggleRegModal)}
+            >
+              sign up
+            </RegisterButton>
+          </ButtonContainer>
+        </FormContainer>
+      </MainContainer>
+    </React.Fragment>
+    );
 };
 export default LandingPage;

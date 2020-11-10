@@ -3,13 +3,11 @@ import isEmpty from '../server/validation/isEmpty'
 import axios from "axios";
 
 const initialState = {
-  trippList: [],
-  currentUser: { 
-    isAuthenticated: false,
-    user: {}
-  },
+  user: {},
+  isAuthenticated: false,
   isfetching: false,
   hasError: false,
+  trippList: [],
   error:""
 };
 
@@ -21,12 +19,10 @@ const reducer = (state, action) => {
       error: action.payload
     }
     case "SET_CURRENT_USER": 
-    
     return {
       ...state,
-      isAuthenticated: !isEmpty(action.payload),
+      isAuthenticated: true,
       user: action.payload
-
     }
     case "FETCH_LIST_REQUEST":
       return {

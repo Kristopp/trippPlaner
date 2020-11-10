@@ -1,2 +1,5 @@
 [1024/113719.962:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
 [1031/154305.694:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1110/083421.455:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Palu\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\6d93495d-f61d-49fb-808f-37644cbf1f53: The system cannot find the path specified. (0x3)
+[1110/084258.780:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1110/094229.163:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Palu\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\6a799942-2bf4-496b-be7e-846da2ec00b4: The system cannot find the path specified. (0x3)

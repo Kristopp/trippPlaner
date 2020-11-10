@@ -52,23 +52,15 @@ export const App = () => {
     localStorage.removeItem("jwtToken");
     setAuthToken(false);
     dispatch({ type: "SET_CURRENT_USER", payload: {} });
-    history.push("/login");
-
-    /*   const currentTime = Date.now() / 1000;
-    if(decoded.exp < currentTime) {
-      store.dispatch(logoutUser());
-      window.location.href = '/login'
-    } */
+    history.push("/");
   };
-  /*   console.log(state)
-  useEffect(() => { 
-<Redirect to="/" />
-  },[state.currentUser.isAuthenticated]) */
-
+  console.log(state)
   return (
     <React.Fragment>
       <Switch>
-        <Route path="/" component={LandingPage} exact />
+        <Route path="/" component={LandingPage} exact>
+          {/* {state.isAuthenticated ? <Redirect to="/trippApp"/> : <Redirect to="/" /> } */}
+        </Route>
         <Route path="/trippApp">
           <Header />
           <MainContainer>
