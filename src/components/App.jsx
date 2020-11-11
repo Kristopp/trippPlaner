@@ -16,11 +16,9 @@ import "../index.css";
 const MainContainer = Styled.div`
 display: flex;
 min-width: 100vh;
-min-height: 100vh;
-overflow: auto;
+min-height: 92vh;
 margin: 0;
 padding: 0;
-position: relative;
 `;
 
 const TabFormWrapper = Styled.div`
@@ -44,7 +42,14 @@ position: absolute;
 `;
 
 export const App = () => {
-  const [state, dispatch, toggleTab, setToggleTab] = useContext(Context);
+  const [
+    state,
+    dispatch,
+    toggleTab,
+    setToggleTab,
+    loadPage,
+    setLoadPage,
+  ] = useContext(Context);
   const [openTrippForm, setTrippForm] = useState(false);
   let history = useHistory();
 
@@ -54,7 +59,7 @@ export const App = () => {
     dispatch({ type: "SET_CURRENT_USER", payload: {} });
     history.push("/");
   };
-  console.log(state)
+
   return (
     <React.Fragment>
       <Switch>

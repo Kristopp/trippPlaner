@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Styled, { keyframes } from "styled-components";
 import { Context } from "../context/Store";
 
@@ -180,8 +180,10 @@ const RegisterModal = () => {
           type: "REGISTER_USER_ERROR",
           payload: err.response.data,
         });
+        setLoadPic(false);
       });
   };
+  
   return (
     <React.Fragment>
       {toggleRegModal ? (

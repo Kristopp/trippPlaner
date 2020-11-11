@@ -11,9 +11,11 @@ const initialState = {
   error:""
 };
 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "REGISTER_USER_ERROR": 
+    console.log(action.payload)
     return { 
       ...state,
       error: action.payload
@@ -31,10 +33,11 @@ const reducer = (state, action) => {
         hasError: false,
       };
     case "FETCH_LIST_SUCCESS":
+      let newArray = initialState.trippList.concat(action.payload)
       return {
         ...state,
         isFetching: false,
-        trippList: action.payload,
+        trippList: newArray,
       };
     case "FETCH_LIST_FAILURE":
       return {

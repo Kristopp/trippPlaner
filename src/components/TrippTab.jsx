@@ -26,7 +26,7 @@ background: linear-gradient(
                                   #02aab0
                                 );
 box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
-margin: 60px 10px 0 10px;
+margin: 60px 0px 0 20px;
 border-radius: 5%;
 width: 190px;
 height: 250px;

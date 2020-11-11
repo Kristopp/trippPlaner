@@ -158,9 +158,8 @@ const NewCardForm = () => {
             secureImgUrl: secureUrl,
           })
           .then((res) => {
-            console.log(res);
-            loadPage ? setLoadPage(false) : setLoadPage(true);
-            setLoadPic(false);
+            console.log(res)
+            dispatch({type: "FETCH_LIST_SUCCESS",payload: res.data });
             setToggleTab(false);
           })
           .catch((error) => {
