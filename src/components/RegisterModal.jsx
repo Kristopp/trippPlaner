@@ -175,7 +175,6 @@ const RegisterModal = () => {
         setRegModal(false);
       })
       .catch((err) => {
-        console.log(err);
         dispatch({
           type: "REGISTER_USER_ERROR",
           payload: err.response.data,

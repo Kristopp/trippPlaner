@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, useState, useEffect } from "react";
-import isEmpty from '../server/validation/isEmpty'
 import axios from "axios";
 
 const initialState = {
@@ -8,17 +7,18 @@ const initialState = {
   isfetching: false,
   hasError: false,
   trippList: [],
-  error:""
+  error: "",
 };
 
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "REGISTER_USER_ERROR": 
-    console.log(action.payload)
+   /*  let newErrorArray = initialState.error.concat(action.payload) */
+    let newErrorString = action.payload
     return { 
       ...state,
-      error: action.payload
+      error: newErrorString
     }
     case "SET_CURRENT_USER": 
     return {

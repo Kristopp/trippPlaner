@@ -1,12 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import setAuthToken from "../setAuthToken";
 import { Context } from "../context/Store";
-import {  useHistory,Redirect } from "react-router-dom";
+import {  useHistory} from "react-router-dom";
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 import Styled, { keyframes } from "styled-components";
 
 import RegisterModal from "./RegisterModal";
+import ErrorTab from './ErrorTab';
 
 /**need to make reusable */
 const boxShadow = keyframes`
@@ -46,9 +47,9 @@ position: relative;
 const FormInput = Styled.input`
 width: 300px;
 height: 50px;
-margin: 10px;
 border-radius: 20px;
 padding: 10px;
+color: #00cdac;
 background-color: #0f2027;
 border: none;
 outline: none;
@@ -72,6 +73,25 @@ box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.45);
 &:hover { 
     animation: ${boxShadow} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
+`;
+const ErrorContainer = Styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+flex-direction: column;
+width: 100%;
+height: 20px;
+
+`;
+const ErrorTabStyled = Styled.div`
+border-radius: 10px;
+color: #00cdac;
+background-color: #0f2027;
+width: 170px;
+z-index: 5;
+letter-spacing: 3px;
+text-align: center;
+color: #00cdac;
 `;
 
 const ButtonContainer = Styled.div`
@@ -145,9 +165,12 @@ const LandingPage = () => {
     password: "",
     errors: {},
   });
+  const [showErrorEmail, setShowErrorEmail] = useState(true)
+  const [showErrorPassword, setShowErrorPassword] = useState(true)
   const [logedIn, setLogedIn] = useState(false)
   const [openModal, setModal] = useState(true);
- let history = useHistory()
+  
+  let history = useHistory()
 
   const inputHandlerEmail = (event) => {
     let email = event.target.value;
@@ -169,7 +192,11 @@ const LandingPage = () => {
         dispatch({type: "SET_CURRENT_USER", payload: decoded})
         history.push("/trippApp");
       })
-      .catch((err) => alert(err));
+      .catch((err) => dispatch({
+        type: "REGISTER_USER_ERROR",
+        payload: err.response.data,
+      }));
+     
   };
   return (
     <React.Fragment>
@@ -182,20 +209,22 @@ const LandingPage = () => {
             name="email"
             onChange={inputHandlerEmail}
           />
+          { showErrorEmail ? <ErrorTab /> : null}
           <FormInput
             type="password"
             placeholder="password"
             name="password"
             autocomplete="current-password"
             onChange={inputHandlerPassword}
-          />
+            />
+            { showErrorPassword ? <ErrorTab /> : null}
           <ButtonContainer>
             <LogInButton
               type="button"
               placeholder="login"
               name="login"
               onClick={logInHandler}
-            >
+              >
               login
             </LogInButton>
             <RegisterButton

@@ -261,6 +261,4 @@ const TrippForm = (props) => {
     </React.Fragment>
   );
 };
-
-
 export default TrippForm;
